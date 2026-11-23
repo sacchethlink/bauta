@@ -1,3 +1,5 @@
+<img src="logo/bauta-logo-nero.svg" width="72" alt="Logo di Bauta">
+
 # Bauta
 
 **Copri i dati personali prima di chiederli all'AI.**
@@ -7,6 +9,10 @@ Bauta sostituisce nomi, recapiti, codici, dati sanitari e gli altri dati persona
 Lavora solo nel browser: il testo non viene inviato a nessuno.
 
 > **Strumento d'esempio dei corsi Hyper Link.** Serve a mostrare come proteggere i dati quando si usa l'AI. Prima di usarlo in azienda con dati reali, fallo approvare da chi di dovere: titolare, DPO o responsabile IT.
+
+## Perché si chiama Bauta
+
+La bauta è la maschera del Carnevale di Venezia che copriva tutto il viso: chi la indossava poteva parlare senza togliersela e senza farsi riconoscere. Bauta fa lo stesso con i tuoi testi: l'AI capisce di cosa parli, ma non sa di chi.
 
 ## Come si usa
 
@@ -62,16 +68,17 @@ node test/test-motore.js
 index.html          lo strumento (pagina unica, funziona offline)
 guida.html          guida all'uso con infografiche
 test/               test del motore di riconoscimento
+logo/               il marchio di Bauta (nero e bianco, con i fori trasparenti)
 LICENSE             licenza MIT
 ```
 
 ## Licenza e responsabilità
 
-Licenza MIT. Bauta è uno strumento d'esempio, fornito così com'è e senza garanzie. La responsabilità di cosa si invia a un servizio AI resta di chi lo invia.
+Licenza MIT. Il carattere Figtree, incluso nelle pagine, ha licenza SIL Open Font License. Bauta è uno strumento d'esempio, fornito così com'è e senza garanzie. La responsabilità di cosa si invia a un servizio AI resta di chi lo invia.
 
 I nomi degli assistenti AI citati sono marchi dei rispettivi titolari e sono indicati solo per spiegare con quali strumenti si può usare.
 
 ---
 
 Realizzato da **Hyper Link** per i corsi di formazione sull'uso consapevole dell'AI in azienda.
-Hyper Link di Sacchet Marco & C. S.a.s. · P.IVA IT01219960257 · [h-link.it](https://h-link.it)
+Hyper Link di Sacchet Marco & C. s.a.s. · P.IVA IT01219960257 · [h-link.it](https://h-link.it)
