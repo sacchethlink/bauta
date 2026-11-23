@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="description" content="Bauta: strumento d'esempio dei corsi Hyper Link per coprire i dati personali prima di incollare un testo in un assistente AI. Funziona nel browser, senza inviare il testo.">
+<title>Bauta · Copri i dati prima di chiedere all'AI</title>
+<style>
+:root{
+  --bg:#f6f5f1; --card:#ffffff; --ink:#1c2230; --muted:#5f6878; --line:#e4e1d8;
+  --accent:#1f4e79; --accent-ink:#ffffff; --accent-soft:#e7eef6; --warn:#b54708; --warn-soft:#fff4e5; --ok:#067647;
+  --radius:14px; --shadow:0 1px 2px rgba(16,24,40,.05),0 1px 3px rgba(16,24,40,.06);
+  --c-PERSONA:#fde2e1; --c-AZIENDA:#e2e8fd; --c-NOME:#f6e3f7; --c-LUOGO:#e0f1ea; --c-INDIRIZZO:#fbe2f0;
+  --c-CF:#fff0c2; --c-PIVA:#ffe4c7; --c-IBAN:#d6f3e3; --c-CARTA:#cdeee0; --c-EMAIL:#dcf0fd; --c-TEL:#ebe2fb; --c-URL:#d9ecf7;
+  --c-DOC:#f2e6d3; --c-TARGA:#e5eedc; --c-CODICE:#eae7df; --c-CATASTO:#dff0ef; --c-DATA:#ececec; --c-ETA:#f1e9dc; --c-IMPORTO:#e6f2d5;
+  --c-SALUTE:#ffd9d1; --c-SENSIBILE:#f9d6e9; --c-GIUDIZIARIO:#e3dcf7; --c-IP:#e5e5f5; --c-ALTRO:#efe9df;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14171d; --card:#1c2029; --ink:#e8eaf0; --muted:#a2abba; --line:#2c3240;
+    --accent:#6aa7e0; --accent-ink:#0d1520; --accent-soft:#1f2b3a; --warn:#f5a35c; --warn-soft:#3a2a18; --ok:#5fd39a;
+    --c-PERSONA:#5a2b2b; --c-AZIENDA:#2c3562; --c-NOME:#4c2b50; --c-LUOGO:#1e4436; --c-INDIRIZZO:#55284a;
+    --c-CF:#5a4a17; --c-PIVA:#5e3d1a; --c-IBAN:#1f4a35; --c-CARTA:#1c4536; --c-EMAIL:#1d3f57; --c-TEL:#3b2d5a; --c-URL:#1f3b4f;
+    --c-DOC:#4d3c24; --c-TARGA:#34442a; --c-CODICE:#3d3a33; --c-CATASTO:#1f4644; --c-DATA:#3a3a3a; --c-ETA:#463a28; --c-IMPORTO:#33461f;
+    --c-SALUTE:#5c2a22; --c-SENSIBILE:#562441; --c-GIUDIZIARIO:#382f57; --c-IP:#33335a; --c-ALTRO:#45392a;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 40px}
+.notice{background:var(--warn-soft);border-bottom:1px solid color-mix(in srgb,var(--warn) 35%,transparent);color:var(--ink);font-size:14px}
+.notice .wrap{padding:10px 20px;display:flex;gap:10px;align-items:flex-start}
+.notice b{color:var(--warn)}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:24px 0 8px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:46px;height:46px;border-radius:13px;background:var(--accent);display:grid;place-items:center;flex:none}
+.logo svg{width:32px;height:22px}
+.brand h1{margin:0;font-size:26px;letter-spacing:-.01em;line-height:1.1}
+.brand small{display:block;color:var(--muted);font-size:13px}
+nav.links{display:flex;gap:8px;flex-wrap:wrap}
+nav.links a{font-size:14px;font-weight:600;text-decoration:none;padding:7px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+nav.links a:hover{border-color:var(--accent)}
+.lead{margin:10px 0 6px;max-width:800px;font-size:17px}
+.sub{color:var(--muted);margin:0 0 20px;max-width:800px;font-size:15px}
+.trust{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+.pill{font-size:12.5px;font-weight:600;padding:5px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px}
+.steps a{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;text-decoration:none;color:var(--ink)}
+.steps a:hover{border-color:var(--accent)}
+.steps b{display:block;font-size:13px;color:var(--accent)}
+@media (max-width:720px){.steps{grid-template-columns:1fr 1fr}}
+section.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin-bottom:18px;scroll-margin-top:14px}
+.card h2{margin:0 0 4px;font-size:18px;display:flex;align-items:center;gap:10px}
+.num{width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:inline-grid;place-items:center;font-size:14px;font-weight:700;flex:none}
+.hint{color:var(--muted);font-size:14px;margin:0 0 14px}
+textarea{width:100%;min-height:180px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font:15px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--bg);color:var(--ink)}
+textarea:focus,select:focus,button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+textarea.drag{border-color:var(--accent);background:var(--accent-soft)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.spacer{flex:1}
+button,.btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:9px 14px;font:600 14px/1 system-ui,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+button:hover,.btn:hover{border-color:var(--accent)}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button.primary:hover{filter:brightness(1.08)}
+button:disabled{opacity:.45;cursor:not-allowed;filter:none}
+button.danger{color:var(--warn)}
+label.chk{display:inline-flex;gap:8px;align-items:flex-start;font-size:14px;color:var(--muted);cursor:pointer}
+label.chk input{margin-top:3px}
+label.gate{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:10px;border:1.5px solid var(--warn);background:var(--warn-soft);font-size:14.5px;font-weight:600;cursor:pointer;margin-top:12px}
+label.gate input{width:18px;height:18px;margin-top:2px;flex:none}
+label.gate.done{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,transparent)}
+select{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:14px system-ui,sans-serif;background:var(--card);color:var(--ink)}
+.mode{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.mode button{border:0;border-radius:0;padding:9px 12px}
+.mode button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.modehint{font-size:13.5px;color:var(--muted);margin-top:8px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:5px 10px 5px 8px;font-size:13px;font-weight:600;display:inline-flex;gap:6px;align-items:center;cursor:pointer;user-select:none;background:var(--card)}
+.chip i{width:12px;height:12px;border-radius:4px;display:inline-block}
+.chip.off{opacity:.5;text-decoration:line-through}
+.chip .n{color:var(--muted);font-weight:500}
+.view{white-space:pre-wrap;word-wrap:break-word;border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-height:120px;max-height:480px;overflow:auto;background:var(--bg);font:15px/1.95 system-ui,sans-serif}
+.view:empty::before{content:"Qui vedrai il testo con i dati evidenziati.";color:var(--muted)}
+.ent{border-radius:5px;padding:1px 2px;cursor:pointer;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.ent::after{content:attr(data-tok);font:600 10.5px/1 ui-monospace,Menlo,monospace;margin-left:4px;padding:2px 4px;border-radius:4px;background:rgba(0,0,0,.10);vertical-align:1px;user-select:none}
+.ent.weak{outline:1.5px dashed var(--warn)}
+.ent.guess{border-bottom:2px dotted var(--muted)}
+.ent.off{background:transparent!important;text-decoration:line-through;text-decoration-style:dotted;opacity:.75;border:0}
+.ent.off::after{content:"in chiaro"}
+.selbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--accent-soft);font-size:14px}
+.selbar[hidden]{display:none}
+.selbar q{font-weight:600}
+.summary{font-size:14px;color:var(--muted);margin-top:10px}
+.summary b{color:var(--ink)}
+.warnbox{margin-top:10px;padding:10px 12px;border-radius:10px;border:1px solid var(--warn);color:var(--warn);font-size:14px}
+.warnbox[hidden]{display:none}
+.infobox{padding:12px 14px;border-radius:10px;background:var(--accent-soft);font-size:14px;margin-top:4px}
+.ais{font-size:13.5px;color:var(--muted);margin-top:10px}
+.restored mark{background:var(--accent-soft);color:inherit;border-bottom:2px solid var(--accent);border-radius:3px;padding:0 1px}
+details.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 20px;margin-bottom:14px;box-shadow:var(--shadow)}
+details.panel summary{cursor:pointer;font-weight:700}
+details.panel[open] summary{margin-bottom:12px}
+details.inner{border-top:1px solid var(--line);margin-top:16px;padding-top:12px}
+details.inner summary{cursor:pointer;font-weight:600}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+.grid2 textarea{min-height:120px;font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+td code{font:600 12.5px ui-monospace,Menlo,monospace}
+.tag{font-size:11px;font-weight:700;padding:2px 6px;border-radius:6px}
+.tag.ok{color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.tag.no{color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,transparent)}
+footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:26px}
+footer a{font-weight:600;text-decoration:none}
+.fine{color:var(--muted);font-size:12.5px;margin-top:10px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}
+.toast.show{opacity:1}
+.sr{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+
+<div class="notice" role="note">
+  <div class="wrap">
+    <span aria-hidden="true">⚠️</span>
+    <span><b>Strumento d'esempio dei corsi Hyper Link.</b> Serve a mostrare come proteggere i dati quando si usa l'AI. Prima di usarlo in azienda con dati reali, fallo approvare da chi di dovere: titolare, DPO o responsabile IT. <a href="guida.html#regole">Perché</a></span>
+  </div>
+</div>
+
+<div class="wrap">
+<header class="top">
+  <div class="brand">
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 48 32"><path d="M3 7c7-4 15-4 21-1 6-3 14-3 21 1 1 9-2 19-10 21-5 1-8-2-11-6-3 4-6 7-11 6C5 26 2 16 3 7z" fill="#fff"/><ellipse cx="14.5" cy="13.5" rx="5.2" ry="3.3" fill="var(--accent)"/><ellipse cx="33.5" cy="13.5" rx="5.2" ry="3.3" fill="var(--accent)"/></svg>
+    </div>
+    <div><h1>Bauta</h1><small>by Hyper Link · strumento d'esempio per i corsi di formazione AI</small></div>
+  </div>
+  <nav class="links">
+    <a href="guida.html">Guida completa</a>
+    <a href="https://github.com/sacchethlink/bauta" target="_blank" rel="noopener">Codice su GitHub</a>
+  </nav>
+</header>
+
+<p class="lead">Prima di incollare un testo in un assistente AI, Bauta copre nomi, recapiti, codici, dati sanitari e gli altri dati personali che riconosce, mettendo al loro posto dei segnaposto. Quando l'AI ti risponde, rimette i dati veri dove erano.</p>
+<p class="sub">Lavora solo in questa pagina: il testo non viene inviato a nessuno, nemmeno a Hyper Link. Funziona con qualsiasi assistente AI: Claude, ChatGPT, Gemini, Copilot, Le Chat, Perplexity e gli altri. Non riconosce tutto: il controllo finale (passaggio 2) resta tuo.</p>
+<div class="trust">
+  <span class="pill">Lavora offline</span>
+  <span class="pill">Il testo non viene inviato</span>
+  <span class="pill">Codice pubblico e verificabile</span>
+  <span class="pill">Il controllo finale è tuo</span>
+</div>
+
+<nav class="steps" aria-label="I quattro passaggi">
+  <a href="#s1"><b>1 · Incolla</b>Il testo, o un file .docx / .txt</a>
+  <a href="#s2"><b>2 · Controlla</b>Togli o aggiungi ciò che va coperto</a>
+  <a href="#s3"><b>3 · Chiedi all'AI</b>Copi solo il testo con i segnaposto</a>
+  <a href="#s4"><b>4 · Ripristina</b>Incolli la risposta: tornano i dati veri</a>
+</nav>
+
+<section class="card" id="s1">
+  <h2><span class="num">1</span>Incolla il tuo testo</h2>
+  <p class="hint">Incolla qui il testo, oppure trascina un file .docx, .txt o .md. Per i PDF: copia il testo dal PDF e incollalo qui.</p>
+  <label class="sr" for="src">Testo originale</label>
+  <textarea id="src" placeholder="Incolla qui email, contratti, verbali, note HR, referti…"></textarea>
+  <div class="row">
+    <button class="primary" id="btnAnalyze">Trova i dati personali</button>
+    <label class="btn" for="file">Apri file…</label>
+    <input type="file" id="file" accept=".docx,.txt,.md,.csv,text/plain" hidden>
+    <button id="btnExample">Prova con un esempio</button>
+    <span class="spacer"></span>
+    <button class="danger" id="btnReset" title="Svuota testo, risposta e segnaposto">Nuovo documento</button>
+  </div>
+  <div class="row" style="margin-top:16px">
+    <span style="font-size:14px;font-weight:600">Modalità:</span>
+    <div class="mode" role="group" aria-label="Modalità">
+      <button id="modeRev" aria-pressed="true">Reversibile</button>
+      <button id="modeAnon" aria-pressed="false">Anonima</button>
+    </div>
+  </div>
+  <p class="modehint" id="modeHint"></p>
+</section>
+
+<section class="card" id="s2">
+  <h2><span class="num">2</span>Controlla cosa viene coperto</h2>
+  <p class="hint">Nel dubbio Bauta copre: meglio un segnaposto in più che un dato in chiaro. <b>Clicca su un dato</b> per lasciarlo in chiaro (vale per tutte le sue ripetizioni). <b>Se manca qualcosa</b>, selezionalo col mouse e coprilo. Le parole sottolineate a puntini sono nomi propri non riconosciuti con certezza; i bordi tratteggiati indicano codici che non superano il controllo matematico.</p>
+  <div class="chips" id="chips"></div>
+  <div class="view" id="view" aria-live="polite"></div>
+  <div class="selbar" id="selbar" hidden>
+    Selezionato: <q id="selText"></q>
+    <select id="selType" aria-label="Categoria"></select>
+    <button class="primary" id="btnHideSel">Copri</button>
+    <label class="chk"><input type="checkbox" id="selRemember"> copri sempre questa parola</label>
+  </div>
+  <div class="summary" id="summary"></div>
+</section>
+
+<section class="card" id="s3">
+  <h2><span class="num">3</span>Copia il testo per l'AI</h2>
+  <p class="hint">Questo è l'unico testo che esce da qui. Incollalo nell'assistente AI che usi, meglio in una conversazione nuova.</p>
+  <label class="sr" for="out">Testo con i segnaposto</label>
+  <textarea id="out" readonly placeholder="Il testo con i segnaposto comparirà qui."></textarea>
+  <label class="gate" id="gate"><input type="checkbox" id="gateChk"> <span>Ho riletto il testo al passaggio 2 e non ci sono altri dati da coprire.</span></label>
+  <div class="row">
+    <button class="primary" id="btnCopyOut" disabled>Copia testo</button>
+    <label class="chk"><input type="checkbox" id="withPrompt" checked> <span>aggiungi in cima un'istruzione per l'AI sui segnaposto</span></label>
+  </div>
+  <p class="ais">Va bene per Claude, ChatGPT, Gemini, Copilot, Le Chat, Perplexity e gli altri assistenti: l'istruzione chiede all'AI di non modificare i segnaposto.</p>
+</section>
+
+<section class="card" id="s4">
+  <h2><span class="num">4</span>Ripristina la risposta</h2>
+  <div id="restoreArea">
+    <p class="hint">Incolla la risposta dell'AI: i segnaposto tornano dati veri. Funziona anche se l'AI li riscrive a modo suo, per esempio senza parentesi, in grassetto o con le barre.</p>
+    <label class="sr" for="reply">Risposta dell'AI</label>
+    <textarea id="reply" placeholder="Incolla qui la risposta dell'AI…"></textarea>
+    <div class="row">
+      <button class="primary" id="btnRestore">Ripristina i dati</button>
+      <button id="btnSimulate" title="Genera una finta risposta per vedere come funziona">Simula una risposta</button>
+      <span class="spacer"></span>
+      <button id="btnCopyRestored" disabled>Copia risultato</button>
+    </div>
+    <div class="warnbox" id="restoreWarn" hidden></div>
+    <div class="view restored" id="restored" style="margin-top:12px;display:none"></div>
+  </div>
+  <div class="infobox" id="anonNote" hidden>In modalità <b>Anonima</b> il collegamento tra segnaposto e dati veri non viene conservato, quindi la risposta non si può ripristinare. Se ti serve, torna alla modalità Reversibile.</div>
+</section>
+
+<details class="panel" id="settings">
+  <summary>Impostazioni</summary>
+  <div class="grid2">
+    <div>
+      <p class="hint"><b>Copri sempre</b>: clienti, prodotti, progetti, colleghi. Una voce per riga. Puoi indicare la categoria, ad es. <code>Progetto Aurora = ALTRO</code> o <code>Ferrero = AZIENDA</code>.</p>
+      <label class="sr" for="listHide">Copri sempre</label>
+      <textarea id="listHide" placeholder="Dolomiti Impianti = AZIENDA&#10;Progetto Aurora"></textarea>
+    </div>
+    <div>
+      <p class="hint"><b>Non toccare mai</b>: parole che Bauta copre ma che vuoi lasciare in chiaro (il nome della tua azienda, un prodotto, una città). Una per riga.</p>
+      <label class="sr" for="listNever">Non toccare mai</label>
+      <textarea id="listNever" placeholder="Hyper Link&#10;Excel"></textarea>
+    </div>
+  </div>
+  <div class="row">
+    <span class="hint" style="margin:0">Le liste restano solo in questo browser.</span>
+    <span class="spacer"></span>
+    <button id="btnSaveLists" class="primary">Salva e riapplica</button>
+  </div>
+
+  <details class="inner" id="dictPanel">
+    <summary>Avanzate: tabella dei segnaposto <span id="dictCount" style="color:var(--muted);font-weight:500"></span></summary>
+    <p class="hint" style="margin-top:10px">Collega ogni segnaposto al dato vero ed esiste solo finché questa pagina è aperta. Puoi salvarla in un file per riprendere il lavoro più tardi, ma <b>quel file contiene i dati veri</b>: non lasciarlo nei Download o in cartelle condivise e cancellalo quando hai finito.</p>
+    <div style="overflow:auto"><table id="dictTable"><thead><tr><th>Segnaposto</th><th>Dato vero</th><th>Categoria</th><th>Verifica</th></tr></thead><tbody></tbody></table></div>
+    <div class="row">
+      <button id="btnDictDown">Salva la tabella in un file</button>
+      <label class="btn" for="dictFile">Carica una tabella salvata…</label>
+      <input type="file" id="dictFile" accept=".json,application/json" hidden>
+    </div>
+  </details>
+</details>
+
+<footer>
+  <span>Hyper Link di Sacchet Marco &amp; C. S.a.s. · P.IVA IT01219960257 · h-link.it</span>
+  <a href="https://marcosacchet.netlify.app" target="_blank" rel="noopener">Vuoi regole chiare per usare l'AI con i dati in azienda? Parliamone davanti a un caffè →</a>
+</footer>
+<p class="fine">Bauta è uno strumento d'esempio, fornito così com'è e senza garanzie. Aiuta a ridurre i dati personali esposti, ma non rende anonimo un testo in senso legale e non sostituisce le regole della tua azienda: anche con i segnaposto, il contesto può permettere di risalire a una persona. Ricontrolla sempre il passaggio 2 prima di inviare. <a href="guida.html">Guida completa</a> · <a href="https://github.com/sacchethlink/bauta" target="_blank" rel="noopener">Codice</a> · Licenza MIT · versione 0.2</p>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+// CORE-START
+/*
+ * Motore di riconoscimento dei dati personali.
+ * Lavora solo sul testo che riceve: nessuna connessione, nessun salvataggio.
+ * Principio: nel dubbio si nasconde. Meglio un segnaposto in più che un dato in chiaro.
+ */
+const Core = (() => {
+  const CATS = {
+    PERSONA:     {label:'Persone',               tok:'PERSONA'},
+    AZIENDA:     {label:'Aziende ed enti',        tok:'AZIENDA'},
+    NOME:        {label:'Altri nomi propri',      tok:'NOME'},
+    LUOGO:       {label:'Luoghi',                 tok:'LUOGO'},
+    INDIRIZZO:   {label:'Indirizzi',              tok:'INDIRIZZO'},
+    CF:          {label:'Codici fiscali',         tok:'CF'},
+    PIVA:        {label:'Partite IVA',            tok:'PIVA'},
+    IBAN:        {label:'IBAN',                   tok:'IBAN'},
+    CARTA:       {label:'Carte di pagamento',     tok:'CARTA'},
+    EMAIL:       {label:'Email',                  tok:'EMAIL'},
+    TEL:         {label:'Telefoni',               tok:'TEL'},
+    URL:         {label:'Siti e account',         tok:'URL'},
+    DOC:         {label:'Documenti d’identità', tok:'DOC'},
+    TARGA:       {label:'Targhe',                 tok:'TARGA'},
+    CODICE:      {label:'Codici e numeri pratica', tok:'CODICE'},
+    CATASTO:     {label:'Dati catastali',         tok:'CATASTO'},
+    DATA:        {label:'Date',                   tok:'DATA'},
+    ETA:         {label:'Età',                    tok:'ETA'},
+    IMPORTO:     {label:'Importi',                tok:'IMPORTO'},
+    SALUTE:      {label:'Salute',                 tok:'SALUTE'},
+    SENSIBILE:   {label:'Dati particolari',       tok:'SENSIBILE'},
+    GIUDIZIARIO: {label:'Dati giudiziari',        tok:'GIUDIZIARIO'},
+    IP:          {label:'Indirizzi IP',           tok:'IP'},
+    ALTRO:       {label:'Le tue liste',           tok:'ALTRO'}
+  };
+  const PRI = {ALTRO:0,IBAN:1,CARTA:2,CF:3,PIVA:4,EMAIL:5,URL:5.5,CATASTO:6,SALUTE:6.2,GIUDIZIARIO:6.3,SENSIBILE:6.4,
+    AZIENDA:7,INDIRIZZO:8,DOC:9,TARGA:10,TEL:11,CODICE:11.5,IP:12,IMPORTO:12.5,ETA:12.7,PERSONA:13,DATA:14,LUOGO:15,NOME:16};
+
+  const words = s => s.trim().split(/\s+/);
+  const FIRST = new Set(words(`abramo achille ada adele adriana adriano agata agnese agostino alba alberto alda aldo alessandra alessandro alessia alessio alfonso alfredo alice alma amalia ambra amedeo amelia anastasia andrea angela angelica angelo anita anna annalisa annamaria antonella antonietta antonino antonio arianna armando arnaldo arturo assunta asia aurelio aurora barbara bartolomeo beatrice benedetta benito bernardo bianca bruna bruno camilla carla carlo carlotta carmela carmelo carmen carolina caterina cecilia cesare chiara christian cinzia clara claudia claudio clelia concetta corrado cosimo costanza cristian cristiano cristina dalia damiano daniela daniele dante dario davide debora delia denis denise diana diego dino domenico donatella donato edoardo elena eleonora elia elisa elisabetta ella emanuela emanuele emilia emiliano emilio emma enrica enrico enzo erica ermanno ernesto ettore eugenio eva fabio fabiola fabrizio fausto federica federico fernando filippo fiorella flavia flavio franca francesca francesco franco fulvio gabriele gabriella gaetano gaia gemma gennaro germano giacomo giada gianfranco gianluca gianluigi gianmarco gianni giorgia giorgio giovanna giovanni gino giordano giulia giuliana giuliano giulio giuseppe giuseppina gloria grazia graziella gregorio guido ilaria ines ignazio irene iris isabella italo ivan ivana jacopo laura lara lazzaro leandro leonardo leone letizia lia liliana lidia linda lino livia lorena lorenza lorenzo loredana luana luca lucia luciana luciano lucio ludovica luigi luigia luisa maddalena manuel manuela mara marcella marcello marco margherita maria mariangela marianna marika marilena marina mario marisa marta martina massimiliano massimo matilde matteo mattia maura maurizio mauro melissa michela michele milena mirella mirko monica nadia natale natalia nazareno nella nicola nicoletta nicolò nina noemi norma oliviero olga orazio oreste orlando ornella osvaldo ottavio paola paolo pasquale patrizia patrizio pierluigi piero pietro pina pino raffaele raffaella raimondo renata renato riccardo rina rita roberta roberto rocco romano romeo rosa rosalba rosanna rosaria rosario rossella ruggero sabrina salvatore samuele sandra sandro sara saverio sebastiano sergio silvana silvia silvio simona simone sofia sonia stefania stefano susanna tania teresa tiziana tiziano tommaso ugo umberto valentina valentino valeria valerio vanessa vanna veronica vincenzo viola virginia vito vittoria vittorio walter wanda zoe ahmed aisha ana anne carlos david fatima george james john jose juan julia kevin mark martin michael mohamed mohammed omar paul peter robert sarah thomas`));
+  // parole comuni che spesso compaiono con l'iniziale maiuscola ma non identificano nessuno
+  const COMMON = new Set(words(`il lo la i gli le un uno una e ed o od ma se che chi con per tra fra da di del dello della dei degli delle al allo alla ai agli alle nel nello nella nei negli nelle su sul sulla sui in a ad come dove quando anche non si ci vi ne questo questa questi queste quello quella ogni tutti tutte altro altri altre nessuno qualcuno poi però quindi infatti inoltre oppure mentre dopo prima ora oggi ieri domani sempre già ancora così grazie prego salve ciao buongiorno buonasera gentile gentili gentilissimo gentilissima egregio egregi caro cara cari care spett spettabile cordiali cordialmente saluti distinti ossequi un abbraccio
+  sig sigra sigg signor signora signore signori signorina dott dottor dottore dottoressa dottssa dr avv avvocato avvocata ing ingegnere ingegnera prof professore professoressa profssa geom geometra rag ragioniere arch architetto notaio on mr mrs ms
+  oggetto data firma luogo allegato allegati nota note premessa premesso considerato visto vista articolo art comma lettera sezione capitolo paragrafo tabella figura pagina pag punto punti elenco totale subtotale importo euro iva imponibile sconto prezzo costo costi quantità descrizione voce voci
+  ufficio uffici direzione direttore direttrice amministrazione amministratore amministratrice amministrativo risorse umane personale responsabile responsabili presidente vicepresidente consiglio consigliere segreteria segretario segretaria reception commerciale vendite acquisti marketing produzione logistica magazzino qualità sicurezza manutenzione tecnico tecnica assistenza clienti cliente fornitore fornitori dipendente dipendenti collaboratore collaboratori collega colleghi team gruppo staff reparto reparti area settore servizio servizi divisione filiale sede sedi stabilimento negozio
+  comune provincia regione stato repubblica governo ministero agenzia entrate inps inail asl ats ulss azienda sanitaria garante privacy tribunale corte cassazione procura prefettura questura camera commercio parlamento senato legge leggi decreto decreti regolamento regolamenti direttiva norma normativa codice civile penale costituzione europa europea europeo unione italia italiano italiana italiani italiane paese nazionale internazionale mondo
+  società azienda aziende impresa imprese ditta ente enti istituto scuola università ospedale clinica studio associazione fondazione cooperativa consorzio gruppo holding banca banche
+  progetto progetti contratto contratti fattura fatture ordine ordini preventivo preventivi offerta offerte verbale riunione riunioni incontro colloquio corso corsi formazione modulo moduli lezione lezioni workshop webinar evento eventi convegno seminario attestato certificato documento documenti relazione report rapporto analisi piano budget bilancio richiesta domanda risposta comunicazione circolare avviso informativa policy procedura procedure manuale guida checklist modello
+  lunedì martedì mercoledì giovedì venerdì sabato domenica gennaio febbraio marzo aprile maggio giugno luglio agosto settembre ottobre novembre dicembre natale pasqua capodanno ferragosto primavera estate autunno inverno
+  nord sud est ovest centro
+  telefono tel cellulare cell fax email mail pec sito web internet online link indirizzo via viale piazza corso largo cap città
+  numero codice fiscale partita matricola protocollo pratica
+  chatgpt gpt claude gemini copilot microsoft google openai anthropic mistral chat perplexity deepseek llama meta grok notebooklm excel word powerpoint outlook teams zoom meet whatsapp telegram linkedin facebook instagram youtube tiktok amazon apple iphone ipad android windows mac macos linux office drive dropbox slack notion canva zapier
+  ai ia intelligenza artificiale act gdpr dpo rspp rls ccnl tfr durc spid cie pdf docx xlsx csv kpi crm erp faq ok nb ps re fw fwd cc ccn ecc etc vs
+  si no sì buono buona bene male nuovo nuova proposta proposte slide rischio rischi opportunità obiettivo obiettivi risultato risultati strategia strategie processo processi attività sistema sistemi strumento strumenti soluzione soluzioni problema problemi scadenza scadenze fase fasi tema temi argomento argomenti introduzione conclusione conclusioni sintesi riepilogo dettaglio dettagli esempio esempi scenario scenari mercato prodotto prodotti cliente vendita costo ricavi entrate uscite fatturato margine investimento investimenti risorsa domande risposte requisiti specifiche funzionalità caratteristiche vantaggi svantaggi benefici limiti criticità azioni azione priorità calendario agenda programma ordine giorno tecnica tecnico tecnologia innovazione digitale trasformazione dati informazioni privacy protezione conformità compliance rischio audit controllo verifica valutazione impatto qualità certificazione sostenibilità ambiente energia welfare benessere salute sicurezza lavoro lavoratori datore ruolo ruoli mansione mansioni competenze competenza obblighi diritti doveri accordo accordi convenzione partner partnership fornitura servizio consulenza supporto aggiornamento aggiornamenti novità news newsletter post articolo blog video foto immagine immagini file cartella allegato testo pagina sezione titolo sottotitolo nome cognome indirizzo città provincia paese lingua inglese tedesco francese spagnolo importante urgente riservato riservata confidenziale bozza versione finale definitivo definitiva`));
+  const ACRONYM_OK = new Set(words(`iva cf hr ceo cfo cto coo it ai ia pdf doc url ok srl spa sas snc ue eu usa uk gdpr dpo rspp rls inps inail asl ats ulss ccnl tfr durc pec spid cie kpi crm erp b2b b2c faq nb ps re fw fwd cc tbd asap api app web seo sms mms nfc qr id pc tv dvd cd usb ram cpu gpu rom wifi lan vpn ict iot ue onu nato fao oms who covid`));
+  const CITIES = [...`agrigento|alessandria|ancona|aosta|arezzo|ascoli piceno|asti|avellino|bari|barletta|andria|trani|belluno|benevento|bergamo|biella|bologna|bolzano|brescia|brindisi|cagliari|caltanissetta|campobasso|caserta|catania|catanzaro|chieti|como|cosenza|cremona|crotone|cuneo|enna|ferrara|firenze|foggia|forlì|cesena|frosinone|genova|gorizia|grosseto|imperia|isernia|l'aquila|la spezia|lecce|lecco|livorno|lodi|lucca|macerata|mantova|massa carrara|matera|messina|milano|modena|monza|napoli|novara|nuoro|oristano|padova|palermo|parma|pavia|perugia|pesaro|urbino|pescara|piacenza|pisa|pistoia|pordenone|ragusa|ravenna|reggio calabria|reggio emilia|rieti|rimini|roma|rovigo|salerno|sassari|savona|siena|siracusa|sondrio|taranto|teramo|terni|torino|trapani|trento|treviso|trieste|udine|varese|venezia|mestre|verbania|vercelli|verona|vibo valentia|vicenza|viterbo|feltre|cortina d'ampezzo|cortina|bassano del grappa|conegliano|abruzzo|basilicata|calabria|campania|emilia-romagna|emilia romagna|friuli-venezia giulia|friuli venezia giulia|friuli|lazio|liguria|lombardia|marche|molise|piemonte|puglia|sardegna|sicilia|toscana|trentino-alto adige|trentino alto adige|trentino|alto adige|südtirol|umbria|valle d'aosta|veneto|dolomiti|londra|parigi|berlino|madrid|barcellona|lisbona|vienna|zurigo|ginevra|lugano|monaco di baviera|bruxelles|amsterdam|praga|varsavia|atene|new york|san marino|vaticano`.split('|')];
+  const CITY_SET = new Set(CITIES);
+  const PLACE_PREFIX = new Set(words(`san santa santo sant via viale piazza corso largo vicolo ospedale istituto scuola liceo hotel albergo ristorante villa palazzo fondazione teatro chiesa basilica stazione aeroporto ponte porta parco museo università premio cantina`));
+  const PARTICLES = new Set(words(`de di del della dal dalla lo la li da dello degli dei d`));
+
+  // Lessici per le categorie particolari (art. 9 e 10 GDPR). Nel dubbio si nasconde.
+  const SALUTE_TERMS = `diabet(?:e|ic[oaie]|ici|iche)|tumor(?:e|i|ale|ali)|cancro|carcinom[ai]|leucemi[ae]|linfom[ai]|metastas[ie]|chemio(?:terapia)?|radioterapia|hiv|aids|sieropositiv[oaie]|epatite|cirrosi|epiless(?:ia|ic[oaie])|ictus|infarto|ischemi(?:a|c[oaie])|cardiopati[ae]|ipertension[ei]|ipertes[oaie]|aritmi[ae]|asma|asmatic[oaie]|bpco|allergi(?:a|e|c[oaie]|ci|che)|celiachia|celiac[oaie]|intolleranz[ae]|depression[ei]|depress[oaie]|ansia|ansios[oaie]|attacch[io] di panico|disturb[oi] (?:bipolare|ossessivo[- ]compulsivo|d(?:ella|i) personalità|alimentar[ei]|post[- ]traumatico|d'ansia)|bipolare|schizofreni(?:a|c[oaie])|burn[- ]?out|esaurimento nervoso|adhd|autism[oi]|autistic[oaie]|dislessi(?:a|c[oaie])|discalculia|disabilità|disabil[ei]|invalidità|invalid[oaie] civil[ei]|legge 104|l\\. ?104|handicap|sclerosi(?: multipla| laterale amiotrofica)?|sla|parkinson|alzheimer|demenza|artrite|artrosi|ernia(?: del disco| discale)?|frattur[ae]|lombalgia|sciatalgia|cervicalgia|tendinite|distorsione|infortuni[oi]|malatti[ae]|malat[oaie]|patologi[ae]|sindrome(?: di [A-Za-zÀ-ÿ]+)?|diagnos[ie]|terapi[ae]|farmac[oi]|psicofarmac[oi]|antidepressiv[oi]|ansiolitic[oi]|antibiotic[oi]|insulina|cortisone|ricover[oi]|ricoverat[oaie]|intervento chirurgico|operazione chirurgica|day hospital|pronto soccorso|certificat[oi] medic[oi]|certificat[oi] di malattia|visit[ae] (?:medic[ah]e?|specialistic[ah]e?|fiscal[ei])|esami del sangue|risonanza(?: magnetica)?|tac|ecografi[ae]|biopsi[ae]|gravidanz[ae]|incinta|aborto|interruzione di gravidanza|fecondazione(?: assistita)?|covid(?:-19)?|quarantena|febbre|dipendenz[ae] da [a-zà-ÿ]+|alcolism[oi]|alcolist[aie]|tossicodipenden(?:za|te|ti)|ludopatia|sert|psicolog[oaie]|psichiatr[aie]|psichiatric[oaie]|psicoterapi[ae]|psicoterapeut[aie]|dialisi|trapiant[oi]|obesità|obes[oaie]|anoressi(?:a|c[oaie])|bulimi(?:a|c[oaie])|cartell[ae] clinic[ah]e?|referto|referti|emicrania|fibromialgia|ipotiroidismo|ipertiroidismo|tiroide|gastrite|colite|morbo di [A-Za-zÀ-ÿ]+|crohn|pressione alta|colesterolo|glicemia|anemia|trombosi|ospedalizzat[oaie]|convalescenza|riabilitazione|fisioterapia|inidone[oaie]|inidoneità|idoneità con limitazioni|medico competente|sorveglianza sanitaria`;
+  const SALUTE_CTX = `(?:affett[oaie] da|soffr(?:e|ono) di|ha sofferto di|diagnosi di|diagnosticat[oaie](?: con| una?| un)?|in cura (?:per|da|presso)|in terapia (?:con|per)|allergic[oaie] a|intolleran(?:te|ti) a|ricoverat[oaie] (?:per|a causa di|presso)|operat[oaie] (?:di|per|al|alla|alle|ai)|positiv[oaie] (?:al|alla|a)|esent[ei] (?:per|da)|in malattia per|assente per|assenza per|a causa di (?:una|un)? ?(?:malattia|patologia))`;
+  const SENSIBILE_TERMS = `cattolic[oaie]|cristian[oaie]|musulman[oaie]|islamic[oaie]|ebre[oaie]|ebraic[oaie]|buddist[aie]|induist[aie]|testimon[ei] di geova|evangelic[oaie]|ortodoss[oaie]|protestant[ei]|atei|atea|ateo|agnostic[oaie]|sikh|religion[ei]|religios[oaie]|ramadan|kosher|halal|omosessual(?:e|i|ità)|eterosessual[ei]|gay|lesbic(?:a|he)|bisessual[ei]|transgender|transessual[ei]|lgbt[a-z+]*|queer|non binari[oaie]|coming out|orientamento sessuale|identità di genere|vita sessuale|unione civile|etnia|etnic[oaie]|razza|razzial[ei]|colore della pelle|di origin[ei] [a-zà-ÿ]+|nazionalità [a-zà-ÿ]+|permesso di soggiorno|richiedent[ei] asilo|rifugiat[oaie]|profugh?[oaie]|sindacat[oi]|sindacal[ei]|sindacalist[aie]|rsu|cgil|cisl|uil|ugl|cobas|fiom|iscritt[oaie] (?:al|a un) (?:partito|sindacato)|tesserat[oaie]|orientamento politico|opinion[ei] politic[ah]e?|idee politiche|partito democratico|fratelli d.italia|movimento 5 stelle|m5s|forza italia|italia viva|rifondazione comunista|casapound|forza nuova|dna|test genetic[oi]|dati genetici|impront[ae] digital[ei]|dati biometrici|riconoscimento facciale`;
+  const GIUD_TERMS = `condann[ae]|condannat[oaie](?: (?:per|a) [^.,;:\\n()]{2,50})?|carichi pendenti|casellario(?: giudiziale)?|precedenti penali|fedina penale|procediment[oi] penal[ei]|indagat[oaie]|imputat[oaie]|arrestat[oaie]|denunciat[oaie]|querel[ae]|querelat[oaie]|reat[oi]|pregiudicat[oaie]|misur[ae] cautelar[ei]|arresti domiciliari|domiciliari|patteggiament[oi]|sentenz[ae] penal[ei]|pena detentiva|detenut[oaie]|carcere|libertà vigilata|affidamento in prova|interdittiva antimafia|daspo`;
+
+  const CF_ODD = {0:1,1:0,2:5,3:7,4:9,5:13,6:15,7:17,8:19,9:21,A:1,B:0,C:5,D:7,E:9,F:13,G:15,H:17,I:19,J:21,K:2,L:4,M:18,N:20,O:11,P:3,Q:6,R:8,S:12,T:14,U:16,V:10,W:22,X:25,Y:24,Z:23};
+  function cfValid(cf){
+    cf = cf.toUpperCase();
+    if(!/^[A-Z0-9]{16}$/.test(cf)) return false;
+    let s = 0;
+    for(let i=0;i<15;i++){ const c = cf[i]; s += (i%2===0) ? CF_ODD[c] : (/\d/.test(c) ? +c : c.charCodeAt(0)-65); }
+    return String.fromCharCode(65 + s%26) === cf[15];
+  }
+  function pivaValid(p){
+    if(!/^\d{11}$/.test(p) || /^0+$/.test(p)) return false;
+    let s = 0;
+    for(let i=0;i<10;i++){ let n = +p[i]; if(i%2===1){ n*=2; if(n>9) n-=9; } s+=n; }
+    return (10 - s%10)%10 === +p[10];
+  }
+  function ibanValid(s){
+    if(!/^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(s)) return false;
+    const r = s.slice(4) + s.slice(0,4);
+    let m = 0;
+    for(const ch of r){ const v = /\d/.test(ch) ? ch : String(ch.charCodeAt(0)-55); for(const d of v) m = (m*10 + +d) % 97; }
+    return m === 1;
+  }
+  function luhn(d){
+    let s=0, alt=false;
+    for(let i=d.length-1;i>=0;i--){ let n=+d[i]; if(alt){ n*=2; if(n>9) n-=9; } s+=n; alt=!alt; }
+    return s%10===0;
+  }
+  const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  const W = 'A-Za-zÀ-ÖØ-öø-ÿ0-9_';
+  const NB = `(?<![${W}])`, NA = `(?![${W}])`;
+
+  function norm(type, t){
+    switch(type){
+      case 'CF': case 'IBAN': case 'TARGA': case 'DOC': return t.toUpperCase().replace(/\s+/g,'');
+      case 'PIVA': case 'CARTA': return t.replace(/\D/g,'');
+      case 'TEL': { let d=t.replace(/\D/g,''); if(d.startsWith('0039')) d=d.slice(4); else if(d.length>10 && d.startsWith('39')) d=d.slice(2); return d; }
+      case 'EMAIL': case 'URL': return t.toLowerCase().replace(/\/+$/,'');
+      case 'PERSONA': return t.toLowerCase().replace(/[^a-zà-ÿ' ]+/g,' ').split(/\s+/).filter(Boolean).sort().join(' ');
+      default: return t.toLowerCase().replace(/\s+/g,' ').replace(/[\s.,;:]+$/,'').trim();
+    }
+  }
+
+  function analyze(text, opts={}){
+    const hide = opts.hide || [];
+    const never = new Set((opts.never||[]).map(x=>x.toLowerCase().replace(/\s+/g,' ').trim()).filter(Boolean));
+    const cands = [];
+    const add = (s,e,type,extra={}) => {
+      while(e>s && /[\s,;:]/.test(text[e-1])) e--;
+      if(e<=s) return;
+      cands.push(Object.assign({s,e,type,text:text.slice(s,e),pri:PRI[type],valid:true},extra));
+    };
+    const all = (re, fn) => { for(const m of text.matchAll(re)) fn(m); };
+
+    // 0. Liste personali
+    for(const h of hide){
+      const t = (h.text||'').trim(); if(t.length<2) continue;
+      const type = CATS[h.type] ? h.type : 'ALTRO';
+      all(new RegExp(`${NB}${esc(t).replace(/\s+/g,'\\s+')}${NA}`,'gi'), m => add(m.index, m.index+m[0].length, 'ALTRO', {forcedType:type, key:type+'|'+t.toLowerCase()}));
+    }
+    // IBAN (con controllo mod-97)
+    all(/(?<![A-Za-z0-9])[A-Z]{2}\d{2}(?:[ ]?[A-Z0-9]){11,32}/g, m => {
+      const pos=[], chars=[];
+      for(let i=0;i<m[0].length;i++) if(m[0][i]!==' '){ chars.push(m[0][i]); pos.push(m.index+i); }
+      const c = chars.join('');
+      for(let L=Math.min(34,c.length); L>=15; L--) if(ibanValid(c.slice(0,L))) return add(m.index, pos[L-1]+1, 'IBAN');
+      if(c.startsWith('IT') && c.length>=27) add(m.index, pos[26]+1, 'IBAN', {valid:false});
+    });
+    // Codice fiscale (con carattere di controllo)
+    all(/(?<![A-Za-z0-9])[A-Za-z]{6}[0-9LMNPQRSTUVlmnpqrstuv]{2}[A-Za-z][0-9LMNPQRSTUVlmnpqrstuv]{2}[A-Za-z][0-9LMNPQRSTUVlmnpqrstuv]{3}[A-Za-z](?![A-Za-z0-9])/g, m => {
+      const ok = cfValid(m[0]);
+      if(ok || /\d/.test(m[0])) add(m.index, m.index+m[0].length, 'CF', {valid:ok});
+    });
+    // Partita IVA
+    all(/(?<![\d])(?:IT\s?)?\d{11}(?!\d)/g, m => {
+      const d = m[0].replace(/\D/g,''); const ok = pivaValid(d);
+      const ctx = /p\.?\s?iva|partita\s+iva|vat|c\.?\s?f\.?/i.test(text.slice(Math.max(0,m.index-25), m.index));
+      if(ok || ctx) add(m.index, m.index+m[0].length, 'PIVA', {valid:ok});
+    });
+    // Carte (Luhn)
+    all(/(?<![\d])(?:\d[ -]?){12,18}\d(?!\d)/g, m => {
+      const d = m[0].replace(/\D/g,'');
+      if(d.length>=13 && d.length<=19 && /^[2-6]/.test(d) && luhn(d)) add(m.index, m.index+m[0].length, 'CARTA');
+    });
+    // Email, siti, account social
+    all(/[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g, m => add(m.index, m.index+m[0].length, 'EMAIL'));
+    all(/\bhttps?:\/\/[^\s<>"'()\]]+|\bwww\.[^\s<>"'()\]]+|(?<![@\w.\-])[a-z0-9][a-z0-9\-]{1,62}\.(?:it|com|eu|net|org|info|biz|io|ch|de|fr|es|co\.uk|uk)(?![\w\-])(?:\/[^\s<>"'()\]]*)?/gi, m => {
+      add(m.index, m.index+m[0].replace(/[.,;:!?)]+$/,'').length, 'URL');
+    });
+    all(/(?<![\w@.])@[A-Za-z0-9_][A-Za-z0-9_.]{2,29}(?![\w@])/g, m => add(m.index, m.index+m[0].replace(/\.+$/,'').length, 'URL'));
+    // Catasto
+    all(/(?:[Ff]oglio|[Ff]g\.?)\s*(?:n\.?\s*)?\d+[,;]?\s*(?:(?:[Pp]articell[ae]|[Pp]art\.|[Mm]appal[ei]|[Mm]ap\.)\s*(?:n\.?\s*)?\d+(?:\s*(?:e|,)\s*\d+)*)(?:[,;]?\s*(?:[Ss]ub(?:alterno)?\.?)\s*(?:n\.?\s*)?\d+)?/g, m => add(m.index, m.index+m[0].length, 'CATASTO'));
+    // Salute, dati particolari, giudiziari
+    all(new RegExp(`${NB}${SALUTE_CTX}\\s+[^.,;:\\n()]{2,60}`,'gi'), m => add(m.index, m.index+m[0].length, 'SALUTE', {pri:6.1}));
+    all(new RegExp(`${NB}(?:${SALUTE_TERMS})${NA}`,'gi'), m => add(m.index, m.index+m[0].length, 'SALUTE'));
+    all(new RegExp(`${NB}(?:${SENSIBILE_TERMS})${NA}`,'gi'), m => add(m.index, m.index+m[0].length, 'SENSIBILE'));
+    all(new RegExp(`${NB}(?:${GIUD_TERMS})${NA}`,'gi'), m => add(m.index, m.index+m[0].length, 'GIUDIZIARIO'));
+
+    // Aziende ed enti
+    const CO_TOK = `(?:[A-ZÀ-Ý0-9][${W}'&.\\-]*|di|e|&|C\\.)`;
+    const CO_SUF = `(?:S\\.\\s?r\\.\\s?l\\.(?:\\s?s\\.?)?|s\\.r\\.l\\.s?|Srls?|SRLS?|srls?|S\\.\\s?p\\.\\s?[Aa]\\.?|s\\.p\\.a\\.?|SpA|SPA|S\\.\\s?a\\.\\s?s\\.?|s\\.a\\.s\\.?|Sas|SAS|S\\.\\s?n\\.\\s?c\\.?|s\\.n\\.c\\.?|Snc|SNC|Soc\\.\\s?[Cc]oop\\.?(?:\\s?a\\s?r\\.?\\s?l\\.?)?|S\\.c\\.a\\.r\\.l\\.|S\\.C\\.A\\.R\\.L\\.|[Ss]carl|Onlus|ONLUS|APS|ODV|ETS|S\\.?S\\.?D\\.?|A\\.?S\\.?D\\.?|GmbH|Ltd\\.?|Inc\\.?|LLC)`;
+    const companies = [];
+    all(new RegExp(`${NB}((?:${CO_TOK}\\s+){1,8})(${CO_SUF})${NA}`,'g'), m => {
+      const pre = m[1];
+      const parts = [...pre.matchAll(/\S+/g)];
+      let k = 0;
+      const lowClean = w => w.toLowerCase().replace(/[.']/g,'').replace(/^spett(le)?$/,'spett');
+      while(k<parts.length && (COMMON.has(lowClean(parts[k][0])) || /^(di|e|&|C\.)$/.test(parts[k][0]))) k++;
+      if(!pre.includes('&')) for(let q=parts.length-1;q>=k;q--) if(parts[q][0]==='di'){ k=q+1; break; }
+      if(k>=parts.length) return;
+      const s = m.index + parts[k].index, e = m.index + m[0].length;
+      const core = text.slice(s, m.index + m[1].length).trim().split(/\s+di\s+/)[0].replace(/[\s,&]+$/,'').trim();
+      const key = 'AZIENDA|'+norm('AZIENDA', text.slice(s,e));
+      add(s, e, 'AZIENDA', {key});
+      companies.push({core, key});
+    });
+    // Indirizzi
+    const ADDR_KW = `(?:[Vv]ia|VIA|[Vv]iale|V\\.le|[Pp]iazza|P\\.zza|P\\.za|[Pp]iazzale|[Cc]orso|C\\.so|[Ll]argo|[Vv]icolo|[Ss]trada(?: [Ss]tatale| [Pp]rovinciale)?|[Ll]ocalità|[Ll]oc\\.|[Ff]razione|[Ff]raz\\.|[Cc]ontrada|[Bb]orgo|[Ll]ungomare|[Ss]alita|[Vv]ia\\s+[Pp]rivata)`;
+    const ADDR_TOK = `(?:(?:[A-ZÀ-Ý][${W}'.]*|\\d{1,3}|d[aei]|del|della|dei|degli|delle|dal|dalla|e)(?![${W}])|d')`;
+    const CAPCITY = `\\d{5}\\s+[A-ZÀ-Ý][${W}']+(?:\\s(?:[A-ZÀ-Ý][${W}']+|d[aei]|del))*?(?:\\s*\\(\\s?[A-Z]{2}\\s?\\))?`;
+    all(new RegExp(`${NB}${ADDR_KW}\\s+((?:${ADDR_TOK}\\s*){1,6})(?:,?\\s*(?:n\\.?\\s*|nr\\.?\\s*|n°\\s*)?\\d{1,4}(?!\\d)(?:\\s?[A-Za-z](?![${W}]))?(?:\\/\\s?[A-Za-z0-9]+)?)?(?:,?\\s*${CAPCITY})?`,'g'), m => {
+      let str = m[0];
+      const ws = [...str.matchAll(/\S+/g)];
+      for(let q=2;q<ws.length;q++){ const w=ws[q][0].replace(/[.,]$/,'').toLowerCase(); if(COMMON.has(w) && !PARTICLES.has(w) && w!=='e' && !/^\d/.test(w)){ str = str.slice(0, ws[q].index); break; } }
+      str = str.replace(/(?:[\s,]+(?:e|d[aei]|del|della|dei|degli|delle|dal|dalla))+\s*$/,'').replace(/[\s,]+$/,'');
+      if(str.split(/\s+/).length>=2) add(m.index, m.index+str.length, 'INDIRIZZO');
+    });
+    all(new RegExp(`(?<![\\d])${CAPCITY}`,'g'), m => add(m.index, m.index+m[0].length, 'INDIRIZZO'));
+    all(/-?\d{1,2}\.\d{4,},\s*-?\d{1,3}\.\d{4,}/g, m => add(m.index, m.index+m[0].length, 'LUOGO', {pri:7.9}));
+    // Documenti d'identità e targhe
+    all(/(?<![A-Za-z0-9])(?:[A-Z]{2}\d{5}[A-Z]{2}|[A-Z]{2}\d{7}[A-Z]?|[A-Z]{2}\s\d{7}|U1[A-Z0-9]{7}[A-Z])(?![A-Za-z0-9])/g, m => add(m.index, m.index+m[0].length, 'DOC'));
+    all(/(?<![A-Za-z0-9])[A-HJ-NPR-TV-Z]{2}\s?\d{3}\s?[A-HJ-NPR-TV-Z]{2}(?![A-Za-z0-9])/g, m => add(m.index, m.index+m[0].length, 'TARGA'));
+    // Telefoni
+    all(/(?<![\d+\w])(?:(?:\+|00)\d{2,3}[\s.\-]?)?(?:3\d{2}(?:[\s.\-\/]?\d){6,7}|\(?0\d{1,3}\)?(?:[\s.\-\/]?\d){5,8})(?![\d])/g, m => {
+      if(/^\d{1,2}[.\/\-]\d{1,2}[.\/\-]\d{2,4}$/.test(m[0])) return;
+      const d = m[0].replace(/\D/g,'');
+      if(d.length>=6 && d.length<=14) add(m.index, m.index+m[0].length, 'TEL');
+    });
+    all(/(?<![\w])\+\d{2,3}[\s.\-]?\d(?:[\s.\-]?\d){6,11}(?!\d)/g, m => add(m.index, m.index+m[0].length, 'TEL'));
+    // Codici: matricole, protocolli, pratiche, tessere, POD/PDR, contratti…
+    all(/(?<![A-Za-zÀ-ÿ])(?:matricola|matr\.|protocollo|prot\.|pratica|fattura|ft\.|ordine|contratto|polizza|sinistro|ticket|badge|codice(?: cliente| utente| dipendente| paziente| pratica)?|cod\.(?: cliente)?|cliente|utente|id(?: utente| cliente)?|user ?id|username|pod|pdr|tessera(?: sanitaria)?|cartella(?: clinica)?|ricetta|impegnativa|nre|posizione|numero|num\.|n\.|nr\.|n°|rif\.|riferimento)\s*[:#]?\s*(?:n\.?\s*|nr\.?\s*|n°\s*)?([A-Za-z0-9][A-Za-z0-9\/\-\._]{2,30})/gi, m => {
+      const v = m[1].replace(/[.\-_\/]+$/,'');
+      if(!/\d/.test(v) || v.length<3) return;
+      if(/^\d{4}$/.test(v) && +v>1900 && +v<2100) return;
+      const s = m.index + m[0].length - m[1].length;
+      add(s, s+v.length, 'CODICE');
+    });
+    all(/(?<![A-Za-z0-9\-\/.,])(?:\d{6,}|(?=[A-Z0-9\-\/]*\d)(?=[A-Z0-9\-\/]*[A-Z])[A-Z0-9]+(?:[\-\/][A-Z0-9]+)+|(?=[A-Z0-9]*\d[A-Z0-9]*\d)(?=[A-Z0-9]*[A-Z][A-Z0-9]*[A-Z])[A-Z0-9]{6,})(?![A-Za-z0-9\-\/])/g, m => {
+      if(/^[A-Z]+-\d{1,2}$/.test(m[0])) return; // es. COVID-19
+      add(m.index, m.index+m[0].length, 'CODICE', {pri:11.8});
+    });
+    // IP
+    all(/(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?!\d)(?!\.\d)/g, m => { if(m[0].split('.').every(x=>+x<=255)) add(m.index, m.index+m[0].length, 'IP'); });
+    // Importi
+    all(/(?:€|EUR|euro|\$|USD|£|CHF)\s?\d[\d.' ]*(?:,\d{1,2})?(?!\d)|(?<![\w.,])\d[\d.']*(?:,\d{1,2})?\s?(?:€|EUR|euro|eur|\$|USD|£|CHF|mila euro|milioni(?: di euro)?|k€)(?![A-Za-z])/gi, m => add(m.index, m.index+m[0].length, 'IMPORTO'));
+    // Età
+    all(/(?<![\w])(?:(?:ha|aveva|avrà|di|età(?: di)?|età:|anni:|aged)\s+)(\d{1,3})\s+anni(?![\w])/gi, m => { if(+m[1]<=120){ const s=m.index+m[0].indexOf(m[1]); add(s, m.index+m[0].length, 'ETA'); } });
+    all(/(?<![\w])\d{1,3}\s?(?:-\s?)?enn[ei](?![\w])|(?<![\w])(?:ventenn|trentenn|quarantenn|cinquantenn|sessantenn|settantenn|ottantenn|novantenn|diciottenn|minorenn|maggiorenn|ultra(?:sessant|settant|ottant)enn)[ei](?![\w])|(?<![\w])classe\s(?:19|20)\d{2}(?![\w])|(?<![\w])(?:età|anni)\s*:\s*\d{1,3}(?![\w])|(?<=[,(]\s?)\d{1,3}\s+anni(?=\s*[,);.])|(?<![\w])età\s+\d{1,3}(?![\w])/gi, m => add(m.index, m.index+m[0].length, 'ETA'));
+    // Date (tutte)
+    const MESI='gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre|gen|feb|mar|apr|mag|giu|lug|ago|set|ott|nov|dic';
+    all(new RegExp(`(?<!\\d)(?:\\d{1,2}[\\/.\\-]\\d{1,2}[\\/.\\-](?:19|20)?\\d{2}|(?:19|20)\\d{2}-\\d{2}-\\d{2}|\\d{1,2}°?\\s+(?:${MESI})\\.?\\s+(?:19|20)\\d{2}|\\d{1,2}°?(?:\\s*(?:-|al|e)\\s*\\d{1,2})?\\s+(?:gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre))(?!\\d)`,'gi'), m => add(m.index, m.index+m[0].length, 'DATA'));
+
+    // Luoghi noti (città, regioni)
+    const cityRe = new RegExp(`${NB}(?=[A-ZÀ-Ý])(?:${CITIES.map(c=>esc(c).replace(/\\? /g,'[\\s\\-]')).sort((a,b)=>b.length-a.length).join('|')})${NA}`,'gi');
+    all(cityRe, m => add(m.index, m.index+m[0].length, 'LUOGO'));
+
+    // ---- Persone ----
+    const toks = [...text.matchAll(/[A-Za-zÀ-ÖØ-öø-ÿ]+(?:'[A-Za-zÀ-ÖØ-öø-ÿ]+)*/g)].map(m=>({s:m.index,e:m.index+m[0].length,w:m[0]}));
+    const adj = (a,b) => /^[  ]{1,2}$/.test(text.slice(a.e,b.s));
+    const isCap = w => /^[A-ZÀ-ÖØ-Þ][a-zß-öø-ÿ]+(?:'[A-Za-zÀ-ÿ]+)?$/.test(w) || /^[A-ZÀ-ÖØ-Þ]{2,}$/.test(w) || /^[A-Z]'[A-ZÀ-Þ][a-zß-ÿ]+$/.test(w);
+    const isFirst = w => isCap(w) && FIRST.has(w.toLowerCase());
+    const isCommon = w => COMMON.has(w.toLowerCase());
+    function namePart(i){
+      const t = toks[i]; if(!t) return null;
+      if(PARTICLES.has(t.w.toLowerCase()) && isCap(t.w) && toks[i+1] && adj(t,toks[i+1]) && isCap(toks[i+1].w) && !isCommon(toks[i+1].w))
+        return {next:i+2, e:toks[i+1].e, w:t.w+' '+toks[i+1].w, s:t.s};
+      if(isCap(t.w) && !isCommon(t.w)) return {next:i+1, e:t.e, w:t.w, s:t.s};
+      return null;
+    }
+    function takeName(k, max){
+      const parts=[]; let i=k;
+      while(i<toks.length && parts.length<max){
+        if(parts.length && !adj(toks[i-1], toks[i])) break;
+        const p = namePart(i); if(!p) break;
+        parts.push(p); i=p.next;
+      }
+      return parts;
+    }
+    const persons = [];
+    const pushPerson = parts => {
+      if(!parts.length) return;
+      const s = parts[0].s, e = parts[parts.length-1].e;
+      const nonFirst = parts.filter(p=>!FIRST.has(p.w.toLowerCase()));
+      const surname = nonFirst.length ? nonFirst[nonFirst.length-1].w : (parts.length>1 ? parts[parts.length-1].w : null);
+      persons.push({s,e,text:text.slice(s,e),surname,parts:parts.map(p=>p.w.toLowerCase())});
+    };
+    const tokIndexAt = pos => { let lo=0, hi=toks.length; while(lo<hi){ const mid=(lo+hi)>>1; if(toks[mid].s<pos) lo=mid+1; else hi=mid; } return lo<toks.length ? lo : -1; };
+    const ctxRes = [
+      /(?<![A-Za-zÀ-ÿ])(?:Sig\.(?:ra|na)?|Sigg\.|Signor(?:a|ina|e)?|Dott\.(?:ssa)?|Dr\.(?:ssa)?|Dottor(?:essa|e)?|Avv\.(?:to)?|Avvocat[oa]|Ing\.|Ingegner[ea]?|Prof\.(?:ssa)?|Professor(?:essa|e)?|Geom\.|Geometra|Rag\.|Ragioniere|Arch\.|Architetto|Notaio|Not\.|On\.|Mr\.|Mrs\.|Ms\.|Gent\.(?:mo|ma|mi)?|Gentile|Gentilissim[oa]|Egr\.|Egregio|Car[oa]|Ciao|Salve|Buongiorno|Grazie)\s*/g,
+      /(?<![A-Za-zÀ-ÿ])(?:nome e cognome|cognome e nome|nominativo|il sottoscritto|la sottoscritta|sottoscritt[oa]\/[ao]|intestat[oa] a|intestatari[oa]|dipendente|paziente|lavorat(?:ore|rice)|cliente|referente|destinatari[oa]|richiedente|candidat[oa]|alunn[oa]|student(?:e|essa)|utente|firmato|a cura di|a nome di|in nome di|nome|cognome|figli[oa] di|moglie|marito|padre|madre|fratello|sorella|compagn[oa])\s*[:\-]?\s*/gi
+    ];
+    for(const re of ctxRes) all(re, m => {
+      const end = m.index + m[0].length;
+      const k = tokIndexAt(end);
+      if(k<0 || !/^[\s:,]{0,3}$/.test(text.slice(end, toks[k].s))) return;
+      const parts = takeName(k, 3);
+      if(parts.length) pushPerson(parts);
+    });
+    for(let i=0;i<toks.length;i++){
+      const t = toks[i], prev = toks[i-1];
+      const prevPlace = prev && adj(prev,t) && PLACE_PREFIX.has(prev.w.toLowerCase().replace(/'$/,''));
+      if(isFirst(t.w) && !prevPlace){
+        let j=i+1; const chain=[{s:t.s,e:t.e,w:t.w,next:i+1}];
+        while(j<toks.length && chain.length<3 && adj(toks[j-1],toks[j]) && isFirst(toks[j].w)){ chain.push({s:toks[j].s,e:toks[j].e,w:toks[j].w,next:j+1}); j++; }
+        const sur = (j<toks.length && adj(toks[j-1],toks[j])) ? namePart(j) : null;
+        if(sur){ pushPerson([...chain, sur]); i = sur.next-1; continue; }
+        if(chain.length>=2){ pushPerson(chain); i=j-1; continue; }
+      } else if(isCap(t.w) && !isCommon(t.w) && !FIRST.has(t.w.toLowerCase()) && !(prev && adj(prev,t) && isCap(prev.w)) && !prevPlace){
+        const nx = toks[i+1];
+        if(nx && adj(t,nx) && isFirst(nx.w)){
+          const after = toks[i+2];
+          const parts=[{s:t.s,e:t.e,w:t.w},{s:nx.s,e:nx.e,w:nx.w}];
+          if(after && adj(nx,after) && isFirst(after.w)) parts.push({s:after.s,e:after.e,w:after.w});
+          const nextTok = toks[i+parts.length];
+          if(!(nextTok && adj(toks[i+parts.length-1], nextTok) && isCap(nextTok.w))){ pushPerson(parts); i += parts.length-1; }
+        }
+      }
+    }
+    for(const p of persons) p.key = 'PERSONA|'+norm('PERSONA', p.text);
+    for(const p of persons){
+      if(p.parts.length===1 && !FIRST.has(p.parts[0])){
+        const owners = new Set(persons.filter(q=>q.parts.length>1 && q.parts.includes(p.parts[0])).map(q=>q.key));
+        if(owners.size===1) p.key = [...owners][0];
+      }
+    }
+    const surnameOwners = {};
+    for(const p of persons) if(p.surname && p.parts.length>1) (surnameOwners[p.surname] ||= new Set()).add(p.key);
+    for(const p of persons) add(p.s, p.e, 'PERSONA', {key:p.key});
+    const seenFull = new Set();
+    for(const p of persons){
+      const f = p.text.toLowerCase(); if(seenFull.has(f)) continue; seenFull.add(f);
+      all(new RegExp(`${NB}${esc(p.text).replace(/\s+/g,'\\s+')}${NA}`,'gi'), m => add(m.index, m.index+m[0].length, 'PERSONA', {key:p.key, pri:13.2}));
+    }
+    for(const [sur, keys] of Object.entries(surnameOwners)){
+      if(keys.size!==1 || sur.length<3 || isCommon(sur) || FIRST.has(sur.toLowerCase())) continue;
+      const key = [...keys][0];
+      for(const form of new Set([sur, sur.toUpperCase()])) all(new RegExp(`${NB}${esc(form)}${NA}`,'g'), m => add(m.index, m.index+m[0].length, 'PERSONA', {key, pri:13.5, alias:true}));
+    }
+    for(const c of companies){
+      if(c.core.length<3 || isCommon(c.core) || never.has(c.core.toLowerCase())) continue;
+      all(new RegExp(`${NB}${esc(c.core).replace(/\s+/g,'\\s+')}${NA}`,'g'), m => add(m.index, m.index+m[0].length, 'AZIENDA', {key:c.key, pri:7.5, alias:true}));
+    }
+
+    // ---- Risoluzione delle sovrapposizioni ----
+    cands.sort((a,b)=> a.pri-b.pri || (b.e-b.s)-(a.e-a.s) || a.s-b.s);
+    const occ = new Uint8Array(text.length+1);
+    const out = [];
+    const accept = c => {
+      for(let i=c.s;i<c.e;i++) if(occ[i]) return false;
+      if(c.forcedType) c.type = c.forcedType;
+      if(never.has(c.text.toLowerCase().replace(/\s+/g,' ').trim())) return false;
+      if(!c.key) c.key = c.type+'|'+norm(c.type, c.text);
+      for(let i=c.s;i<c.e;i++) occ[i]=1;
+      out.push(c); return true;
+    };
+    for(const c of cands) accept(c);
+
+    // ---- Rete di sicurezza: ogni altro nome proprio viene nascosto ----
+    // Una parola con la maiuscola a metà frase, che non è una parola comune, viene trattata come nome.
+    const lowerSeen = new Set();
+    for(const t of toks) if(/^[a-zà-öø-ÿ]/.test(t.w)) lowerSeen.add(t.w.toLowerCase());
+    const lineOf = pos => { const a = text.lastIndexOf('\n', pos-1)+1; let b = text.indexOf('\n', pos); if(b<0) b=text.length; return text.slice(a,b); };
+    const headingLine = pos => { const l = lineOf(pos).replace(/[^A-Za-zÀ-ÿ]/g,''); return l.length>=6 && l === l.toUpperCase(); };
+    const initial = pos => { let i=pos-1; while(i>=0 && /[ \t "'«“‘(\[*•\-–—>#]/.test(text[i])) i--; return i<0 || /[.!?:;\n]/.test(text[i]); };
+    const candidateCap = t => {
+      const w=t.w, lw=w.toLowerCase();
+      if(!isCap(w)) return false;
+      if(COMMON.has(lw) || never.has(lw)) return false;
+      if(/^[A-ZÀ-Þ]{2,}$/.test(w) && (w.length<=3 || ACRONYM_OK.has(lw))) return FIRST.has(lw);
+      return true;
+    };
+    const known = new Set(out.filter(e=>['PERSONA','AZIENDA','LUOGO','NOME','ALTRO'].includes(e.type)).flatMap(e=>e.text.toLowerCase().split(/\s+/)));
+    const midSeen = new Set();
+    for(const t of toks) if(candidateCap(t) && !initial(t.s) && !headingLine(t.s) && !lowerSeen.has(t.w.toLowerCase())) midSeen.add(t.w.toLowerCase());
+    const strong = t => { const lw=t.w.toLowerCase(); return FIRST.has(lw) || CITY_SET.has(lw) || midSeen.has(lw) || known.has(lw); };
+    const hideable = t => {
+      if(occ[t.s]) return false;
+      if(!candidateCap(t)) return false;
+      const lw = t.w.toLowerCase();
+      if(lowerSeen.has(lw) && !FIRST.has(lw) && !CITY_SET.has(lw)) return false;
+      if(initial(t.s) || headingLine(t.s)) return strong(t);
+      return true;
+    };
+    for(let i=0;i<toks.length;i++){
+      const t = toks[i];
+      if(!hideable(t)) continue;
+      let j=i;
+      while(j+1<toks.length && adj(toks[j],toks[j+1])){
+        const n = toks[j+1];
+        if(!occ[n.s] && candidateCap(n) && !(lowerSeen.has(n.w.toLowerCase()) && !FIRST.has(n.w.toLowerCase()))) { j++; continue; }
+        if(PARTICLES.has(n.w.toLowerCase()) && toks[j+2] && adj(n,toks[j+2]) && !occ[toks[j+2].s] && candidateCap(toks[j+2])) { j+=2; continue; }
+        break;
+      }
+      const s = t.s, e = toks[j].e;
+      const str = text.slice(s,e), lw = str.toLowerCase();
+      let type = 'NOME';
+      if(j===i && FIRST.has(lw)) type = 'PERSONA';
+      else if(CITY_SET.has(lw)) type = 'LUOGO';
+      else if(toks.slice(i,j+1).some(x=>FIRST.has(x.w.toLowerCase())) && j>i) type = 'PERSONA';
+      accept({s, e, type, text:str, pri:PRI[type], valid:true, guessed:true});
+      i = j;
+    }
+    // stessa parola già nascosta come nome altrove: copri anche le altre ripetizioni
+    const hiddenNames = new Map();
+    for(const e of out) if(e.guessed) hiddenNames.set(e.text.toLowerCase(), e);
+    for(const [lw, ref] of hiddenNames){
+      all(new RegExp(`${NB}${esc(ref.text)}${NA}`,'gi'), m => {
+        if(/^[a-zà-ÿ]/.test(m[0]) && !FIRST.has(lw)) return;
+        accept({s:m.index, e:m.index+m[0].length, type:ref.type, text:m[0], pri:PRI[ref.type], valid:true, key:ref.key, guessed:true});
+      });
+    }
+
+    out.sort((a,b)=>a.s-b.s);
+    return out;
+  }
+
+  // Ripristino tollerante: funziona con il modo in cui le diverse AI riscrivono i segnaposto.
+  // [PERSONA_1]  [ PERSONA 1 ]  \[PERSONA\_1\]  **[PERSONA_1]**  {PERSONA_1}  (PERSONA_1)  «PERSONA_1»  PERSONA_1  PERSONA-1  [Persona_1]
+  function restore(reply, byToken){
+    const found = new Set(), unknown = new Set();
+    const P = Object.values(CATS).map(c=>c.tok).sort((a,b)=>b.length-a.length).join('|');
+    const re = new RegExp(
+      `\\\\?[\\[\\{(«‹]\\s*\\**\\s*(${P})\\s*(?:\\\\?_|-|\\s)?\\s*(\\d+)\\s*\\**\\s*\\\\?[\\]\\})»›]` +
+      `|(?<![A-Za-z0-9_])(${P})(?:\\\\?_|-)(\\d+)(?![A-Za-z0-9_])`, 'gi');
+    const parts = []; let last = 0;
+    for(const m of reply.matchAll(re)){
+      const pre = (m[1]||m[3]);
+      if(!m[1] && pre !== pre.toUpperCase()) continue; // senza parentesi accetta solo il maiuscolo
+      const tok = `[${pre.toUpperCase()}_${m[2]||m[4]}]`;
+      const hit = byToken[tok];
+      parts.push({t:reply.slice(last, m.index)});
+      if(hit){ parts.push({t:hit.value, restored:true}); found.add(tok); }
+      else { parts.push({t:m[0], unknown:true}); unknown.add(tok); }
+      last = m.index + m[0].length;
+    }
+    parts.push({t:reply.slice(last)});
+    return {parts, text:parts.map(p=>p.t).join(''), found:[...found], unknown:[...unknown]};
+  }
+
+  return {CATS, analyze, restore, cfValid, pivaValid, ibanValid, luhn};
+})();
+// CORE-END
+
+
+(() => {
+  const $ = id => document.getElementById(id);
+  const state = {
+    text:'', ents:[], excluded:new Set(), catOff:new Set(), manual:[], mode:'rev',
+    dict:{byKey:{}, byToken:{}, count:{}}, lastRestored:'', restoredOnce:false
+  };
+  const PROMPT = "Nel testo che segue alcuni dati sono stati sostituiti da segnaposto tra parentesi quadre, ad esempio [PERSONA_1] o [IBAN_1]. Lasciali esattamente come sono: non modificarli, non tradurli, non completarli e non provare a indovinare i dati originali. Quando ti riferisci a quei dati nella risposta, usa gli stessi segnaposto.\n\n---\n\n";
+
+  const store = {
+    get(k, d){ try{ const v = localStorage.getItem(k); return v===null ? d : v; }catch(e){ return d; } },
+    set(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
+  };
+  $('listHide').value = store.get('bauta.hide','');
+  $('listNever').value = store.get('bauta.never','');
+
+  function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove('show'),2000); }
+  function escHtml(s){ return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  async function copy(text){
+    try{ await navigator.clipboard.writeText(text); return true; }
+    catch(e){ const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); let ok=false; try{ ok=document.execCommand('copy'); }catch(_){} ta.remove(); return ok; }
+  }
+
+  function parseHide(){
+    return $('listHide').value.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{
+      const m = l.match(/^(.*?)\s*=\s*([A-Za-z]+)\s*$/);
+      return m ? {text:m[1], type:m[2].toUpperCase()} : {text:l, type:'ALTRO'};
+    }).concat(state.manual);
+  }
+  const parseNever = () => $('listNever').value.split('\n').map(l=>l.trim()).filter(Boolean);
+
+  function tokenFor(ent, dict){
+    if(dict.byKey[ent.key]) return dict.byKey[ent.key];
+    const pre = Core.CATS[ent.type].tok;
+    dict.count[pre] = (dict.count[pre]||0) + 1;
+    const tok = `[${pre}_${dict.count[pre]}]`;
+    dict.byKey[ent.key] = tok;
+    dict.byToken[tok] = {value: ent.alias ? (ent.fullValue || ent.text) : ent.text, type: ent.type, valid: ent.valid};
+    return tok;
+  }
+
+  function resetGate(){ $('gateChk').checked=false; $('gate').classList.remove('done'); $('btnCopyOut').disabled=true; }
+
+  function analyze(){
+    state.text = $('src').value;
+    state.ents = Core.analyze(state.text, {hide: parseHide(), never: parseNever()});
+    const fullByKey = {};
+    for(const e of state.ents) if(!e.alias && !fullByKey[e.key]) fullByKey[e.key] = e.text;
+    for(const e of state.ents) if(e.alias) e.fullValue = fullByKey[e.key] || e.text;
+    resetGate();
+    render();
+  }
+
+  const active = e => !state.excluded.has(e.key) && !state.catOff.has(e.type);
+
+  function render(){
+    const text = state.text, ents = state.ents;
+    // in modalità anonima la tabella è temporanea e non viene conservata
+    const dict = state.mode==='rev' ? state.dict : {byKey:{}, byToken:{}, count:{}};
+    for(const e of ents) e.tok = active(e) ? tokenFor(e, dict) : null;
+
+    let html='', pos=0;
+    for(const e of ents){
+      if(e.s>pos) html += `<span data-s="${pos}">${escHtml(text.slice(pos,e.s))}</span>`;
+      if(state.catOff.has(e.type)) html += `<span data-s="${e.s}">${escHtml(e.text)}</span>`;
+      else {
+        const off = state.excluded.has(e.key);
+        const title = off ? 'Lasciato in chiaro: clicca per coprirlo'
+          : `${Core.CATS[e.type].label}${e.guessed?' (probabile)':''}${e.valid===false?' · non supera il controllo matematico':''}: clicca per lasciarlo in chiaro`;
+        html += `<span data-s="${e.s}" class="ent${off?' off':''}${e.valid===false?' weak':''}${e.guessed?' guess':''}" style="background:var(--c-${e.type})" data-key="${escHtml(e.key)}" data-tok="${e.tok||''}" title="${escHtml(title)}">${escHtml(e.text)}</span>`;
+      }
+      pos = e.e;
+    }
+    if(pos<text.length) html += `<span data-s="${pos}">${escHtml(text.slice(pos))}</span>`;
+    $('view').innerHTML = html;
+
+    const counts = {};
+    for(const e of ents){ (counts[e.type] ||= new Set()).add(e.key); }
+    $('chips').innerHTML = Object.keys(Core.CATS).filter(t=>counts[t]).map(t=>`<span class="chip${state.catOff.has(t)?' off':''}" data-type="${t}" role="button" tabindex="0" title="Clicca per ${state.catOff.has(t)?'coprire di nuovo':'lasciare in chiaro'} tutta la categoria"><i style="background:var(--c-${t})"></i>${Core.CATS[t].label}<span class="n">${counts[t].size}</span></span>`).join('');
+
+    let out='', p=0; const hidden=new Set();
+    for(const e of ents){ if(!e.tok) continue; out += text.slice(p,e.s) + e.tok; p=e.e; hidden.add(e.key); }
+    out += text.slice(p);
+    $('out').value = text ? (($('withPrompt').checked ? PROMPT : '') + out) : '';
+
+    const nAll = new Set(ents.map(e=>e.key)).size;
+    const weak = ents.filter(e=>e.valid===false && e.tok).length;
+    const open = nAll - hidden.size;
+    $('summary').innerHTML = text
+      ? (nAll ? `Coperti <b>${hidden.size}</b> dati diversi${open?`, <span style="color:var(--warn)">${open} lasciati in chiaro da te</span>`:''}${weak?` · <span style="color:var(--warn)">${weak} codici da verificare</span>`:''}.`
+              : 'Non ho trovato dati personali. Se ce ne sono, selezionali col mouse qui sopra per coprirli.')
+      : '';
+    renderDict();
+  }
+
+  function renderDict(){
+    const rows = Object.entries(state.dict.byToken);
+    $('dictCount').textContent = rows.length ? `(${rows.length})` : '';
+    const vtag = (t, v) => ['CF','PIVA','IBAN','CARTA'].includes(t) ? (v===false ? '<span class="tag no">da verificare</span>' : '<span class="tag ok">codice valido</span>') : '';
+    $('dictTable').querySelector('tbody').innerHTML = rows.length
+      ? rows.map(([tok,v])=>`<tr><td><code>${tok}</code></td><td>${escHtml(v.value)}</td><td>${Core.CATS[v.type]?.label||v.type}</td><td>${vtag(v.type,v.valid)}</td></tr>`).join('')
+      : `<tr><td colspan="4" style="color:var(--muted)">${state.mode==='anon'?'In modalità Anonima la tabella non viene conservata.':'Ancora vuota.'}</td></tr>`;
+  }
+
+  // modalità
+  function setMode(m){
+    state.mode = m;
+    $('modeRev').setAttribute('aria-pressed', m==='rev'); $('modeAnon').setAttribute('aria-pressed', m==='anon');
+    $('modeHint').innerHTML = m==='rev'
+      ? '<b>Reversibile</b>: i dati vengono sostituiti da segnaposto e la tabella dei collegamenti resta in questa pagina, così puoi rimettere i dati veri nella risposta dell\'AI.'
+      : '<b>Anonima</b>: i dati vengono sostituiti da segnaposto e la tabella dei collegamenti non viene conservata. Più protezione, ma la risposta non si può ripristinare.';
+    $('restoreArea').hidden = m==='anon'; $('anonNote').hidden = m==='rev';
+    if(m==='anon') state.dict = {byKey:{}, byToken:{}, count:{}};
+    resetGate(); render();
+  }
+  $('modeRev').addEventListener('click', ()=>setMode('rev'));
+  $('modeAnon').addEventListener('click', ()=>setMode('anon'));
+
+  // clic su un dato o su una categoria
+  $('view').addEventListener('click', ev=>{
+    const el = ev.target.closest('.ent'); if(!el) return;
+    if(String(window.getSelection()).length>0) return;
+    const k = el.dataset.key;
+    state.excluded.has(k) ? state.excluded.delete(k) : state.excluded.add(k);
+    resetGate(); render();
+  });
+  $('chips').addEventListener('click', ev=>{
+    const c = ev.target.closest('.chip'); if(!c) return;
+    const t = c.dataset.type; state.catOff.has(t) ? state.catOff.delete(t) : state.catOff.add(t);
+    resetGate(); render();
+  });
+  $('chips').addEventListener('keydown', ev=>{ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); ev.target.click(); } });
+
+  // selezione manuale
+  $('selType').innerHTML = Object.entries(Core.CATS).map(([k,v])=>`<option value="${k}">${k==='ALTRO'?'Altro':v.label}</option>`).join('');
+  $('selType').value = 'ALTRO';
+  function offsetOf(node, off){
+    const view = $('view');
+    if(node.nodeType===3){ const sp = node.parentElement.closest('[data-s]'); return sp ? +sp.dataset.s + off : null; }
+    if(node===view){ const ch = view.children[off]; return ch ? +ch.dataset.s : state.text.length; }
+    const sp = node.closest && node.closest('[data-s]');
+    if(sp) return off===0 ? +sp.dataset.s : +sp.dataset.s + sp.textContent.length;
+    return null;
+  }
+  let selRange = null;
+  document.addEventListener('selectionchange', ()=>{
+    const sel = window.getSelection();
+    if(!sel || sel.rangeCount===0 || sel.isCollapsed) return;
+    const r = sel.getRangeAt(0);
+    if(!$('view').contains(r.commonAncestorContainer)) return;
+    const a = offsetOf(r.startContainer, r.startOffset), b = offsetOf(r.endContainer, r.endOffset);
+    if(a===null || b===null) return;
+    let s=Math.min(a,b), e=Math.max(a,b);
+    while(s<e && /\s/.test(state.text[s])) s++;
+    while(e>s && /\s/.test(state.text[e-1])) e--;
+    if(e-s<2) return;
+    selRange = {s,e};
+    const t = state.text.slice(s,e);
+    $('selText').textContent = t.length>60 ? t.slice(0,57)+'…' : t;
+    $('selbar').hidden = false;
+  });
+  $('btnHideSel').addEventListener('click', ()=>{
+    if(!selRange) return;
+    const t = state.text.slice(selRange.s, selRange.e);
+    const type = $('selType').value;
+    if($('selRemember').checked){
+      $('listHide').value = ($('listHide').value.trim() ? $('listHide').value.trim()+'\n' : '') + (type==='ALTRO' ? t : `${t} = ${type}`);
+      store.set('bauta.hide', $('listHide').value);
+    } else state.manual.push({text:t, type});
+    $('selbar').hidden = true; selRange=null; window.getSelection().removeAllRanges();
+    analyze(); toast('Coperto in tutto il testo');
+  });
+
+  // file .docx / .txt
+  async function inflateRaw(u8){
+    const stream = new Blob([u8]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+    return new Uint8Array(await new Response(stream).arrayBuffer());
+  }
+  async function docxText(buf){
+    const dv = new DataView(buf), u8 = new Uint8Array(buf), dec = new TextDecoder();
+    let eocd=-1;
+    for(let i=u8.length-22;i>=Math.max(0,u8.length-66000);i--){ if(dv.getUint32(i,true)===0x06054b50){ eocd=i; break; } }
+    if(eocd<0) throw new Error('Il file non sembra un .docx valido.');
+    const n = dv.getUint16(eocd+10,true); let p = dv.getUint32(eocd+16,true);
+    const files = {};
+    for(let k=0;k<n;k++){
+      if(dv.getUint32(p,true)!==0x02014b50) break;
+      const method=dv.getUint16(p+10,true), csize=dv.getUint32(p+20,true), nlen=dv.getUint16(p+28,true), elen=dv.getUint16(p+30,true), clen=dv.getUint16(p+32,true), off=dv.getUint32(p+42,true);
+      files[dec.decode(u8.subarray(p+46,p+46+nlen))] = {method,csize,off};
+      p += 46+nlen+elen+clen;
+    }
+    const f = files['word/document.xml']; if(!f) throw new Error('Nel file non trovo il testo del documento.');
+    const ln=dv.getUint16(f.off+26,true), le=dv.getUint16(f.off+28,true), start=f.off+30+ln+le;
+    const data = u8.subarray(start, start+f.csize);
+    const xml = dec.decode(f.method===0 ? data : await inflateRaw(data));
+    return xml
+      .replace(/<w:instrText[^>]*>[\s\S]*?<\/w:instrText>/g,'')
+      .replace(/<w:delText[^>]*>[\s\S]*?<\/w:delText>/g,'')
+      .replace(/<w:tab\/>/g,'\u0001T').replace(/<w:br[^>]*\/>/g,'\u0001N').replace(/<\/w:p>/g,'\u0001N')
+      .replace(/<[^>]+>/g,'')
+      .replace(/\u0001T/g,'\t').replace(/\u0001N/g,'\n')
+      .replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'")
+      .replace(/&#x([0-9a-f]+);/gi,(_,h)=>String.fromCodePoint(parseInt(h,16))).replace(/&#(\d+);/g,(_,d)=>String.fromCodePoint(+d)).replace(/&amp;/g,'&')
+      .replace(/\n{3,}/g,'\n\n').trim();
+  }
+  async function loadFile(file){
+    try{
+      const name = file.name.toLowerCase();
+      if(name.endsWith('.pdf')){ toast('Per i PDF copia il testo e incollalo qui'); return; }
+      const txt = name.endsWith('.docx') ? await docxText(await file.arrayBuffer()) : await file.text();
+      $('src').value = txt; analyze(); toast(`Caricato: ${file.name}`);
+    }catch(e){ toast(e.message || 'Non riesco a leggere il file'); }
+  }
+  $('file').addEventListener('change', e=>{ if(e.target.files[0]) loadFile(e.target.files[0]); e.target.value=''; });
+  const src = $('src');
+  src.addEventListener('dragover', e=>{ e.preventDefault(); src.classList.add('drag'); });
+  src.addEventListener('dragleave', ()=>src.classList.remove('drag'));
+  src.addEventListener('drop', e=>{ e.preventDefault(); src.classList.remove('drag'); if(e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
+
+  // passaggi 1-3
+  $('btnAnalyze').addEventListener('click', ()=>{ analyze(); $('s2').scrollIntoView({block:'start'}); });
+  let tAuto; src.addEventListener('input', ()=>{ clearTimeout(tAuto); tAuto=setTimeout(analyze, 500); });
+  $('withPrompt').addEventListener('change', render);
+  $('gateChk').addEventListener('change', ()=>{ const ok=$('gateChk').checked; $('gate').classList.toggle('done', ok); $('btnCopyOut').disabled = !ok || !$('out').value; });
+  $('btnCopyOut').addEventListener('click', async ()=>{ toast(await copy($('out').value) ? 'Copiato: ora incollalo nel tuo assistente AI' : 'Copia non riuscita: seleziona il testo a mano'); });
+  $('btnExample').addEventListener('click', ()=>{
+    $('src').value = `Oggetto: rimborso spese e aggiornamento dati di Luca Ferraro
+
+Gentile Dott.ssa Laura Bianchi,
+
+le scrivo per conto della Dolomiti Impianti S.r.l. (P.IVA 12345678903) in merito alla trasferta del nostro dipendente Luca Ferraro, nato il 01/01/1980 a Belluno, C.F. FRRLCU80A01A757D, residente in Via Garibaldi 12, 32100 Belluno.
+
+Il rimborso di 1.240 € va accreditato sull'IBAN IT60 X054 2811 1010 0000 0123 456. Per le spese anticipate Ferraro ha usato la carta aziendale 4111 1111 1111 1111. L'auto utilizzata è la Fiat targata AB 123 CD.
+
+Le segnalo inoltre che Ferraro, 45 anni, è stato assente dal 3 al 7 marzo per un'ernia del disco ed è iscritto alla CGIL. Matricola 4521, pratica n. PR-2024/0012.
+
+Per qualsiasi chiarimento può contattarlo al 347 123 4567 o scrivere a luca.ferraro@dolomiti-impianti.it. Il documento di riconoscimento allegato è la carta d'identità CA12345AB.
+
+Cordiali saluti,
+Anna Maria De Luca
+Ufficio Risorse Umane`;
+    state.excluded.clear(); state.catOff.clear(); analyze();
+  });
+  $('btnReset').addEventListener('click', e=>{
+    const b = e.currentTarget;
+    if(!b.dataset.armed){ b.dataset.armed='1'; b.textContent='Sicuro? Clicca di nuovo'; setTimeout(()=>{ delete b.dataset.armed; b.textContent='Nuovo documento'; }, 3000); return; }
+    delete b.dataset.armed; b.textContent='Nuovo documento';
+    $('src').value=''; $('reply').value=''; $('restored').style.display='none'; $('restoreWarn').hidden=true; $('btnCopyRestored').disabled=true;
+    state.excluded.clear(); state.catOff.clear(); state.manual=[]; state.dict={byKey:{},byToken:{},count:{}}; state.restoredOnce=false;
+    analyze(); toast('Pronto per un nuovo documento');
+  });
+  $('btnSaveLists').addEventListener('click', ()=>{
+    store.set('bauta.hide', $('listHide').value); store.set('bauta.never', $('listNever').value);
+    analyze(); toast('Liste salvate in questo browser');
+  });
+
+  // passaggio 4
+  $('btnSimulate').addEventListener('click', ()=>{
+    const toks = Object.keys(state.dict.byToken);
+    if(!toks.length) return toast('Prima analizza un testo');
+    const by = t => toks.filter(x=>x.startsWith('['+t+'_'));
+    const p = by('PERSONA'), a = by('AZIENDA'), iban = by('IBAN'), mail = by('EMAIL');
+    // scritta come la scriverebbero AI diverse: con parentesi, in grassetto, con le barre, senza parentesi
+    let r = `Ecco una bozza di risposta.\n\nGentile ${p[1]||p[0]||'collega'},\n\ngrazie per la segnalazione. Confermiamo che il rimborso per **${p[0]||'il dipendente'}**${a[0]?` di ${a[0].replace('[','\\[').replace(']','\\]').replace('_','\\_')}`:''} verrà disposto entro fine mese${iban[0]?` sull'IBAN ${iban[0].slice(1,-1)}`:''}.`;
+    if(mail[0]) r += ` Per eventuali domande scriveremo a ${mail[0]}.`;
+    $('reply').value = r; doRestore();
+  });
+  function doRestore(){
+    const reply = $('reply').value;
+    if(!reply.trim()) return toast('Incolla prima la risposta dell\'AI');
+    const res = Core.restore(reply, state.dict.byToken);
+    state.lastRestored = res.text; state.restoredOnce = true;
+    const box = $('restored');
+    box.style.display='block';
+    box.innerHTML = res.parts.map(p=> p.restored ? `<mark title="ripristinato">${escHtml(p.t)}</mark>` : p.unknown ? `<span style="color:var(--warn);font-weight:700">${escHtml(p.t)}</span>` : escHtml(p.t)).join('');
+    const w = $('restoreWarn');
+    if(res.unknown.length){ w.hidden=false; w.textContent = `Questi segnaposto non sono nella tabella: ${res.unknown.join(', ')}. Forse l'AI li ha inventati o modificati, oppure la risposta riguarda un altro documento.`; }
+    else if(!res.found.length){ w.hidden=false; w.textContent = 'Nella risposta non ho trovato segnaposto da ripristinare.'; }
+    else w.hidden=true;
+    $('btnCopyRestored').disabled = false;
+    if(res.found.length) toast(`Ripristinati ${res.found.length} dati`);
+  }
+  $('btnRestore').addEventListener('click', doRestore);
+  $('btnCopyRestored').addEventListener('click', async ()=>{ toast(await copy(state.lastRestored) ? 'Risposta con i dati veri copiata' : 'Copia non riuscita'); });
+
+  // tabella dei segnaposto (avanzate)
+  $('btnDictDown').addEventListener('click', ()=>{
+    if(!Object.keys(state.dict.byToken).length) return toast('La tabella è vuota');
+    const blob = new Blob([JSON.stringify({bauta:1, attenzione:'Questo file contiene i dati veri. Cancellalo quando hai finito.', creato:new Date().toISOString(), dict:state.dict}, null, 2)], {type:'application/json'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'bauta-tabella-segnaposto.json'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
+    toast('Salvata: ricordati di cancellarla quando hai finito');
+  });
+  $('dictFile').addEventListener('change', async e=>{
+    const f = e.target.files[0]; e.target.value=''; if(!f) return;
+    try{
+      const j = JSON.parse(await f.text());
+      if(!j.dict || !j.dict.byToken) throw 0;
+      setMode('rev');
+      state.dict = {byKey:j.dict.byKey||{}, byToken:j.dict.byToken, count:j.dict.count||{}};
+      render(); toast('Tabella caricata: ora puoi ripristinare');
+    }catch(_){ toast('File non valido'); }
+  });
+
+  // avviso se si chiude la pagina con segnaposto non ancora ripristinati
+  window.addEventListener('beforeunload', ev=>{
+    if(state.mode==='rev' && Object.keys(state.dict.byToken).length && !state.restoredOnce){ ev.preventDefault(); ev.returnValue=''; }
+  });
+
+  setMode('rev');
+  analyze();
+})();
+</script>
+</body>
+</html>

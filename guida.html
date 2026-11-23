@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; base-uri 'none'">
+<title>Guida a Bauta · Copri i dati prima di chiedere all'AI</title>
+<style>
+:root{
+  --bg:#f6f5f1; --card:#ffffff; --ink:#1c2230; --muted:#5f6878; --line:#e4e1d8;
+  --accent:#1f4e79; --accent-ink:#ffffff; --accent-soft:#e7eef6; --warn:#b54708; --warn-soft:#fff4e5; --ok:#067647; --ok-soft:#e3f4ea;
+  --cloud:#f0ecfa; --cloud-line:#7a5bc7;
+  --g1:#fde2e1; --g2:#dcf0fd; --g3:#fff0c2; --g4:#e6f2d5; --g5:#ffd9d1; --g6:#e0f1ea;
+  --radius:14px; --shadow:0 1px 2px rgba(16,24,40,.05),0 1px 3px rgba(16,24,40,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14171d; --card:#1c2029; --ink:#e8eaf0; --muted:#a2abba; --line:#2c3240;
+    --accent:#6aa7e0; --accent-ink:#0d1520; --accent-soft:#1f2b3a; --warn:#f5a35c; --warn-soft:#3a2a18; --ok:#5fd39a; --ok-soft:#173326;
+    --cloud:#2a2440; --cloud-line:#a68bf0;
+    --g1:#5a2b2b; --g2:#1d3f57; --g3:#5a4a17; --g4:#33461f; --g5:#5c2a22; --g6:#1e4436;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 48px}
+.notice{background:var(--warn-soft);border-bottom:1px solid color-mix(in srgb,var(--warn) 35%,transparent);font-size:14px}
+.notice .wrap{padding:10px 20px}
+.notice b{color:var(--warn)}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:24px 0 18px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.logo{width:42px;height:42px;border-radius:12px;background:var(--accent);display:grid;place-items:center}
+.logo svg{width:29px;height:20px}
+.brand b{font-size:22px}
+.brand small{display:block;color:var(--muted);font-size:13px;font-weight:400}
+.cta{background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:700;font-size:15px;padding:10px 16px;border-radius:10px}
+h1{font-size:34px;line-height:1.2;margin:8px 0 10px;letter-spacing:-.01em}
+.lead{font-size:19px;color:var(--muted);margin:0 0 22px}
+h2{font-size:24px;margin:44px 0 10px;scroll-margin-top:16px;letter-spacing:-.005em}
+h3{font-size:18px;margin:22px 0 6px}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 20px;box-shadow:var(--shadow)}
+.toc ol{margin:6px 0 0;padding-left:20px;columns:2;column-gap:28px;font-size:15.5px}
+@media (max-width:640px){.toc ol{columns:1}}
+.fig{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin:16px 0;box-shadow:var(--shadow)}
+.fig svg{width:100%;height:auto;display:block}
+.fig figcaption{font-size:14px;color:var(--muted);margin-top:10px}
+.steps{display:grid;gap:12px;margin-top:12px}
+.step{display:grid;grid-template-columns:44px 1fr;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.step .n{width:40px;height:40px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:800;font-size:18px}
+.step h3{margin:2px 0 4px}
+.step p{margin:0 0 6px}
+.step ul{margin:4px 0 0;padding-left:20px;color:var(--muted);font-size:15.5px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+@media (max-width:720px){.grid{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.grid{grid-template-columns:1fr}}
+.tile{border-radius:12px;padding:14px;border:1px solid var(--line)}
+.tile b{display:block;font-size:15px;margin-bottom:4px}
+.tile span{font-size:14px;color:var(--ink);opacity:.85}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+@media (max-width:640px){.two{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+.box h3{margin-top:0}
+.box ul{margin:6px 0 0;padding-left:20px}
+.box.ok{border-top:4px solid var(--ok)}
+.box.no{border-top:4px solid var(--warn)}
+.box.acc{border-top:4px solid var(--accent)}
+.compare{width:100%;border-collapse:collapse;font-size:15px;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.compare th,.compare td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.compare th{background:var(--accent-soft);font-size:14px}
+.compare code,.mono{font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.callout{border-left:4px solid var(--warn);background:var(--warn-soft);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;font-size:15.5px}
+.callout.acc{border-color:var(--accent);background:var(--accent-soft)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+details summary{cursor:pointer;font-weight:700}
+details p{margin:8px 0 2px}
+footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:44px}
+footer a{font-weight:600;text-decoration:none}
+.fine{color:var(--muted);font-size:12.5px}
+svg text{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+</style>
+</head>
+<body>
+<div class="notice" role="note"><div class="wrap"><b>Strumento d'esempio dei corsi Hyper Link.</b> Prima di usarlo in azienda con dati reali, fallo approvare da chi di dovere: titolare, DPO o responsabile IT.</div></div>
+
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="index.html">
+    <span class="logo" aria-hidden="true"><svg viewBox="0 0 48 32"><path d="M3 7c7-4 15-4 21-1 6-3 14-3 21 1 1 9-2 19-10 21-5 1-8-2-11-6-3 4-6 7-11 6C5 26 2 16 3 7z" fill="#fff"/><ellipse cx="14.5" cy="13.5" rx="5.2" ry="3.3" fill="var(--accent)"/><ellipse cx="33.5" cy="13.5" rx="5.2" ry="3.3" fill="var(--accent)"/></svg></span>
+    <span><b>Bauta</b><small>Guida all'uso</small></span>
+  </a>
+  <a class="cta" href="index.html">Apri lo strumento →</a>
+</header>
+
+<h1>Copri i dati personali prima di chiederli all'AI</h1>
+<p class="lead">Bauta è lo strumento che usiamo nei corsi Hyper Link per mostrare, in pratica, come usare un assistente AI senza consegnargli nomi, recapiti, codici e dati delicati di colleghi e clienti.</p>
+
+<nav class="toc" aria-label="Indice">
+  <b>In questa guida</b>
+  <ol>
+    <li><a href="#perche">A cosa serve</a></li>
+    <li><a href="#percorso">Dove vanno i tuoi dati</a></li>
+    <li><a href="#passaggi">I quattro passaggi</a></li>
+    <li><a href="#copre">Cosa copre</a></li>
+    <li><a href="#esempio">Un esempio, prima e dopo</a></li>
+    <li><a href="#modalita">Reversibile o anonima</a></li>
+    <li><a href="#ai">Con quale assistente AI</a></li>
+    <li><a href="#limiti">Cosa non può fare</a></li>
+    <li><a href="#regole">Le regole d'oro</a></li>
+    <li><a href="#verifica">Come verificare che non invia nulla</a></li>
+    <li><a href="#domande">Domande frequenti</a></li>
+  </ol>
+</nav>
+
+<h2 id="perche">1. A cosa serve</h2>
+<p>Quando incolli un testo in un assistente AI, quel testo viene inviato ai server di chi fornisce il servizio. Se dentro ci sono il nome di un dipendente, l'IBAN di un cliente o una diagnosi, quei dati escono dall'azienda.</p>
+<p>Spesso però all'AI i dati veri non servono. Per riassumere un verbale, riscrivere una mail o controllare un contratto basta sapere che c'è <i>una persona</i>, <i>un IBAN</i>, <i>una data</i>. Bauta sostituisce i dati con segnaposto come <code class="mono">[PERSONA_1]</code> e, quando l'AI risponde, rimette i dati veri al loro posto.</p>
+<div class="callout acc">È il principio di <b>minimizzazione</b>: condividere solo i dati che servono davvero per lo scopo. Bauta lo rende pratico, ma non decide al posto tuo cosa si può condividere: quello lo stabiliscono le regole della tua azienda.</div>
+
+<h2 id="percorso">2. Dove vanno i tuoi dati</h2>
+<p>Bauta lavora tutta dentro il tuo browser. Al servizio AI arriva solo il testo con i segnaposto.</p>
+<figure class="fig">
+<svg viewBox="0 0 860 360" role="img" aria-labelledby="f1t f1d">
+  <title id="f1t">Il percorso dei dati</title>
+  <desc id="f1d">Il testo originale resta sul computer, Bauta lo trasforma in testo con segnaposto, solo quello va al servizio AI nel cloud; la risposta torna e Bauta rimette i dati veri sul computer.</desc>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ink)"/></marker>
+  </defs>
+  <rect x="10" y="20" width="540" height="320" rx="18" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2" stroke-dasharray="7 6"/>
+  <text x="30" y="50" font-size="16" font-weight="700" fill="var(--accent)">IL TUO COMPUTER · resta tutto qui</text>
+  <rect x="610" y="20" width="240" height="320" rx="18" fill="var(--cloud)" stroke="var(--cloud-line)" stroke-width="2"/>
+  <text x="630" y="50" font-size="16" font-weight="700" fill="var(--cloud-line)">SERVIZIO AI · cloud</text>
+
+  <rect x="34" y="78" width="150" height="96" rx="12" fill="var(--card)" stroke="var(--line)"/>
+  <text x="48" y="104" font-size="14" font-weight="700" fill="var(--ink)">Testo originale</text>
+  <text x="48" y="128" font-size="13" fill="var(--ink)">Luca Ferraro</text>
+  <text x="48" y="147" font-size="13" fill="var(--ink)">IT60 X054…</text>
+  <text x="48" y="166" font-size="13" fill="var(--ink)">ernia del disco</text>
+
+  <rect x="214" y="78" width="120" height="96" rx="12" fill="var(--accent)"/>
+  <text x="274" y="122" font-size="18" font-weight="800" fill="var(--accent-ink)" text-anchor="middle">Bauta</text>
+  <text x="274" y="145" font-size="12.5" fill="var(--accent-ink)" text-anchor="middle">copre i dati</text>
+
+  <rect x="364" y="78" width="168" height="96" rx="12" fill="var(--card)" stroke="var(--line)"/>
+  <text x="378" y="104" font-size="14" font-weight="700" fill="var(--ink)">Testo per l'AI</text>
+  <text x="378" y="128" font-size="13" fill="var(--ink)" font-family="ui-monospace,Menlo,monospace">[PERSONA_1]</text>
+  <text x="378" y="147" font-size="13" fill="var(--ink)" font-family="ui-monospace,Menlo,monospace">[IBAN_1]</text>
+  <text x="378" y="166" font-size="13" fill="var(--ink)" font-family="ui-monospace,Menlo,monospace">[SALUTE_1]</text>
+
+  <rect x="640" y="100" width="180" height="150" rx="12" fill="var(--card)" stroke="var(--line)"/>
+  <text x="730" y="150" font-size="15" font-weight="700" fill="var(--ink)" text-anchor="middle">Claude, ChatGPT,</text>
+  <text x="730" y="172" font-size="15" font-weight="700" fill="var(--ink)" text-anchor="middle">Gemini, Copilot…</text>
+  <text x="730" y="200" font-size="12.5" fill="var(--muted)" text-anchor="middle">vede solo i segnaposto</text>
+
+  <rect x="214" y="232" width="120" height="86" rx="12" fill="var(--accent)"/>
+  <text x="274" y="270" font-size="18" font-weight="800" fill="var(--accent-ink)" text-anchor="middle">Bauta</text>
+  <text x="274" y="292" font-size="12.5" fill="var(--accent-ink)" text-anchor="middle">rimette i dati</text>
+  <rect x="34" y="232" width="150" height="86" rx="12" fill="var(--card)" stroke="var(--line)"/>
+  <text x="48" y="262" font-size="14" font-weight="700" fill="var(--ink)">Risposta finale</text>
+  <text x="48" y="286" font-size="13" fill="var(--ink)">con i dati veri,</text>
+  <text x="48" y="305" font-size="13" fill="var(--ink)">pronta da usare</text>
+  <rect x="364" y="232" width="168" height="86" rx="12" fill="var(--card)" stroke="var(--line)"/>
+  <text x="378" y="262" font-size="14" font-weight="700" fill="var(--ink)">Risposta dell'AI</text>
+  <text x="378" y="286" font-size="13" fill="var(--ink)" font-family="ui-monospace,Menlo,monospace">Gentile</text>
+  <text x="378" y="305" font-size="13" fill="var(--ink)" font-family="ui-monospace,Menlo,monospace">[PERSONA_1]…</text>
+
+  <line x1="184" y1="126" x2="210" y2="126" stroke="var(--ink)" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="334" y1="126" x2="360" y2="126" stroke="var(--ink)" stroke-width="2" marker-end="url(#ar)"/>
+  <path d="M532 126 H586 V160 H636" fill="none" stroke="var(--ink)" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="560" y="114" font-size="12" fill="var(--muted)" text-anchor="middle">copia</text>
+  <path d="M730 250 V275 H536" fill="none" stroke="var(--ink)" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="640" y="295" font-size="12" fill="var(--muted)" text-anchor="middle">incolla la risposta</text>
+  <line x1="364" y1="275" x2="338" y2="275" stroke="var(--ink)" stroke-width="2" marker-end="url(#ar)"/>
+  <line x1="214" y1="275" x2="188" y2="275" stroke="var(--ink)" stroke-width="2" marker-end="url(#ar)"/>
+</svg>
+<figcaption>Il confine tratteggiato è il tuo computer: il testo originale e la tabella che collega segnaposto e dati veri restano qui dentro.</figcaption>
+</figure>
+
+<h2 id="passaggi">3. I quattro passaggi</h2>
+<div class="steps">
+  <div class="step"><div class="n">1</div><div>
+    <h3>Incolla il testo</h3>
+    <p>Incolla una mail, un verbale, un contratto, oppure apri un file .docx o .txt. Scegli la modalità: <b>Reversibile</b> se vuoi rimettere i dati nella risposta, <b>Anonima</b> se non ti serve.</p>
+    <ul><li>Per i PDF: apri il PDF, copia il testo e incollalo.</li><li>Le foto e le scansioni non vengono lette: trascrivi il testo.</li></ul>
+  </div></div>
+  <div class="step"><div class="n">2</div><div>
+    <h3>Controlla cosa viene coperto</h3>
+    <p>Ogni dato trovato è evidenziato con un colore e con il segnaposto accanto. Nel dubbio Bauta copre: meglio un segnaposto in più che un dato in chiaro.</p>
+    <ul><li>Clicca su un dato per lasciarlo in chiaro, in tutte le sue ripetizioni.</li><li>Se manca qualcosa, selezionalo col mouse e premi <b>Copri</b>.</li><li>Clicca su una categoria (es. "Importi") per lasciarla tutta in chiaro, se all'AI serve.</li></ul>
+  </div></div>
+  <div class="step"><div class="n">3</div><div>
+    <h3>Copia il testo per l'AI</h3>
+    <p>Spunta la casella di controllo: il pulsante <b>Copia</b> si attiva solo dopo che hai riletto. Incolla il testo nell'assistente AI che usi, meglio in una conversazione nuova.</p>
+    <ul><li>Lascia attiva l'istruzione in cima: chiede all'AI di non toccare i segnaposto.</li></ul>
+  </div></div>
+  <div class="step"><div class="n">4</div><div>
+    <h3>Ripristina la risposta</h3>
+    <p>Copia la risposta dell'AI e incollala nel passaggio 4: i segnaposto tornano dati veri. Se l'AI ha inventato o storpiato un segnaposto, Bauta lo segnala in arancione.</p>
+    <ul><li>Se chiudi la pagina, la tabella dei segnaposto si perde: il browser te lo ricorda prima di chiudere.</li></ul>
+  </div></div>
+</div>
+
+<h2 id="copre">4. Cosa copre</h2>
+<p>Bauta cerca i dati con regole, elenchi di parole e controlli matematici. Quelli che riconosce sono raggruppati in sei famiglie.</p>
+<div class="grid">
+  <div class="tile" style="background:var(--g1)"><b>Chi è la persona</b><span>Nomi e cognomi, aziende ed enti, altri nomi propri, età</span></div>
+  <div class="tile" style="background:var(--g2)"><b>Come contattarla</b><span>Email, telefoni, indirizzi, siti, profili social</span></div>
+  <div class="tile" style="background:var(--g3)"><b>Codici e documenti</b><span>Codice fiscale e partita IVA (verificati), documenti d'identità, targhe, matricole, protocolli, numeri di pratica</span></div>
+  <div class="tile" style="background:var(--g4)"><b>Soldi</b><span>IBAN (verificato), carte di pagamento (verificate), importi</span></div>
+  <div class="tile" style="background:var(--g5)"><b>Dati particolari</b><span>Salute, religione, opinioni politiche, adesione a sindacati, orientamento sessuale, origine etnica, dati genetici e biometrici, dati giudiziari</span></div>
+  <div class="tile" style="background:var(--g6)"><b>Contesto</b><span>Luoghi, date, dati catastali, indirizzi IP</span></div>
+</div>
+<p style="font-size:15px;color:var(--muted)">"Verificato" vuol dire che Bauta controlla la cifra di controllo del codice: un codice che non la supera viene coperto comunque, ma è segnato da un bordo tratteggiato.</p>
+
+<h2 id="esempio">5. Un esempio, prima e dopo</h2>
+<table class="compare">
+  <tr><th style="width:50%">Prima (resta sul tuo computer)</th><th>Dopo (va all'AI)</th></tr>
+  <tr><td>Gentile Dott.ssa Laura Bianchi, il dipendente Luca Ferraro, 45 anni, è stato assente dal 3 al 7 marzo per un'ernia del disco. Il rimborso di 1.240 € va sull'IBAN IT60 X054 2811 1010 0000 0123 456.</td>
+      <td class="mono">Gentile Dott.ssa [PERSONA_1], il dipendente [PERSONA_2], [ETA_1], è stato assente dal [DATA_1] per un'[SALUTE_1]. Il rimborso di [IMPORTO_1] va sull'IBAN [IBAN_1].</td></tr>
+</table>
+<p>All'AI resta tutto quello che serve per capire e rispondere: c'è una persona, un'assenza, un rimborso. Mancano solo i dati che permettono di sapere <i>chi</i>.</p>
+
+<h2 id="modalita">6. Reversibile o anonima</h2>
+<div class="two">
+  <div class="box acc"><h3>Reversibile</h3>
+    <ul><li>I dati diventano segnaposto numerati.</li><li>La tabella che li collega ai dati veri resta nella pagina finché è aperta.</li><li>Puoi rimettere i dati veri nella risposta dell'AI.</li></ul>
+    <p style="margin:10px 0 0"><b>Quando:</b> mail, lettere e documenti da completare con la risposta dell'AI.</p></div>
+  <div class="box ok"><h3>Anonima</h3>
+    <ul><li>I dati diventano segnaposto numerati.</li><li>La tabella non viene conservata.</li><li>Non si torna indietro: la risposta resta con i segnaposto.</li></ul>
+    <p style="margin:10px 0 0"><b>Quando:</b> analisi, riassunti, statistiche, dove i dati veri non servono più.</p></div>
+</div>
+<div class="callout">In entrambe le modalità, chi conosce il contesto potrebbe comunque riconoscere una persona ("l'unica ingegnera della sede"). Per la legge sulla privacy un testo così si considera <b>pseudonimizzato</b>, non anonimo: restano dati personali da trattare secondo le regole aziendali.</div>
+
+<h2 id="ai">7. Con quale assistente AI</h2>
+<p>Con tutti. Bauta non si collega a nessun servizio: produce un testo che puoi incollare in Claude, ChatGPT, Gemini, Microsoft Copilot, Le Chat di Mistral, Perplexity o in qualsiasi altro assistente. E il ripristino capisce i segnaposto anche quando l'AI li riscrive a modo suo:</p>
+<table class="compare">
+  <tr><th>Come li può scrivere l'AI</th><th>Bauta li riconosce?</th></tr>
+  <tr><td class="mono">[PERSONA_1] · **[PERSONA_1]** · \[PERSONA\_1\]</td><td>Sì</td></tr>
+  <tr><td class="mono">PERSONA_1 · PERSONA-1 · {PERSONA_1} · (PERSONA_1) · «PERSONA_1»</td><td>Sì</td></tr>
+  <tr><td class="mono">[Persona 1] · [ PERSONA 1 ]</td><td>Sì</td></tr>
+  <tr><td class="mono">[PERSONA_9] (inventato dall'AI)</td><td>Lo segnala in arancione</td></tr>
+</table>
+<h3>Consigli che valgono per tutti gli assistenti</h3>
+<ul>
+  <li><b>Apri una conversazione nuova</b> per ogni documento, così l'AI non mescola segnaposto di testi diversi.</li>
+  <li><b>Non allegare il file originale</b>: incolla solo il testo con i segnaposto.</li>
+  <li><b>Attenzione alla memoria dell'assistente</b>: se l'AI ricorda le conversazioni passate, evita di scriverle tu i dati veri in un secondo momento.</li>
+  <li><b>Chiedi di usare i segnaposto</b> anche nella risposta: l'istruzione in cima lo fa per te.</li>
+</ul>
+
+<h2 id="limiti">8. Cosa non può fare</h2>
+<div class="two">
+  <div class="box no"><h3>Limiti da conoscere</h3>
+    <ul>
+      <li>Non riconosce <b>tutto</b>: nomi scritti in minuscolo, soprannomi, dati descritti a parole ("la figlia del titolare").</li>
+      <li>Non legge <b>immagini e scansioni</b>.</li>
+      <li>Non rende un testo <b>anonimo in senso legale</b>: il contesto può far riconoscere una persona.</li>
+      <li>Non può sapere se la tua azienda <b>permette</b> di usare un certo assistente AI.</li>
+    </ul></div>
+  <div class="box ok"><h3>Come compensare</h3>
+    <ul>
+      <li>Rileggi sempre il passaggio 2: è obbligatorio per poter copiare.</li>
+      <li>Aggiungi nelle <b>Impostazioni</b> i nomi che ricorrono nel tuo lavoro (clienti, progetti, colleghi).</li>
+      <li>Togli dal testo i dettagli che non servono all'AI.</li>
+      <li>Usa solo gli assistenti AI autorizzati dalla tua azienda.</li>
+    </ul></div>
+</div>
+
+<h2 id="regole">9. Le regole d'oro</h2>
+<div class="callout"><b>Bauta è uno strumento d'esempio dei corsi Hyper Link.</b> Serve a imparare un metodo. Prima di usarlo in azienda con dati reali, fallo approvare da chi di dovere: titolare, DPO (responsabile della protezione dei dati) o responsabile IT.</div>
+<ol>
+  <li><b>Prima le regole aziendali, poi lo strumento.</b> Bauta riduce i dati esposti dove l'uso dell'AI è già consentito; non rende lecito un uso che non lo è.</li>
+  <li><b>Meno è meglio.</b> Se all'AI un dettaglio non serve, toglilo dal testo, anche se è coperto.</li>
+  <li><b>I dati particolari restano delicati.</b> Salute, sindacato, religione e dati giudiziari, anche coperti, vanno trattati solo dove la tua azienda lo prevede.</li>
+  <li><b>Il controllo finale è tuo.</b> Lo strumento aiuta; la responsabilità di cosa invii resta di chi lo invia.</li>
+  <li><b>La tabella dei segnaposto contiene i dati veri.</b> Se la salvi in un file, tienila al sicuro e cancellala quando hai finito.</li>
+</ol>
+
+<h2 id="verifica">10. Come verificare che non invia nulla</h2>
+<p>Non devi fidarti sulla parola. Puoi controllarlo da solo, anche senza competenze tecniche.</p>
+<div class="steps">
+  <div class="step"><div class="n">A</div><div><h3>Stacca internet</h3><p>Apri Bauta, poi disattiva il Wi-Fi o metti il computer in modalità aereo. Lo strumento continua a funzionare in tutto: vuol dire che non ha bisogno di mandare nulla da nessuna parte.</p></div></div>
+  <div class="step"><div class="n">B</div><div><h3>Usalo dal tuo computer</h3><p>Scarica il file <code class="mono">index.html</code> dal <a href="https://github.com/sacchethlink/bauta" target="_blank" rel="noopener">progetto su GitHub</a> e aprilo con un doppio clic: funziona anche senza essere online.</p></div></div>
+  <div class="step"><div class="n">C</div><div><h3>Leggi il codice</h3><p>Tutto il codice è pubblico, in un unico file. Chi ha competenze tecniche può leggerlo e far girare i test inclusi nel progetto.</p></div></div>
+  <div class="step"><div class="n">D</div><div><h3>Controllo tecnico</h3><p>La pagina dichiara al browser di bloccare ogni connessione verso l'esterno (<code class="mono">Content-Security-Policy: connect-src 'none'</code>). Negli strumenti per sviluppatori del browser, la scheda <i>Rete</i> resta vuota mentre usi lo strumento.</p></div></div>
+</div>
+
+<h2 id="domande">11. Domande frequenti</h2>
+<details><summary>Hyper Link vede i testi che incollo?</summary><p>No. Il testo resta nel tuo browser: la pagina non lo invia a nessun server e non raccoglie statistiche. Come per ogni sito, chi ospita la pagina registra solo che è stata aperta, non cosa ci scrivi. Se vuoi evitare anche questo, scarica il file e usalo dal tuo computer.</p></details>
+<details><summary>Abbiamo un assistente AI aziendale protetto da contratto: serve ancora?</summary><p>Può servire comunque: condividere meno dati è una buona pratica anche con gli strumenti protetti. Valutalo con chi si occupa di privacy e IT in azienda.</p></details>
+<details><summary>Perché copre anche parole che non sono dati personali?</summary><p>Perché nel dubbio copre. Una parola con la maiuscola a metà frase viene trattata come un possibile nome. Clicca sulla parola per lasciarla in chiaro, oppure aggiungila in "Non toccare mai" nelle Impostazioni.</p></details>
+<details><summary>L'AI ha bisogno degli importi per fare i calcoli. Come faccio?</summary><p>Al passaggio 2 clicca sulla categoria "Importi" per lasciarla in chiaro. Vale lo stesso per date ed età quando servono all'AI.</p></details>
+<details><summary>Posso usarlo con un file PDF?</summary><p>Copia il testo dal PDF e incollalo. Per i file Word (.docx) e di testo (.txt) puoi invece aprirli direttamente.</p></details>
+<details><summary>Se chiudo la pagina perdo tutto?</summary><p>Sì, in modalità Reversibile la tabella dei segnaposto si perde. Il browser ti avvisa prima di chiudere. Se ti serve riprendere più tardi, nelle Impostazioni avanzate puoi salvarla in un file, che però contiene i dati veri.</p></details>
+<details><summary>Posso usarlo e modificarlo per la mia azienda?</summary><p>Il codice è pubblico con licenza MIT: puoi usarlo e adattarlo. Ricorda che è uno strumento d'esempio, senza garanzie, e che prima dell'uso in azienda va approvato da chi di dovere.</p></details>
+
+<footer>
+  <span>Hyper Link di Sacchet Marco &amp; C. S.a.s. · P.IVA IT01219960257 · h-link.it</span>
+  <a href="https://marcosacchet.netlify.app" target="_blank" rel="noopener">Vuoi regole chiare per usare l'AI con i dati in azienda? Parliamone davanti a un caffè →</a>
+</footer>
+<p class="fine">Bauta è uno strumento d'esempio, fornito così com'è e senza garanzie, con licenza MIT. I nomi degli assistenti AI citati sono marchi dei rispettivi titolari e sono indicati solo per spiegare con quali strumenti si può usare.</p>
+</div>
+</body>
+</html>
