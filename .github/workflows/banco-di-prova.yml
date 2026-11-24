@@ -28,12 +28,16 @@ jobs:
           python banco-di-prova/scarica.py
       - name: Misura
         run: node banco-di-prova/misura.js banco-di-prova/dati.jsonl
-      - name: Esempi non coperti (per migliorare Bauta)
-        uses: actions/upload-artifact@v4
-        with:
-          name: esempi-mancati
-          path: banco-di-prova/esempi-mancati.txt
-          retention-days: 7
+      - name: Esempi non coperti (ramo di lavoro banco-esempi, non nel ramo principale)
+        run: |
+          cp banco-di-prova/esempi-mancati.txt /tmp/esempi.txt
+          git config user.name "Banco di prova"
+          git config user.email "actions@users.noreply.github.com"
+          git fetch --depth=1 origin banco-esempi || true
+          git worktree add --detach /tmp/es
+          cd /tmp/es && git checkout --orphan banco-esempi-tmp && git rm -rfq . && cp /tmp/esempi.txt esempi-mancati.txt
+          printf 'Esempi sintetici dal dataset ai4privacy/open-pii-masking-500k-ai4privacy (CC BY 4.0), usati solo per migliorare Bauta.\n' > LEGGIMI.txt
+          git add esempi-mancati.txt LEGGIMI.txt && git commit -qm "Esempi non coperti" && git push -f origin HEAD:banco-esempi
       - name: Salva i risultati nel repository
         run: |
           git config user.name "Banco di prova"
