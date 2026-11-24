@@ -68,20 +68,20 @@ Testi: 2000 ([ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.c
 
 Testi: 600 ([gretelai/synthetic_pii_finance_multilingual](https://huggingface.co/datasets/gretelai/synthetic_pii_finance_multilingual), Apache 2.0).
 
-- Dati coperti per intero: **50,8%** (1550 su 3050)
-- Caratteri di dati personali coperti: **71,0%**
-- Testo normale coperto per eccesso: **13,2%**
+- Dati coperti per intero: **51,0%** (1554 su 3050)
+- Caratteri di dati personali coperti: **71,1%**
+- Testo normale coperto per eccesso: **13,3%**
 
 | Tipo di dato (etichetta del dataset) | Quanti | Coperti per intero | Caratteri coperti |
 |---|---:|---:|---:|
-| name | 952 | 64,7% | 78,4% |
+| name | 952 | 64,4% | 78,2% |
 | company | 582 | 33,5% | 53,2% |
 | street_address | 462 | 8,9% | 74,6% |
-| date | 395 | 61,0% | 69,8% |
+| date | 395 | 62,3% | 70,6% |
 | time | 113 | 43,4% | 54,5% |
 | phone_number | 84 | 83,3% | 86,6% |
 | email | 78 | 91,0% | 92,3% |
-| date_of_birth | 41 | 78,0% | 71,3% |
+| date_of_birth | 41 | 82,9% | 77,5% |
 | first_name | 36 | 94,4% | 94,1% |
 | customer_id | 29 | 62,1% | 77,5% |
 | account_pin | 28 | 67,9% | 75,0% |
@@ -108,20 +108,20 @@ Testi: 600 ([gretelai/synthetic_pii_finance_multilingual](https://huggingface.co
 
 Testi: 600 ([gretelai/synthetic_pii_finance_multilingual](https://huggingface.co/datasets/gretelai/synthetic_pii_finance_multilingual), Apache 2.0).
 
-- Dati coperti per intero: **52,8%** (1611 su 3050)
-- Caratteri di dati personali coperti: **72,7%**
+- Dati coperti per intero: **53,0%** (1615 su 3050)
+- Caratteri di dati personali coperti: **72,8%**
 - Testo normale coperto per eccesso: **13,6%**
 
 | Tipo di dato (etichetta del dataset) | Quanti | Coperti per intero | Caratteri coperti |
 |---|---:|---:|---:|
-| name | 952 | 64,8% | 78,4% |
+| name | 952 | 64,5% | 78,3% |
 | company | 582 | 33,5% | 53,2% |
 | street_address | 462 | 15,8% | 79,6% |
-| date | 395 | 61,3% | 70,7% |
+| date | 395 | 62,5% | 71,3% |
 | time | 113 | 44,2% | 54,9% |
 | phone_number | 84 | 83,3% | 89,9% |
 | email | 78 | 91,0% | 92,3% |
-| date_of_birth | 41 | 78,0% | 72,2% |
+| date_of_birth | 41 | 82,9% | 77,5% |
 | first_name | 36 | 94,4% | 94,1% |
 | customer_id | 29 | 62,1% | 77,5% |
 | account_pin | 28 | 85,7% | 88,9% |
