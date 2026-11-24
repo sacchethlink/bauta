@@ -60,6 +60,14 @@ for (const r of [...esempi, ...esempiG]) {
     if (!tutti && (mancati[d.label] ||= []).length < 40) mancati[d.label].push(`«${t.slice(d.start, d.end)}» … ${t.slice(Math.max(0, d.start - 45), d.start)}[[${t.slice(d.start, d.end)}]]${t.slice(d.end, d.end + 30)}`.replace(/\n/g, ' '));
   }
 }
+// esempi di testo normale coperto per eccesso (per ridurre i falsi allarmi)
+const eccesso = [];
+for (const r of esempiG.concat(esempi)) {
+  if (eccesso.length >= 120) break;
+  const pii = new Uint8Array(r.testo.length); for (const d of r.dati) for (let i = d.start; i < d.end; i++) pii[i] = 1;
+  for (const e of Core.analyze(r.testo, {})) { let dentro = false; for (let i = e.s; i < e.e; i++) if (pii[i]) dentro = true; if (!dentro && eccesso.length < 120) eccesso.push(`${e.type}: «${e.text}» … ${r.testo.slice(Math.max(0, e.s - 40), e.s)}[[${e.text}]]${r.testo.slice(e.e, e.e + 25)}`.replace(/\n/g, ' ')); }
+}
+mancati['ECCESSO (coperti senza essere dati personali)'] = eccesso;
 // i testi sintetici possono contenere finte chiavi d'accesso: si tolgono prima di salvare gli esempi
 const pulisci = s => s.replace(/(?:xox[a-z]-[\w-]+|gh[pousr]_\w+|sk-[\w-]{16,}|AKIA[0-9A-Z]{16}|AIza[\w-]{30,}|eyJ[\w-]{10,}\.[\w-]{10,}\.[\w-]+|[A-Za-z0-9_\-+\/=]{32,})/g, '[segreto rimosso]');
 fs.writeFileSync(path.join(__dirname, 'esempi-mancati.txt'), pulisci(Object.entries(mancati).map(([k, v]) => `## ${k}\n` + v.join('\n')).join('\n\n')));
