@@ -256,7 +256,7 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
   </ol>
   <dl class="peso" aria-label="Dati del file">
     <div><dt>Peso del file</dt><dd>107 KB</dd></div>
-    <div><dt>Una volta estratto</dt><dd>219 KB</dd></div>
+    <div><dt>Una volta estratto</dt><dd>220 KB</dd></div>
     <div><dt>Contiene</dt><dd>4 file: strumento, guida, istruzioni, licenza</dd></div>
     <div><dt>Versione</dt><dd>0.7 · 24/11/2026</dd></div>
   </dl>
@@ -633,13 +633,15 @@ const Core = (() => {
     // IP
     all(/(?<![\d.])(?:\d{1,3}\.){3}\d{1,3}(?!\d)(?!\.\d)/g, m => { if(m[0].split('.').every(x=>+x<=255)) add(m.index, m.index+m[0].length, 'IP'); });
     // Importi
-    all(/(?:€|EUR|euro|\$|USD|£|CHF)\s?\d[\d.' ]*(?:,\d{1,2})?(?!\d)|(?<![\w.,])\d[\d.']*(?:,\d{1,2})?\s?(?:€|EUR|euro|eur|\$|USD|£|CHF|mila euro|milioni(?: di euro)?|k€)(?![A-Za-z])/gi, m => add(m.index, m.index+m[0].length, 'IMPORTO'));
+    all(/(?:€|EUR|euro|\$|USD|£|CHF)\s?\d{1,3}(?:[.,' ]\d{3})+(?:[.,]\d{1,2})?(?!\d)|(?:€|EUR|euro|\$|USD|£|CHF)\s?\d[\d.' ]*(?:,\d{1,2})?(?!\d)|(?<![\w.,])\d[\d.']*(?:,\d{1,2})?\s?(?:€|EUR|euro|eur|\$|USD|£|CHF|mila euro|milioni(?: di euro)?|k€)(?![A-Za-z])/gi, m => add(m.index, m.index+m[0].length, 'IMPORTO'));
     // Età
     all(/(?<![\w])(?:(?:ha|ho|hai|abbiamo|hanno|aveva|avevo|avrà|avrò|compie|compio|compiuto|compirà|di|età(?: di)?|età:|anni:|aged)\s+)(\d{1,3})\s+anni(?![\w])/gi, m => { if(+m[1]<=120){ const s=m.index+m[0].indexOf(m[1]); add(s, m.index+m[0].length, 'ETA'); } });
     all(/(?<![\w])\d{1,3}\s?(?:-\s?)?enn[ei](?![\w])|(?<![\w])(?:ventenn|trentenn|quarantenn|cinquantenn|sessantenn|settantenn|ottantenn|novantenn|diciottenn|minorenn|maggiorenn|ultra(?:sessant|settant|ottant)enn)[ei](?![\w])|(?<![\w])classe\s(?:19|20)\d{2}(?![\w])|(?<![\w])(?:età|anni)\s*:\s*\d{1,3}(?![\w])|(?<=[,(]\s?)\d{1,3}\s+anni(?=\s*[,);.])|(?<![\w])età\s+\d{1,3}(?![\w])|(?<![\w])(?<=età\s*(?:è|di|:|\(|pari a)\s*)\d{1,3}(?![\w])/gi, m => add(m.index, m.index+m[0].length, 'ETA'));
     // Date (tutte)
+    const MESI_EN='january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sep|sept|oct|nov|dec';
     const MESI='gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre|gen|feb|mar|apr|mag|giu|lug|ago|set|ott|nov|dic';
     all(new RegExp(`(?<!\\d)(?:\\d{1,2}[\\/.\\-]\\d{1,2}[\\/.\\-](?:19|20)?\\d{2}|(?:19|20)\\d{2}-\\d{2}-\\d{2}(?:T\\d{2}:\\d{2}(?::\\d{2})?)?|\\d{1,2}[°º]?\\s+(?:${MESI})\\.?,?\\s+(?:19|20)?\\d{2}|(?:${MESI})\\.?\\s+\\d{1,2}[°º]?,?\\s+(?:19|20)\\d{2}|(?:gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)\\s*\\/\\s*\\d{2,4}|(?:gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)\\s+(?:19|20)\\d{2}|\\d{1,2}[°º]?(?:\\s*(?:-|al|e)\\s*\\d{1,2})?\\s+(?:gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre))(?!\\d)`,'gi'), m => add(m.index, m.index+m[0].length, 'DATA', /T\d/.test(m[0]) ? {pri:11} : {}));
+    all(new RegExp(`(?<![\\w])(?:(?:${MESI_EN})\\.?\\s+\\d{1,2}(?:st|nd|rd|th)?,?\\s+(?:19|20)\\d{2}|\\d{1,2}(?:st|nd|rd|th)?\\s+(?:${MESI_EN})\\.?,?\\s+(?:19|20)\\d{2})(?![\\w])`,'gi'), m => add(m.index, m.index+m[0].length, 'DATA', {pri:8.4}));
 
     // Luoghi noti (città, regioni)
     const cityRe = new RegExp(`${NB}(?=[A-ZÀ-Ý])(?:${CITIES.map(c=>esc(c).replace(/\\? /g,'[\\s\\-]')).sort((a,b)=>b.length-a.length).join('|')})${NA}`,'gi');
@@ -720,7 +722,7 @@ const Core = (() => {
     const seenFull = new Set();
     for(const p of persons){
       const f = p.text.toLowerCase(); if(seenFull.has(f)) continue; seenFull.add(f);
-      all(new RegExp(`${NB}${esc(p.text).replace(/\s+/g,'\\s+')}${NA}`,'gi'), m => add(m.index, m.index+m[0].length, 'PERSONA', {key:p.key, pri:13.2}));
+      all(new RegExp(`${NB}${esc(p.text).replace(/\s+/g,'\\s+')}${NA}`,'gi'), m => { if(/^[a-zà-ÿ]/.test(m[0]) && !/^[a-zà-ÿ]/.test(p.text)) return; add(m.index, m.index+m[0].length, 'PERSONA', {key:p.key, pri:13.2}); });
     }
     for(const [sur, keys] of Object.entries(surnameOwners)){
       if(keys.size!==1 || sur.length<3 || isCommon(sur) || FIRST.has(sur.toLowerCase())) continue;
@@ -772,6 +774,7 @@ const Core = (() => {
     // ---- Indirizzi senza "Via": Nome 589a, 2022 Città ----
     all(/(?<![\w])((?:(?:La|Le|Il)\s)?[A-ZÀ-Ý][a-zà-ÿ\-]+(?:\s[A-ZÀ-Ý][a-zà-ÿ\-]+){0,2})\s(\d{1,4}[a-z]?)(?:,\s*\d{4,5}(?=\s+[A-ZÀ-Ý])|(?=,\s*[A-ZÀ-Ý]))/g, m => {
       if(COMMON.has(m[1].toLowerCase())) return;
+      if(/(?:^|\s)(?:january|february|march|april|may|june|july|august|september|october|november|december|gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)$/i.test(m[1])) return;
       add(m.index, m.index+m[0].length, 'INDIRIZZO', {pri:8.5});
     });
 
