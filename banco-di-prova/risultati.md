@@ -6,26 +6,26 @@ Due banchi di prova pubblici con testi italiani sintetici. Per ognuno, metà dei
 
 Testi: 2000 ([ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.co/datasets/ai4privacy/open-pii-masking-500k-ai4privacy), CC BY 4.0).
 
-- Dati coperti per intero: **89,9%** (4054 su 4508)
-- Caratteri di dati personali coperti: **95,2%**
-- Testo normale coperto per eccesso: **1,5%**
+- Dati coperti per intero: **90,1%** (4062 su 4508)
+- Caratteri di dati personali coperti: **95,3%**
+- Testo normale coperto per eccesso: **1,4%**
 
 | Tipo di dato (etichetta del dataset) | Quanti | Coperti per intero | Caratteri coperti |
 |---|---:|---:|---:|
-| GIVENNAME | 1356 | 93,1% | 94,9% |
-| SURNAME | 611 | 95,7% | 97,9% |
-| CITY | 343 | 93,9% | 96,2% |
-| TELEPHONENUM | 341 | 97,4% | 98,6% |
+| GIVENNAME | 1356 | 93,0% | 94,8% |
+| SURNAME | 611 | 95,9% | 97,9% |
+| CITY | 343 | 94,2% | 96,3% |
+| TELEPHONENUM | 341 | 97,9% | 98,8% |
 | DATE | 256 | 100,0% | 100,0% |
 | TIME | 208 | 77,9% | 82,8% |
-| STREET | 206 | 92,7% | 97,1% |
+| STREET | 206 | 93,7% | 97,9% |
 | EMAIL | 206 | 96,6% | 98,9% |
 | IDCARDNUM | 191 | 99,0% | 99,3% |
-| BUILDINGNUM | 172 | 57,0% | 57,0% |
-| TITLE | 153 | 75,8% | 72,3% |
+| BUILDINGNUM | 172 | 59,9% | 59,6% |
+| TITLE | 153 | 74,5% | 71,3% |
 | AGE | 110 | 47,3% | 46,9% |
 | PASSPORTNUM | 69 | 100,0% | 100,0% |
-| ZIPCODE | 60 | 46,7% | 46,0% |
+| ZIPCODE | 60 | 48,3% | 47,4% |
 | CREDITCARDNUMBER | 57 | 100,0% | 100,0% |
 | TAXNUM | 53 | 92,5% | 97,7% |
 | SEX | 48 | 52,1% | 79,6% |
@@ -37,23 +37,23 @@ Testi: 2000 ([ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.c
 
 Testi: 2000 ([ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.co/datasets/ai4privacy/open-pii-masking-500k-ai4privacy), CC BY 4.0).
 
-- Dati coperti per intero: **92,4%** (4164 su 4508)
-- Caratteri di dati personali coperti: **96,2%**
-- Testo normale coperto per eccesso: **1,9%**
+- Dati coperti per intero: **92,5%** (4170 su 4508)
+- Caratteri di dati personali coperti: **96,3%**
+- Testo normale coperto per eccesso: **1,8%**
 
 | Tipo di dato (etichetta del dataset) | Quanti | Coperti per intero | Caratteri coperti |
 |---|---:|---:|---:|
-| GIVENNAME | 1356 | 93,1% | 94,9% |
-| SURNAME | 611 | 95,7% | 97,9% |
-| CITY | 343 | 93,9% | 96,2% |
-| TELEPHONENUM | 341 | 98,2% | 98,9% |
+| GIVENNAME | 1356 | 93,0% | 94,8% |
+| SURNAME | 611 | 95,9% | 97,9% |
+| CITY | 343 | 94,2% | 96,3% |
+| TELEPHONENUM | 341 | 98,8% | 99,1% |
 | DATE | 256 | 100,0% | 100,0% |
 | TIME | 208 | 77,9% | 89,6% |
-| STREET | 206 | 92,7% | 97,1% |
+| STREET | 206 | 93,7% | 97,9% |
 | EMAIL | 206 | 96,6% | 99,0% |
 | IDCARDNUM | 191 | 99,0% | 99,3% |
-| BUILDINGNUM | 172 | 80,2% | 79,5% |
-| TITLE | 153 | 75,8% | 72,3% |
+| BUILDINGNUM | 172 | 82,6% | 81,4% |
+| TITLE | 153 | 74,5% | 71,3% |
 | AGE | 110 | 80,9% | 82,6% |
 | PASSPORTNUM | 69 | 100,0% | 100,0% |
 | ZIPCODE | 60 | 96,7% | 96,7% |
@@ -68,29 +68,29 @@ Testi: 2000 ([ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.c
 
 Testi: 600 ([gretelai/synthetic_pii_finance_multilingual](https://huggingface.co/datasets/gretelai/synthetic_pii_finance_multilingual), Apache 2.0).
 
-- Dati coperti per intero: **51,0%** (1554 su 3050)
-- Caratteri di dati personali coperti: **71,1%**
-- Testo normale coperto per eccesso: **13,3%**
+- Dati coperti per intero: **65,0%** (1983 su 3050)
+- Caratteri di dati personali coperti: **77,5%**
+- Testo normale coperto per eccesso: **9,8%**
 
 | Tipo di dato (etichetta del dataset) | Quanti | Coperti per intero | Caratteri coperti |
 |---|---:|---:|---:|
-| name | 952 | 64,4% | 78,2% |
-| company | 582 | 33,5% | 53,2% |
-| street_address | 462 | 8,9% | 74,6% |
-| date | 395 | 62,3% | 70,6% |
+| name | 952 | 71,0% | 80,4% |
+| company | 582 | 51,0% | 62,0% |
+| street_address | 462 | 64,3% | 90,0% |
+| date | 395 | 62,8% | 71,0% |
 | time | 113 | 43,4% | 54,5% |
-| phone_number | 84 | 83,3% | 86,6% |
-| email | 78 | 91,0% | 92,3% |
+| phone_number | 84 | 89,3% | 89,8% |
+| email | 78 | 91,0% | 91,8% |
 | date_of_birth | 41 | 82,9% | 77,5% |
 | first_name | 36 | 94,4% | 94,1% |
-| customer_id | 29 | 62,1% | 77,5% |
-| account_pin | 28 | 67,9% | 75,0% |
+| customer_id | 29 | 65,5% | 77,9% |
+| account_pin | 28 | 60,7% | 69,4% |
 | iban | 24 | 79,2% | 95,6% |
-| credit_card_number | 24 | 66,7% | 73,7% |
-| swift_bic_code | 20 | 95,0% | 99,5% |
+| credit_card_number | 24 | 66,7% | 70,6% |
+| swift_bic_code | 20 | 95,0% | 99,1% |
 | credit_card_security_code | 19 | 10,5% | 10,7% |
 | passport_number | 18 | 100,0% | 100,0% |
-| employee_id | 17 | 64,7% | 79,6% |
+| employee_id | 17 | 70,6% | 80,3% |
 | bank_routing_number | 17 | 94,1% | 94,1% |
 | ssn | 17 | 58,8% | 65,8% |
 | last_name | 17 | 88,2% | 88,8% |
@@ -102,35 +102,35 @@ Testi: 600 ([gretelai/synthetic_pii_finance_multilingual](https://huggingface.co
 | api_key | 8 | 12,5% | 5,0% |
 | user_name | 7 | 42,9% | 53,1% |
 | ipv6 | 4 | 0,0% | 1,9% |
-| date_time | 3 | 66,7% | 89,1% |
+| date_time | 3 | 100,0% | 100,0% |
 
 ## Gretel (documenti finanziari) · modalità Anonima
 
 Testi: 600 ([gretelai/synthetic_pii_finance_multilingual](https://huggingface.co/datasets/gretelai/synthetic_pii_finance_multilingual), Apache 2.0).
 
-- Dati coperti per intero: **53,0%** (1615 su 3050)
-- Caratteri di dati personali coperti: **72,8%**
-- Testo normale coperto per eccesso: **13,6%**
+- Dati coperti per intero: **66,8%** (2036 su 3050)
+- Caratteri di dati personali coperti: **78,7%**
+- Testo normale coperto per eccesso: **10,1%**
 
 | Tipo di dato (etichetta del dataset) | Quanti | Coperti per intero | Caratteri coperti |
 |---|---:|---:|---:|
-| name | 952 | 64,5% | 78,3% |
-| company | 582 | 33,5% | 53,2% |
-| street_address | 462 | 15,8% | 79,6% |
-| date | 395 | 62,5% | 71,3% |
+| name | 952 | 72,0% | 80,9% |
+| company | 582 | 51,0% | 62,0% |
+| street_address | 462 | 67,5% | 92,3% |
+| date | 395 | 63,0% | 71,7% |
 | time | 113 | 44,2% | 54,9% |
-| phone_number | 84 | 83,3% | 89,9% |
-| email | 78 | 91,0% | 92,3% |
+| phone_number | 84 | 89,3% | 91,4% |
+| email | 78 | 91,0% | 91,8% |
 | date_of_birth | 41 | 82,9% | 77,5% |
 | first_name | 36 | 94,4% | 94,1% |
-| customer_id | 29 | 62,1% | 77,5% |
-| account_pin | 28 | 85,7% | 88,9% |
+| customer_id | 29 | 65,5% | 77,9% |
+| account_pin | 28 | 82,1% | 86,1% |
 | iban | 24 | 79,2% | 97,0% |
 | credit_card_number | 24 | 91,7% | 94,8% |
-| swift_bic_code | 20 | 95,0% | 99,5% |
+| swift_bic_code | 20 | 95,0% | 99,1% |
 | credit_card_security_code | 19 | 89,5% | 91,1% |
 | passport_number | 18 | 100,0% | 100,0% |
-| employee_id | 17 | 64,7% | 79,6% |
+| employee_id | 17 | 70,6% | 80,3% |
 | bank_routing_number | 17 | 94,1% | 94,1% |
 | ssn | 17 | 58,8% | 77,7% |
 | last_name | 17 | 88,2% | 88,8% |
@@ -142,6 +142,6 @@ Testi: 600 ([gretelai/synthetic_pii_finance_multilingual](https://huggingface.co
 | api_key | 8 | 12,5% | 5,0% |
 | user_name | 7 | 42,9% | 53,1% |
 | ipv6 | 4 | 0,0% | 1,9% |
-| date_time | 3 | 66,7% | 89,1% |
+| date_time | 3 | 100,0% | 100,0% |
 
 _I testi dei banchi di prova sono sintetici: nessun dato reale. Ogni dataset usa le sue categorie, che non coincidono sempre con quelle di Bauta._
