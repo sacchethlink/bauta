@@ -12,12 +12,16 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
-      - run: |
+      - name: Scarica
+        run: |
           pip install --quiet huggingface_hub pandas pyarrow
           python banco-di-prova/scarica.py
-          mkdir /tmp/d && cp banco-di-prova/dati*.jsonl /tmp/d/
+      - name: Salva su ramo temporaneo
+        run: |
+          cp banco-di-prova/dati.jsonl banco-di-prova/dati-gretel.jsonl /tmp/
           git config user.name "Banco di prova"
           git config user.email "actions@users.noreply.github.com"
-          git checkout --orphan tmp-dati && git rm -rfq . && cp /tmp/d/* .
+          git worktree add --detach /tmp/td
+          cd /tmp/td && git checkout --orphan tmp-dati && git rm -rfq . && cp /tmp/dati.jsonl /tmp/dati-gretel.jsonl .
           printf 'Ramo temporaneo: testi sintetici di ai4privacy (CC BY 4.0) e gretelai (Apache 2.0), da cancellare.\n' > LEGGIMI.txt
-          git add -f *.jsonl LEGGIMI.txt && git commit -qm "Dati temporanei" && git push -f origin HEAD:tmp-dati
+          git add -f dati.jsonl dati-gretel.jsonl LEGGIMI.txt && git commit -qm "Dati temporanei" && git push -f origin HEAD:tmp-dati
