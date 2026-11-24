@@ -81,4 +81,4 @@ I nomi degli assistenti AI citati sono marchi dei rispettivi titolari e sono ind
 ---
 
 Realizzato da **Hyper Link** per i corsi di formazione sull'uso consapevole dell'AI in azienda.
-Hyper Link di Sacchet Marco & C. s.a.s. · P.IVA IT01219960257 · [h-link.it](https://h-link.it)
+Hyper Link di Sacchet Marco & C. s.a.s. · P.IVA IT01219960257 · [hyperlink-ai.netlify.app](https://hyperlink-ai.netlify.app/)
