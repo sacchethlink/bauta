@@ -1,0 +1,23 @@
+name: Dati per il lavoro (temporaneo)
+on:
+  push:
+    branches: [lavoro-0.8]
+    paths: ['.github/workflows/dati-lavoro.yml']
+permissions:
+  contents: write
+jobs:
+  dati:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: |
+          pip install --quiet huggingface_hub pandas pyarrow
+          python banco-di-prova/scarica.py
+          mkdir /tmp/d && cp banco-di-prova/dati*.jsonl /tmp/d/
+          git config user.name "Banco di prova"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout --orphan tmp-dati && git rm -rfq . && cp /tmp/d/* .
+          printf 'Ramo temporaneo: testi sintetici di ai4privacy (CC BY 4.0) e gretelai (Apache 2.0), da cancellare.\n' > LEGGIMI.txt
+          git add -f *.jsonl LEGGIMI.txt && git commit -qm "Dati temporanei" && git push -f origin HEAD:tmp-dati
