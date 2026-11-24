@@ -1,0 +1,39 @@
+name: Prova dei modelli
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['banco-di-prova/modelli.py', '.github/workflows/prova-modelli.yml']
+
+jobs:
+  prova:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Scarica i testi
+        run: |
+          pip install --quiet huggingface_hub pandas pyarrow
+          QUANTI=4000 QUANTI_GRETEL=1200 python banco-di-prova/scarica.py
+      - name: Prova i modelli
+        run: |
+          pip install --quiet onnxruntime tokenizers numpy
+          pip install --quiet torch --index-url https://download.pytorch.org/whl/cpu
+          pip install --quiet transformers
+          python banco-di-prova/modelli.py
+      - name: Misura
+        run: |
+          node banco-di-prova/misura.js banco-di-prova/dati.jsonl
+          sed -n '/Prova dei modelli/,$p' banco-di-prova/risultati.md
+      - name: Salva il confronto in un ramo di lavoro
+        continue-on-error: true
+        run: |
+          cp banco-di-prova/risultati.md /tmp/r.md
+          git config user.name "Prova modelli"; git config user.email "actions@users.noreply.github.com"
+          git worktree add --detach /tmp/pm && cd /tmp/pm && git checkout --orphan prova-modelli-tmp && git rm -rfq . && cp /tmp/r.md risultati-modelli.md
+          git add risultati-modelli.md && git commit -qm "Prova dei modelli" && git push -f origin HEAD:prova-modelli

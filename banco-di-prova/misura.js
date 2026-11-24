@@ -12,13 +12,14 @@ const metaG = Math.floor(gretelTutte.length / 2), esempiG = gretelTutte.slice(0,
 const meta = Math.floor(tutte.length / 2);
 const esempi = tutte.slice(0, meta), righe = tutte.length > 1 ? tutte.slice(meta) : tutte;
 
-function misura(opts, righe) {
+function misura(opts, righe, esterni, soloEsterni) {
   const perLabel = {}; let piiTot = 0, piiCoperti = 0, altroTot = 0, altroCoperti = 0, datiInteri = 0, datiTot = 0;
-  for (const r of righe) {
+  for (const [idx, r] of righe.entries()) {
     const t = r.testo, n = t.length;
     const pii = new Uint8Array(n), cop = new Uint8Array(n);
     for (const d of r.dati) for (let i = d.start; i < d.end && i < n; i++) pii[i] = 1;
-    for (const e of Core.analyze(t, opts)) for (let i = e.s; i < e.e; i++) cop[i] = 1;
+    if (!soloEsterni) for (const e of Core.analyze(t, opts)) for (let i = e.s; i < e.e; i++) cop[i] = 1;
+    if (esterni) for (const [a, b] of (esterni[idx] || [])) for (let i = a; i < b && i < n; i++) cop[i] = 1;
     for (let i = 0; i < n; i++) {
       if (/\s/.test(t[i])) continue;
       if (pii[i]) { piiTot++; if (cop[i]) piiCoperti++; } else { altroTot++; if (cop[i]) altroCoperti++; }
@@ -48,6 +49,27 @@ for (const [banco, dati, fonte] of banchi) for (const [nome, opts] of [['Reversi
   out.push(`|---|---:|---:|---:|`);
   for (const [k, v] of Object.entries(m.perLabel).sort((a, b) => b[1].tot - a[1].tot)) out.push(`| ${k} | ${v.tot} | ${pct(v.interi, v.tot)} | ${pct(v.carCop, v.car)} |`);
   out.push('');
+}
+
+// ---- Modelli già addestrati, provati sugli stessi testi del voto ----
+const modelli = [['newmean', 'newmean-ai/pii-small (7 MB, Apache 2.0)'], ['italian_ner', 'DeepMount00/Italian_NER_XXL_v2 (italiano, Apache 2.0)']];
+const conModelli = [];
+for (const [chiave, nomeModello] of modelli) {
+  const f = path.join(__dirname, `spans-${chiave}.json`);
+  if (!fs.existsSync(f)) continue;
+  const sp = JSON.parse(fs.readFileSync(f, 'utf8'));
+  for (const [banco, dati, tutteB, metaB, k] of [['ai4privacy', righe, tutte, meta, 'ai4privacy'], ['Gretel', gretel, gretelTutte, metaG, 'gretel']]) {
+    if (!dati.length || !sp[k]) continue;
+    const esterni = sp[k].slice(metaB);   // stessa metà usata per il voto
+    const solo = misura({}, dati, esterni, true), bauta = misura({}, dati), insieme = misura({}, dati, esterni);
+    conModelli.push(`| ${nomeModello} | ${banco} | ${pct(bauta.datiInteri, bauta.datiTot)} | ${pct(solo.datiInteri, solo.datiTot)} | ${pct(insieme.datiInteri, insieme.datiTot)} | ${pct(bauta.altroCoperti, bauta.altroTot)} → ${pct(insieme.altroCoperti, insieme.altroTot)} |`);
+  }
+}
+if (conModelli.length) {
+  out.push(`## Prova dei modelli già addestrati (modalità Reversibile)\n`);
+  out.push(`| Modello | Banco | Bauta da sola | Modello da solo | Bauta + modello | Coperto per eccesso |`);
+  out.push(`|---|---|---:|---:|---:|---:|`);
+  out.push(...conModelli, '');
 }
 out.push(`_I testi dei banchi di prova sono sintetici: nessun dato reale. Ogni dataset usa le sue categorie, che non coincidono sempre con quelle di Bauta._`);
 // esempi di dati non coperti, per capire cosa migliorare (testi sintetici del dataset)
