@@ -33,21 +33,44 @@ body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 "Figtree",sys
 a{color:var(--ink);text-decoration-color:var(--brand);text-underline-offset:3px;text-decoration-thickness:2px}
 :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .wrap{max-width:900px;margin:0 auto;padding:0 20px 48px}
-.notice{background:var(--warn-soft);color:var(--on-warn-soft);border-bottom:1px solid var(--line);font-size:15px}
-.notice .wrap{padding:10px 20px}
 
-header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:24px 0 18px}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
-.brand svg{width:56px;height:33px;flex:none}
-.brand b{font-size:26px;font-weight:800;letter-spacing:-.035em}
-.brand small{display:block;color:var(--muted);font-size:13px;font-weight:400}
 .cta{background:var(--brand);color:var(--on-brand);text-decoration:none;font-weight:700;font-size:15px;padding:10px 18px;border-radius:999px}
-h1{font-size:44px;line-height:1.1;margin:8px 0 12px;letter-spacing:-.035em;font-weight:800}
-@media (max-width:640px){h1{font-size:34px}}
-.eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
-.lead{font-size:19px;color:var(--muted);margin:0 0 22px}
+
+
 h2{font-size:28px;font-weight:700;margin:56px 0 10px;scroll-margin-top:16px;letter-spacing:-.02em}
 h3{font-size:18px;margin:22px 0 6px}
+.notice{display:flex;gap:14px;align-items:flex-start;background:var(--warn-soft);color:var(--on-warn-soft);border:1px solid var(--warn);border-radius:18px;padding:14px 18px;margin:0 0 18px;font-size:15px}
+.notice p{margin:0}
+.notice a{color:var(--on-warn-soft)}
+.notice .ico{width:26px;height:26px;border-radius:50%;background:var(--warn);color:#111214;display:grid;place-items:center;font-weight:800;font-size:15px;flex:none;margin-top:1px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:22px 0 18px}
+.logos{display:flex;align-items:center;gap:16px}
+.logos a,.logos .bauta{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none}
+.bauta svg{width:52px;height:30px}
+.bauta span{font-size:26px;font-weight:800;letter-spacing:-.035em}
+.sep{width:1px;height:30px;background:var(--line)}
+.hlink svg{width:30px;height:30px}
+.hlink span{font-size:13px;font-weight:700}
+.hero{display:grid;grid-template-columns:1.7fr 1fr;gap:28px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:40px 44px;margin:0 0 18px;overflow:hidden}
+.hero h1{margin:0 0 14px;font-size:50px;font-weight:800;letter-spacing:-.035em;line-height:1.08}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.lead{margin:0 0 10px;font-size:19px;line-height:1.55;color:var(--muted)}
+.sub{color:var(--muted);margin:0;font-size:15px}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn.primary{background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
+.hero-art{display:grid;place-items:center;gap:14px;background:var(--bg);border-radius:18px;padding:34px 20px;color:var(--ink)}
+.hero-art svg{width:100%;max-width:240px;height:auto}
+.demo{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:15px}
+.demo .orig{font-weight:700}
+.demo .arr{color:var(--muted);font-size:13px}
+.hero-art code{font:700 14px ui-monospace,Menlo,monospace;background:var(--brand-soft);border-bottom:2px solid var(--brand);padding:4px 10px;border-radius:6px 6px 0 0}
+@media (max-width:820px){.hero{grid-template-columns:1fr;padding:28px 24px}.hero h1{font-size:36px}.hero-art{padding:22px}.hero-art svg{max-width:160px}}
+@media (max-width:520px){.hlink span{display:none}}
+nav.links{display:flex;gap:8px;flex-wrap:wrap}
+nav.links a{font-size:15px;font-weight:700;text-decoration:none;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+nav.links a:hover{box-shadow:0 6px 16px #0000001f}
+button,.btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:10px 18px;font:700 15px/1.2 "Figtree",system-ui,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+button:hover,.btn:hover{box-shadow:0 6px 16px #0000001f}
 .toc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 20px;box-shadow:var(--shadow)}
 .toc ol{margin:6px 0 0;padding-left:20px;columns:2;column-gap:28px;font-size:15.5px}
 @media (max-width:640px){.toc ol{columns:1}}
@@ -97,20 +120,40 @@ svg text{font-family:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,Arial,s
 </style>
 </head>
 <body>
-<div class="notice" role="note"><div class="wrap"><b>Strumento d'esempio dei corsi Hyper Link.</b> Prima di usarlo in azienda con dati reali, fallo approvare da chi di dovere: titolare, DPO o responsabile IT.</div></div>
-
 <div class="wrap">
 <header class="top">
-  <a class="brand" href="index.html">
-    <svg viewBox="2 11 60 35" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M4 26c0-10 10-14 18-12 4 1 7 3 10 3s6-2 10-3c8-2 18 2 18 12s-8 18-16 18c-5 0-8-3-12-3s-7 3-12 3C12 44 4 36 4 26ZM13 27c2-5 10-6 14-1-3 5-11 6-14 1ZM51 27c-2-5-10-6-14-1 3 5 11 6 14 1Z"/></svg>
-    <span><b>Bauta</b><small>Guida all'uso</small></span>
-  </a>
-  <a class="cta" href="index.html">Apri lo strumento →</a>
+  <div class="logos">
+    <span class="bauta"><svg viewBox="2 11 60 35" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M4 26c0-10 10-14 18-12 4 1 7 3 10 3s6-2 10-3c8-2 18 2 18 12s-8 18-16 18c-5 0-8-3-12-3s-7 3-12 3C12 44 4 36 4 26ZM13 27c2-5 10-6 14-1-3 5-11 6-14 1ZM51 27c-2-5-10-6-14-1 3 5 11 6 14 1Z"/></svg><span>Bauta</span></span>
+    <span class="sep" aria-hidden="true"></span>
+    <a class="hlink" href="https://h-link.it" target="_blank" rel="noopener"><svg class="hl" viewBox="0 0 316 316" role="img" aria-label="Logo Hyper Link"><path d="M57.8,268.5 A149.4,149.4 0 1 1 293.0,219.2" fill="none" stroke="#676767" stroke-width="15"/><path d="M288.9,227.6 A149.4,149.4 0 0 1 70.4,278.6" fill="none" stroke="#ff8200" stroke-width="15"/><rect x="64" y="87" width="15" height="191" fill="#ff8200"/><rect x="147" y="87" width="15" height="136" fill="#ff8200"/><rect x="64" y="144" width="98" height="15" fill="#ff8200"/><rect x="178" y="86" width="15" height="137" fill="#676767"/><rect x="178" y="209" width="115" height="15" fill="#676767"/></svg><span>Hyper Link</span></a>
+  </div>
+  <nav class="links">
+    <a href="index.html">Apri lo strumento</a>
+    <a href="https://github.com/sacchethlink/bauta" target="_blank" rel="noopener">Codice su GitHub</a>
+  </nav>
 </header>
 
-<p class="eyebrow">Guida · strumento d'esempio dei corsi Hyper Link</p>
-<h1>Copri i dati personali prima di chiederli all'AI</h1>
-<p class="lead">Bauta è lo strumento che usiamo nei corsi Hyper Link per mostrare, in pratica, come usare un assistente AI senza consegnargli nomi, recapiti, codici e dati delicati di colleghi e clienti.</p>
+<div class="notice" role="note">
+  <span class="ico" aria-hidden="true">!</span>
+  <p><b>Strumento d'esempio dei corsi Hyper Link.</b> Serve a mostrare come proteggere i dati quando si usa l'AI. Prima di usarlo in azienda con dati reali, fatelo approvare da chi di dovere: titolare, DPO o responsabile IT. <a href="#regole">Perché</a></p>
+</div>
+
+<section class="hero">
+  <div class="hero-txt">
+    <p class="eyebrow">Guida all'uso · corsi Hyper Link</p>
+    <h1>Copri i dati personali prima di chiederli all'AI.</h1>
+    <p class="lead">Bauta è lo strumento che usiamo nei corsi Hyper Link per mostrare, in pratica, come usare un assistente AI senza consegnargli nomi, recapiti, codici e dati delicati di colleghi e clienti.</p>
+    <p class="sub">In questa guida trovi a cosa serve, i quattro passaggi, cosa copre, i suoi limiti e come verificare da solo che non venga inviato nulla.</p>
+    <div class="hero-cta">
+      <a class="btn primary" href="index.html">Apri lo strumento</a>
+      <a class="btn" href="#perche">Leggi la guida</a>
+    </div>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <svg viewBox="2 11 60 35" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M4 26c0-10 10-14 18-12 4 1 7 3 10 3s6-2 10-3c8-2 18 2 18 12s-8 18-16 18c-5 0-8-3-12-3s-7 3-12 3C12 44 4 36 4 26ZM13 27c2-5 10-6 14-1-3 5-11 6-14 1ZM51 27c-2-5-10-6-14-1 3 5 11 6 14 1Z"/></svg>
+    <div class="demo"><span class="orig">Sacchet Marco</span><span class="arr">diventa</span><code>[PERSONA_1]</code></div>
+  </div>
+</section>
 
 <div class="why"><svg viewBox="2 11 60 35" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M4 26c0-10 10-14 18-12 4 1 7 3 10 3s6-2 10-3c8-2 18 2 18 12s-8 18-16 18c-5 0-8-3-12-3s-7 3-12 3C12 44 4 36 4 26ZM13 27c2-5 10-6 14-1-3 5-11 6-14 1ZM51 27c-2-5-10-6-14-1 3 5 11 6 14 1Z"/></svg><div><b>Perché si chiama Bauta?</b><p>La bauta è la maschera del Carnevale di Venezia che copriva tutto il viso: chi la indossava poteva parlare senza togliersela e senza farsi riconoscere. Bauta fa lo stesso con i tuoi testi: l'AI capisce di cosa parli, ma non sa di chi.</p></div></div>
 
