@@ -132,12 +132,16 @@ body{overflow-x:clip}
 section,h2,.scarica{scroll-margin-top:96px}
 nav.links .theme{font:700 15px/1.2 "Figtree",system-ui,sans-serif;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
 nav.links .theme::before{content:"";display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px;background:linear-gradient(90deg,var(--ink) 50%,transparent 50%);border:1.5px solid var(--ink)}
-.totop{position:fixed;right:20px;bottom:20px;z-index:45;width:48px;height:48px;border-radius:50%;border:0;background:var(--ink);color:var(--accent-ink);font:800 22px/1 "Figtree",system-ui,sans-serif;cursor:pointer;display:grid;place-items:center;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:0 6px 16px #0000002e}
+.totop{position:fixed;right:20px;bottom:20px;z-index:45;width:48px;height:48px;border-radius:50%;border:0;background:var(--ink);color:var(--accent-ink);padding:0;cursor:pointer;display:grid;place-items:center;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:0 6px 16px #0000002e}
 .totop.show{opacity:1;transform:none;pointer-events:auto}
 @media (max-width:520px){.totop{right:14px;bottom:14px}}
 nav.links .short{display:none}
 @media (max-width:600px){nav.links .short{display:inline}header.top{padding:8px 0;flex-wrap:nowrap}nav.links{gap:6px;flex-wrap:nowrap}nav.links a,nav.links .theme{padding:7px 11px;font-size:13px}nav.links .long{display:none}nav.links .theme{font-size:0;padding:7px 10px}nav.links .theme::before{margin-right:0}.logos{gap:10px}.bauta span{font-size:21px}.bauta svg{width:40px;height:24px}.logos .sep,.logos .hlink{display:none}nav.links a{white-space:nowrap}}
 a{text-decoration-skip-ink:none}
+/* link nel testo: si riconoscono come cliccabili */
+a:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.ctaband,.hero-cta) a){font-weight:600;text-decoration-line:underline;text-decoration-color:var(--brand);text-decoration-thickness:2px;text-underline-offset:3px;border-radius:4px;padding:0 2px;margin:0 -2px;transition:background-color .15s,text-decoration-thickness .15s}
+a:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.ctaband,.hero-cta) a):hover{background:var(--brand-soft);text-decoration-thickness:3px}
+a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.ctaband,.hero-cta) a)::after{content:"\2009\2197";font-size:.85em;text-decoration:none;display:inline-block}
 </style>
 </head>
 <body>
@@ -386,7 +390,7 @@ a{text-decoration-skip-ink:none}
 </footer>
 <p class="fine">Bauta è uno strumento d'esempio, fornito così com'è e senza garanzie, con licenza MIT. Carattere Figtree, con licenza SIL Open Font License. I nomi degli assistenti AI citati sono marchi dei rispettivi titolari e sono indicati solo per spiegare con quali strumenti si può usare.</p>
 </div>
-<button class="totop" id="btnTop" type="button" aria-label="Torna in cima" title="Torna in cima">↑</button>
+<button class="totop" id="btnTop" type="button" aria-label="Torna in cima" title="Torna in cima"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 <script>
 (function(){
   var root=document.documentElement, b=document.getElementById('btnTema');

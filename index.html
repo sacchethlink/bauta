@@ -156,6 +156,11 @@ footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-s
 body.solo-download .scarica{display:block}
 body.solo-download .app{display:none}
 .scarica h2{font-size:28px;letter-spacing:-.02em;margin:0 0 8px}
+.peso{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 4px}
+.peso div{background:var(--bg);border-radius:12px;padding:10px 14px}
+.peso dt{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.peso dd{margin:2px 0 0;font-size:17px;font-weight:800;font-variant-numeric:tabular-nums}
+@media (max-width:820px){.peso{grid-template-columns:1fr 1fr}}
 .howto{margin:0 0 6px;padding-left:22px;font-size:16px}
 .howto li{margin:6px 0}
 .howto code,.hint code{font:700 14px ui-monospace,Menlo,monospace;background:var(--surface-2);padding:1px 6px;border-radius:6px}
@@ -180,12 +185,16 @@ body{overflow-x:clip}
 section,h2,.scarica{scroll-margin-top:96px}
 nav.links .theme{font:700 15px/1.2 "Figtree",system-ui,sans-serif;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
 nav.links .theme::before{content:"";display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px;background:linear-gradient(90deg,var(--fg) 50%,transparent 50%);border:1.5px solid var(--fg)}
-.totop{position:fixed;right:20px;bottom:20px;z-index:45;width:48px;height:48px;border-radius:50%;border:0;background:var(--fg);color:var(--on-ink);font:800 22px/1 "Figtree",system-ui,sans-serif;cursor:pointer;display:grid;place-items:center;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:0 6px 16px #0000002e}
+.totop{position:fixed;right:20px;bottom:20px;z-index:45;width:48px;height:48px;border-radius:50%;border:0;background:var(--fg);color:var(--on-ink);padding:0;cursor:pointer;display:grid;place-items:center;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:0 6px 16px #0000002e}
 .totop.show{opacity:1;transform:none;pointer-events:auto}
 @media (max-width:520px){.totop{right:14px;bottom:14px}}
 nav.links .short{display:none}
 @media (max-width:600px){nav.links .short{display:inline}header.top{padding:8px 0;flex-wrap:nowrap}nav.links{gap:6px;flex-wrap:nowrap}nav.links a,nav.links .theme{padding:7px 11px;font-size:13px}nav.links .long{display:none}nav.links .theme{font-size:0;padding:7px 10px}nav.links .theme::before{margin-right:0}.logos{gap:10px}.bauta span{font-size:21px}.bauta svg{width:40px;height:24px}.logos .sep,.logos .hlink{display:none}nav.links a{white-space:nowrap}}
 a{text-decoration-skip-ink:none}
+/* link nel testo: si riconoscono come cliccabili */
+a:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.ctaband,.hero-cta) a){font-weight:600;text-decoration-line:underline;text-decoration-color:var(--brand);text-decoration-thickness:2px;text-underline-offset:3px;border-radius:4px;padding:0 2px;margin:0 -2px;transition:background-color .15s,text-decoration-thickness .15s}
+a:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.ctaband,.hero-cta) a):hover{background:var(--brand-soft);text-decoration-thickness:3px}
+a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.ctaband,.hero-cta) a)::after{content:"\2009\2197";font-size:.85em;text-decoration:none;display:inline-block}
 </style>
 </head>
 <body>
@@ -245,7 +254,13 @@ a{text-decoration-skip-ink:none}
     <li><b>Estrai</b> la cartella: su Windows tasto destro sul file, poi "Estrai tutto"; sul Mac basta un doppio clic.</li>
     <li><b>Apri</b> <code>index.html</code> con un doppio clic. Si apre nel browser, ma lavora tutto sul tuo computer: puoi anche staccare internet.</li>
   </ol>
-  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip</a><a class="btn" href="guida.html">Leggi la guida</a></div>
+  <dl class="peso" aria-label="Dati del file">
+    <div><dt>Peso del file</dt><dd>105 KB</dd></div>
+    <div><dt>Una volta estratto</dt><dd>212 KB</dd></div>
+    <div><dt>Contiene</dt><dd>4 file: strumento, guida, istruzioni, licenza</dd></div>
+    <div><dt>Versione</dt><dd>0.5 · 24/11/2026</dd></div>
+  </dl>
+  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip · 105 KB</a><a class="btn" href="guida.html">Leggi la guida</a></div>
 </section>
 <div class="app">
 <nav class="steps" aria-label="I quattro passaggi">
@@ -365,7 +380,7 @@ a{text-decoration-skip-ink:none}
 <div class="cta"><p>Volete regole chiare per usare l'AI con i dati in azienda?</p><a href="https://marcosacchet.netlify.app" target="_blank" rel="noopener">Il caffè lo offro io ☕</a></div>
 <footer>
   <span>Hyper Link di Sacchet Marco &amp; C. s.a.s. · P.IVA IT01219960257 · <a href="https://hyperlink-ai.netlify.app/" target="_blank" rel="noopener">hyperlink-ai.netlify.app</a></span>
-  <span>Bauta · versione 0.4</span>
+  <span>Bauta · versione 0.5</span>
 </footer>
 <p class="fine">Bauta è uno strumento d'esempio, fornito così com'è e senza garanzie. Aiuta a ridurre i dati personali esposti, ma non rende anonimo un testo in senso legale e non sostituisce le regole della tua azienda: anche con i segnaposto, il contesto può permettere di risalire a una persona. Ricontrolla sempre il passaggio 2 prima di inviare. <a href="guida.html">Guida completa</a> · <a href="https://github.com/sacchethlink/bauta" target="_blank" rel="noopener">Codice</a> · Licenza MIT · carattere Figtree (SIL Open Font License)</p>
 </div>
@@ -1215,7 +1230,7 @@ Ufficio Risorse Umane`;
   analyze();
 })();
 </script>
-<button class="totop" id="btnTop" type="button" aria-label="Torna in cima" title="Torna in cima">↑</button>
+<button class="totop" id="btnTop" type="button" aria-label="Torna in cima" title="Torna in cima"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 <script>
 (function(){
   var root=document.documentElement, b=document.getElementById('btnTema');
