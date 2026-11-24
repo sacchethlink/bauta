@@ -138,6 +138,23 @@ details.inner summary{cursor:pointer;font-weight:700}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media (max-width:720px){.grid2{grid-template-columns:1fr}}
 .grid2 textarea{min-height:120px;font-size:14px}
+.grid2>div{display:flex;flex-direction:column}
+.grid2>div .hint{flex:1}
+.ent.nuovo,.ent.cambiato{outline:2px solid var(--fg);outline-offset:1px;animation:diffin 1.2s ease-out 2}
+.ent.cambiato{outline-style:dashed}
+@keyframes diffin{0%{outline-offset:6px}100%{outline-offset:1px}}
+.modediff{margin:4px 0 12px;padding:10px 14px;border-radius:var(--radius-sm);background:var(--surface-2);font-size:15px}
+.modediff[hidden]{display:none}
+.modediff .link,button.link{border:0;background:none;padding:0;font:600 15px "Figtree",system-ui,sans-serif;text-decoration:underline;text-decoration-color:var(--brand);text-underline-offset:3px;cursor:pointer;color:var(--fg)}
+.modediff .link:hover{box-shadow:none}
+.forti{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 18px}
+.forte{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px;display:flex;flex-direction:column;gap:10px}
+.forte .fi{width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--on-ink);display:grid;place-items:center;flex:none}
+.forte .fi svg{width:22px;height:22px}
+.forte b{font-size:18px;line-height:1.25;letter-spacing:-.01em}
+.forte p{margin:0;font-size:14.5px;color:var(--muted);line-height:1.45}
+@media (max-width:900px){.forti{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.forti{grid-template-columns:1fr;gap:8px}.forte{display:grid;grid-template-columns:36px 1fr;column-gap:12px;row-gap:2px;padding:12px 14px}.forte .fi{width:36px;height:36px;grid-row:span 2}.forte .fi svg{width:18px;height:18px}.forte b{font-size:16px}.forte p{font-size:13.5px}}
 table{width:100%;border-collapse:collapse;font-size:15px}
 th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
 th{color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
@@ -222,7 +239,7 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
     <p class="eyebrow">Strumento d'esempio · corsi Hyper Link</p>
     <h1>Copri i dati personali prima di chiederli all'AI.</h1>
     <p class="lead">Bauta mette dei segnaposto al posto di nomi, recapiti, codici, dati sanitari e degli altri dati personali che riconosce. Quando l'AI ti risponde, rimette i dati veri dove erano.</p>
-    <p class="sub">Lavora solo sul tuo computer: il testo non viene inviato a nessuno, nemmeno a Hyper Link, e non viene salvato online. Funziona con qualsiasi assistente AI: Claude, ChatGPT, Gemini, Copilot, Le Chat, Perplexity e gli altri. Non riconosce tutto: il controllo finale (passaggio 2) resta tuo.</p>
+    <p class="sub">Funziona con qualsiasi assistente AI: Claude, ChatGPT, Gemini, Copilot, Le Chat, Perplexity e gli altri. Non riconosce tutto: per questo il controllo finale (passaggio 2) resta tuo.</p>
     <div class="hero-cta">
       <a class="btn primary" href="#s1">Inizia</a>
       <a class="btn" href="guida.html">Come funziona</a>
@@ -234,16 +251,18 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
   </div>
 </section>
 
+<section class="forti" aria-label="I punti forti di Bauta">
+  <div class="forte"><span class="fi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8.8a15 15 0 0 1 4.2-2.6M9.9 5.1A15 15 0 0 1 22 8.8M5 12.6a10 10 0 0 1 5.2-2.5M15.7 10.6A10 10 0 0 1 19 12.6M8.5 16.4a5 5 0 0 1 7 0M12 20h.01M3 3l18 18"/></svg></span><b>Lavora offline</b><p>Funziona sul tuo computer anche senza internet: puoi staccare la rete e usarla lo stesso.</p></div>
+  <div class="forte"><span class="fi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span><b>Il testo non viene inviato</b><p>Resta nel tuo browser: non arriva a nessuno, nemmeno a Hyper Link, e non viene salvato online.</p></div>
+  <div class="forte"><span class="fi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></svg></span><b>Codice pubblico e verificabile</b><p>Il codice è su GitHub: chiunque può leggerlo e controllare che cosa fa.</p></div>
+  <div class="forte"><span class="fi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></span><b>Il controllo finale è tuo</b><p>Vedi tutto quello che viene coperto e decidi tu cosa togliere o aggiungere prima di copiare.</p></div>
+</section>
+
 <div class="why">
   <svg viewBox="2 11 60 35" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M4 26c0-10 10-14 18-12 4 1 7 3 10 3s6-2 10-3c8-2 18 2 18 12s-8 18-16 18c-5 0-8-3-12-3s-7 3-12 3C12 44 4 36 4 26ZM13 27c2-5 10-6 14-1-3 5-11 6-14 1ZM51 27c-2-5-10-6-14-1 3 5 11 6 14 1Z"/></svg>
   <div><b>Perché si chiama Bauta?</b><p>La bauta è la maschera del Carnevale di Venezia che copriva tutto il viso: chi la indossava poteva parlare senza togliersela e senza farsi riconoscere. Bauta fa lo stesso con i tuoi testi: l'AI capisce di cosa parli, ma non sa di chi.</p></div>
 </div>
-<div class="trust">
-  <span class="pill">Lavora offline</span>
-  <span class="pill">Il testo non viene inviato</span>
-  <span class="pill">Codice pubblico e verificabile</span>
-  <span class="pill">Il controllo finale è tuo</span>
-</div>
+
 
 <section class="card scarica" id="scarica">
   <p class="eyebrow">Solo dal tuo computer</p>
@@ -255,12 +274,12 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
     <li><b>Apri</b> <code>index.html</code> con un doppio clic. Si apre nel browser, ma lavora tutto sul tuo computer: puoi anche staccare internet.</li>
   </ol>
   <dl class="peso" aria-label="Dati del file">
-    <div><dt>Peso del file</dt><dd>107 KB</dd></div>
-    <div><dt>Una volta estratto</dt><dd>220 KB</dd></div>
+    <div><dt>Peso del file</dt><dd>120 KB</dd></div>
+    <div><dt>Una volta estratto</dt><dd>255 KB</dd></div>
     <div><dt>Contiene</dt><dd>4 file: strumento, guida, istruzioni, licenza</dd></div>
     <div><dt>Versione</dt><dd>0.8 · 24/11/2026</dd></div>
   </dl>
-  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip · 107 KB</a><a class="btn" href="guida.html">Leggi la guida</a></div>
+  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip · 120 KB</a><a class="btn" href="guida.html">Leggi la guida</a></div>
 </section>
 <div class="app">
 <nav class="steps" aria-label="I quattro passaggi">
@@ -296,6 +315,7 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
 <section class="card" id="s2">
   <h2><span class="num">2</span>Controlla cosa viene coperto</h2>
   <p class="hint">Nel dubbio Bauta copre: meglio un segnaposto in più che un dato in chiaro. <b>Clicca su un dato</b> per lasciarlo in chiaro (vale per tutte le sue ripetizioni). <b>Se manca qualcosa</b>, selezionalo col mouse e coprilo. Le parole sottolineate a puntini sono nomi propri non riconosciuti con certezza; i bordi tratteggiati indicano codici che non superano il controllo matematico.</p>
+  <div class="modediff" id="modeDiff" role="status" hidden></div>
   <div class="chips" id="chips"></div>
   <div class="view" id="view" aria-live="polite"></div>
   <div class="selbar" id="selbar" hidden>
@@ -471,7 +491,7 @@ const Core = (() => {
   const SOPRANNOMI = new Set(words(`gigi beppe peppe peppino pippo toni tonino nino totò lele ale fede vale max giò teo betta lalla titti bea cri dani giuly marty robi simo gabri michi fabri manu mimmo ciccio nanni bebo enri giuse pupi lory sabri ely vane ricky andy alex tony mike chicca tina nico dodo cate mati gio fra`));
   const SOPRANNOMI_AMBIGUI = new Set(words(`fra ale tina max nico gio`));
   // Persone descritte a parole (solo modalità Anonima)
-  const RUOLI = `titolar[ei]|direttor[ei]|direttric[ei]|responsabil[ei]|cap[oi](?:ufficio|reparto|squadra|area)?|primari[oa]|amministrator[ei](?: delegat[oi])?|amministratric[ei]|president[ei]|presidentessa|segretari[oa]|soci[oa]|fondator[ei]|fondatric[ei]|dirigent[ei]|manager|coordinator[ei]|coordinatric[ei]|preside|sindac[oa]|assessor[ei]|parroc[oi]|medic[oi] di base|commercialista|ragionier[ea]|figli[oa]?|figlie|moglie|marito|compagn[oa]|fidanzat[oa]|padre|madre|pap[àa]|mamma|fratell[oi]|sorell[ae]|nonn[oa]|zi[oa]|cugin[oa]|nipot[ei]|suocer[oa]|cognat[oa]|genero|nuora|vicin[oa](?: di casa)?|colleg[ah]i?|collega|stagista|tirocinante|apprendista|neoassunt[oa]|ex dipendente|ex`;
+  const RUOLI = `titolar[ei]|direttor[ei]|direttric[ei]|responsabil[ei]|cap[oi](?:ufficio|reparto|squadra|area)?|primari[oa]|amministrator[ei](?: delegat[oi])?|amministratric[ei]|president[ei]|presidentessa|segretari[oa]|soci[oa]|fondator[ei]|fondatric[ei]|dirigent[ei]|manager|coordinator[ei]|coordinatric[ei]|preside|sindac[oa]|assessor[ei]|parroc[oi]|medic[oi] di base|commercialista|ragionier[ea]|figli[oa]?|figlie|moglie|marito|compagn[oa]|fidanzat[oa]|padre|madre|pap[àa]|mamma|fratell[oi]|sorell[ae]|nonn[oa]|zi[oa]|cugin[oa]|nipot[ei]|suocer[oa]|cognat[oa]|genero|nuora|vicin[oa](?: di casa)?|colleg[ah]i?|collega|stagista|tirocinante|apprendista|neoassunt[oa]|ex dipendente|dipendente|badante|legale|avvocat[oa] di fiducia|maggiore|minore|primogenit[oa]|ex`;
 
   const CF_ODD = {0:1,1:0,2:5,3:7,4:9,5:13,6:15,7:17,8:19,9:21,A:1,B:0,C:5,D:7,E:9,F:13,G:15,H:17,I:19,J:21,K:2,L:4,M:18,N:20,O:11,P:3,Q:6,R:8,S:12,T:14,U:16,V:10,W:22,X:25,Y:24,Z:23};
   function cfValid(cf){
@@ -856,7 +876,7 @@ const Core = (() => {
     // ---- Solo modalità Anonima: persone descritte a parole e cognomi in minuscolo ----
     if(opts.anon){
       if(opts.numbers!==false) all(/(?<![\w.,\/\-:+€$£])\d{2,6}(?![\w]|[.,\/\-:%]\d|\s?(?:%|€|euro|eur|\$|£|kg|g|km|m|cm|mm|l|ml|litri|pezzi|unità|volte|ore|minuti|giorni|settimane|mesi|anni)(?![\w]))/gi, m => { if(/^(?:19|20)\d{2}$/.test(m[0])) return; add(m.index, m.index+m[0].length, 'NUMERO'); });
-      if(opts.descriptions!==false) all(new RegExp(`(?<![A-Za-zÀ-ÿ])(?:(?:il|lo|la|l'|i|gli|le|un|uno|una|un'|suo|sua|suoi|sue|mio|mia|tuo|tua|nostr[oaie]|vostr[oaie]|quest[oaie]|quell[oa]|quel)\\s*)(?:(?:unic[oa]|nuov[oa]|stess[oa]|vecchi[oa]|giovane|attuale|precedente|ex)\\s+)?(?:${RUOLI})(?![A-Za-zÀ-ÿ])(?:\\s+(?:(?:del|della|dello|dei|degli|delle|dell'|di|d'|al|alla|in|a)\\s*[^\\s.,;:!?()]+(?:\\s+(?!(?:e|ed|o|ma|che|chi|ha|ho|hanno|è|sono|era|sarà|perché|non|si|mi|ti|ci|vi|lo|la|li|le|gli|ne|ieri|oggi|domani|quando|dove|come|anche|poi|già|ancora)(?:\\s|$))[^\\s.,;:!?()]+){0,3}))?`,'gi'), m => add(m.index, m.index+m[0].length, 'DESCRIZIONE'));
+      if(opts.descriptions!==false) all(new RegExp(`(?<![A-Za-zÀ-ÿ])(?:(?:il|lo|la|l'|i|gli|le|un|uno|una|un'|del|dello|della|dell'|dei|degli|delle|al|allo|alla|all'|dal|dalla|dall'|nel|nella|col|suo|sua|suoi|sue|mio|mia|miei|mie|tuo|tua|nostr[oaie]|vostr[oaie]|quest[oaie]|quell[oa]|quel)\\s*){1,2}(?:(?:unic[oa]|nuov[oa]|stess[oa]|vecchi[oa]|giovane|attuale|precedente|ex)\\s+)?(?:${RUOLI})(?![A-Za-zÀ-ÿ])(?:\\s+(?:(?:del|della|dello|dei|degli|delle|dell'|di|d'|al|alla|in|a)(?:(?<=')|\\s+)(?!\\d)[^\\s.,;:!?()]+(?:\\s+(?!(?:e|ed|o|ma|che|chi|ha|ho|hanno|è|sono|era|sarà|perché|non|si|mi|ti|ci|vi|lo|la|li|le|gli|ne|ieri|oggi|domani|quando|dove|come|anche|poi|già|ancora|al|allo|alla|ai|agli|alle|a|in|per|da|su|con|tra|fra|o|tel|telefono)(?:\\s|$))(?!\\d)[^\\s.,;:!?()]+){0,3}))?`,'gi'), m => { const pre = m[0].match(/^(?:del|dello|della|dei|degli|delle|al|allo|alla|dal|dalla|nel|nella|col)\s+|^(?:dell|all|dall)'/i); const s0 = m.index + (pre ? pre[0].length : 0); add(s0, m.index+m[0].length, 'DESCRIZIONE'); });
       if(opts.descriptions!==false) all(/(?<![A-Za-zÀ-ÿ])(?:l'unic[oa]|il solo|la sola|l'ultim[oa] arrivat[oa]|il più giovane|la più giovane|il più anzian[oa]|la più anziana)(?:\s+(?!(?:e|ed|o|ma|che|chi|ha|ho|hanno|è|sono|era|sarà|perché|non|si|mi|ti|ci|vi|lo|la|li|le|gli|ne|ieri|oggi|domani|quando|dove|come|anche|poi|già|ancora)(?:\s|$))[^\s.,;:!?()]+){1,6}/gi, m => add(m.index, m.index+m[0].length, 'DESCRIZIONE', {pri:12.8}));
       for(const [sur, keys] of Object.entries(surnameOwners)){
         if(keys.size!==1 || sur.length<4) continue;
@@ -1048,7 +1068,9 @@ const Core = (() => {
 
   function resetGate(){ $('gateChk').checked=false; $('gate').classList.remove('done'); $('btnCopyOut').disabled=true; }
 
-  function analyze(){
+  function analyze(base){
+    state.diffBase = base instanceof Map ? base : null;
+    if(!state.diffBase && $('modeDiff')) $('modeDiff').hidden = true;
     state.text = $('src').value;
     const T = state.filters.tech;
     state.ents = Core.analyze(state.text, {hide: parseHide(), never: parseNever(), anon: state.mode==='anon', safetyNet:!T.has('safetyNet'), lowercase:!T.has('lowercase'), nicknames:!T.has('nicknames'), descriptions:!T.has('descriptions'), numbers:!T.has('numbers')});
@@ -1098,14 +1120,18 @@ const Core = (() => {
     for(const e of ents) e.tok = active(e) ? ((state.mode==='anon' && !state.filters.tech.has('generalize') && generalize(e)) || tokenFor(e, dict)) : null;
 
     let html='', pos=0;
+    const base = state.diffBase, ora = new Set(); state.diffCount = {nuovi:0, cambiati:0, tolti:0};
+    for(const e of ents){ if(!e.tok) continue; const k=e.s+':'+e.e; ora.add(k);
+      if(base){ if(!base.has(k)){ e.diff='nuovo'; state.diffCount.nuovi++; } else if(/_\d+\]$/.test(base.get(k)) !== /_\d+\]$/.test(e.tok)){ e.diff='cambiato'; state.diffCount.cambiati++; } else e.diff=''; } else e.diff=''; }
+    if(base) for(const k of base.keys()) if(!ora.has(k)) state.diffCount.tolti++;
     for(const e of ents){
       if(e.s>pos) html += `<span data-s="${pos}">${escHtml(text.slice(pos,e.s))}</span>`;
       if(state.catOff.has(e.type)) html += `<span data-s="${e.s}">${escHtml(e.text)}</span>`;
       else {
         const off = state.excluded.has(e.key);
         const title = off ? 'Lasciato in chiaro: clicca per coprirlo'
-          : `${Core.CATS[e.type].label}${e.guessed?' (probabile)':''}${e.valid===false?' · non supera il controllo matematico':''}: clicca per lasciarlo in chiaro`;
-        html += `<span data-s="${e.s}" class="ent${off?' off':''}${e.valid===false?' weak':''}${e.guessed?' guess':''}" data-key="${escHtml(e.key)}" data-tok="${e.tok||''}" title="${escHtml(title)}">${escHtml(e.text)}</span>`;
+          : `${e.diff==='nuovo'?'Coperto solo in modalità Anonima · ':e.diff==='cambiato'?'In modalità Anonima diventa una fascia · ':''}${Core.CATS[e.type].label}${e.guessed?' (probabile)':''}${e.valid===false?' · non supera il controllo matematico':''}: clicca per lasciarlo in chiaro`;
+        html += `<span data-s="${e.s}" class="ent${off?' off':''}${e.valid===false?' weak':''}${e.guessed?' guess':''}${e.diff?' '+e.diff:''}" data-key="${escHtml(e.key)}" data-tok="${e.tok||''}" title="${escHtml(title)}">${escHtml(e.text)}</span>`;
       }
       pos = e.e;
     }
@@ -1148,8 +1174,21 @@ const Core = (() => {
       ? '<b>Reversibile</b>: i dati vengono sostituiti da segnaposto e la tabella dei collegamenti resta in questa pagina, così puoi rimettere i dati veri nella risposta dell\'AI.'
       : '<b>Anonima</b>: copre anche le persone descritte a parole (ruoli, parentele, "l\'unica donna del reparto") e i cognomi scritti in minuscolo; età, date e importi diventano fasce. La tabella dei collegamenti non viene conservata, quindi la risposta non si può ripristinare.';
     $('restoreArea').hidden = m==='anon'; $('anonNote').hidden = m==='rev';
+    const cambio = state.mode_prev && state.mode_prev!==m && state.text;
+    const prima = cambio ? new Map(state.ents.filter(e=>e.tok).map(e=>[e.s+':'+e.e, e.tok])) : null;
+    state.mode_prev = m;
     if(m==='anon') state.dict = {byKey:{}, byToken:{}, count:{}};
-    analyze();
+    analyze(prima);
+    if(prima){
+      const d = state.diffCount;
+      const msg = m==='anon'
+        ? `Modalità Anonima: ${d.nuovi} ${d.nuovi===1?'dato in più coperto':'dati in più coperti'}${d.cambiati?`, ${d.cambiati} ${d.cambiati===1?'trasformato':'trasformati'} in fasce`:''}.`
+        : `Modalità Reversibile: ${d.tolti} ${d.tolti===1?'dato torna':'dati tornano'} in chiaro${d.cambiati?`, ${d.cambiati} ${d.cambiati===1?'fascia torna':'fasce tornano'} segnaposto`:''}.`;
+      $('modeDiff').innerHTML = `<b>${msg}</b> ${m==='anon' ? (d.nuovi||d.cambiati ? 'Qui sotto: riquadro pieno = coperto solo in Anonima, riquadro tratteggiato = diventa una fascia.' : '') : (d.cambiati ? 'Qui sotto, nel riquadro tratteggiato: i dati che tornano segnaposto.' : '')} <button type="button" class="link" id="btnDiffOff">Nascondi</button>`;
+      $('modeDiff').hidden = false;
+      $('btnDiffOff').onclick = ()=>{ state.diffBase=null; $('modeDiff').hidden=true; render(); };
+      toast(msg + ' Guarda il passaggio 2.');
+    }
   }
   $('modeRev').addEventListener('click', ()=>setMode('rev'));
   $('modeAnon').addEventListener('click', ()=>setMode('anon'));
@@ -1261,23 +1300,184 @@ const Core = (() => {
   $('withPrompt').addEventListener('change', render);
   $('gateChk').addEventListener('change', ()=>{ const ok=$('gateChk').checked; $('gate').classList.toggle('done', ok); $('btnCopyOut').disabled = !ok || !$('out').value; });
   $('btnCopyOut').addEventListener('click', async ()=>{ toast(await copy($('out').value) ? 'Copiato: ora incollalo nel tuo assistente AI' : 'Copia non riuscita: seleziona il testo a mano'); });
-  $('btnExample').addEventListener('click', ()=>{
-    $('src').value = `Oggetto: rimborso spese e aggiornamento dati di Luca Ferraro
+  // ---- Esempi: ogni clic genera un testo nuovo (scenario a rotazione, dati inventati ogni volta) ----
+  const Esempi = (() => {
+    const R = a => a[Math.floor(Math.random()*a.length)];
+    const N = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+    const pad = (n,l=2) => String(n).padStart(l,'0');
+    const NOMI_M = 'Luca Marco Andrea Paolo Stefano Davide Matteo Simone Giorgio Riccardo Fabio Enrico Michele Alberto Daniele Roberto Massimo Tommaso Nicola Pietro'.split(' ');
+    const NOMI_F = 'Laura Giulia Chiara Francesca Elena Sara Martina Silvia Valentina Federica Alessandra Paola Anna Roberta Serena Ilaria Marta Elisa Beatrice Cristina'.split(' ');
+    const COGNOMI = 'Ferraro|Bianchi|Zanella|De Bortoli|Dal Farra|Fontana|Barbieri|Costa|Lazzarin|Moretti|Gallo|Pellegrini|Zanon|Bortot|Fabbri|Marchetti|Sartori|Cassol|Riva|Bellotto|Gentile|Mazzucco|Zuliani|Carraro'.split('|');
+    const CITTA = [['Belluno','32100','BL'],['Treviso','31100','TV'],['Padova','35121','PD'],['Verona','37121','VR'],['Vicenza','36100','VI'],['Trento','38122','TN'],['Udine','33100','UD'],['Bologna','40121','BO'],['Milano','20121','MI'],['Torino','10121','TO'],['Feltre','32032','BL'],['Bassano del Grappa','36061','VI']];
+    const VIE = 'Via Garibaldi|Via Roma|Viale Europa|Via Mazzini|Piazza dei Martiri|Via Cavour|Via Dante|Corso Italia|Via Fratelli Bandiera|Via San Lorenzo|Via dei Mille|Viale della Vittoria'.split('|');
+    const AZ1 = 'Dolomiti|Piave|Alpi|Laguna|Berica|Colli|Valbelluna|Sile|Brenta|Cadore|Euganea|Adige'.split('|');
+    const AZ2 = 'Impianti|Logistica|Costruzioni|Serramenti|Meccanica|Servizi|Elettronica|Arredi|Trasporti|Ottica|Alimentari|Software'.split('|');
+    const FORMA = ['S.r.l.','S.p.A.','S.n.c.','S.a.s.'];
+    const MESI = 'gennaio febbraio marzo aprile maggio giugno luglio agosto settembre ottobre novembre dicembre'.split(' ');
+    const persona = () => { const f = Math.random()<.5; return {nome:R(f?NOMI_F:NOMI_M), cognome:R(COGNOMI), f}; };
+    const diversa = (...gia) => { let p; do { p = persona(); } while(gia.some(q=>q.cognome===p.cognome || q.nome===p.nome)); return p; };
+    const azienda = () => `${R(AZ1)} ${R(AZ2)} ${R(FORMA)}`;
+    const citta = () => R(CITTA);
+    const indirizzo = c => `${R(VIE)} ${N(1,120)}, ${c[1]} ${c[0]}`;
+    const data = (a1=1955,a2=2003) => `${pad(N(1,28))}/${pad(N(1,12))}/${N(a1,a2)}`;
+    const dataTesto = () => `${N(1,28)} ${R(MESI)} 2026`;
+    const tel = () => `3${N(20,49)} ${N(100,999)} ${N(1000,9999)}`;
+    const fisso = c => `0${N(400,499)} ${N(100000,999999)}`;
+    const importo = (a,b) => `${N(a,b).toLocaleString('it-IT')},${pad(N(0,99))} €`;
+    const mail = (p, dom) => `${p.nome}.${p.cognome}`.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z.]/g,'') + '@' + dom;
+    const dominio = az => az.split(' ').slice(0,2).join('-').toLowerCase() + '.it';
+    // codici con il carattere o le cifre di controllo giuste, così Bauta li riconosce come validi
+    const cons = s => s.toUpperCase().replace(/[^A-Z]/g,'').replace(/[AEIOU]/g,''), voc = s => s.toUpperCase().replace(/[^A-Z]/g,'').replace(/[^AEIOU]/g,'');
+    function cf(p){
+      const c3 = s => (cons(s)+voc(s)+'XXX').slice(0,3);
+      const cn = cons(p.nome), nome = cn.length>3 ? cn[0]+cn[2]+cn[3] : c3(p.nome);
+      const base = c3(p.cognome) + nome + pad(N(50,99)) + 'ABCDEHLMPRST'[N(0,11)] + pad(N(1,28) + (p.f?40:0)) + R('ABDFGHLM') + pad(N(1,999),3);
+      for(const ch of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') if(Core.cfValid(base+ch)) return base+ch;
+      return base+'X';
+    }
+    function piva(){ const b = Array.from({length:10},()=>N(0,9)).join(''); for(let d=0;d<10;d++) if(Core.pivaValid(b+d)) return b+d; return b+'0'; }
+    function iban(){
+      const bban = R('XYZABC') + pad(N(1000,9999),5) + pad(N(10000,99999),5) + pad(N(0,999999999999),12);
+      for(let k=2;k<100;k++){ const s = 'IT'+pad(k)+bban; if(Core.ibanValid(s)) return s.replace(/(.{4})/g,'$1 ').trim(); }
+      return 'IT60 X054 2811 1010 0000 0123 456';
+    }
+    function carta(){ const b = '4' + Array.from({length:14},()=>N(0,9)).join(''); for(let d=0;d<10;d++) if(Core.luhn(b+d)) return (b+d).replace(/(.{4})/g,'$1 ').trim(); }
+    const targa = () => { const L='ABCDEFGHJKLMNPRSTVWXYZ'; return R(L)+R(L)+' '+N(100,999)+' '+R(L)+R(L); };
+    const cid = () => { const L='ABCDEFGHJKLMNPRSTVWXYZ'; return 'C'+R(L)+N(10000,99999)+R(L)+R(L); };
+    const firma = p => `${p.nome} ${p.cognome}`;
 
-Gentile Dott.ssa Laura Bianchi,
+    // Ogni scenario contiene anche elementi che la modalità Anonima tratta in modo diverso:
+    // persone descritte a parole, cognomi in minuscolo, numeri isolati, età, date e importi in fasce.
+    const SCENARI = [
+      () => { const p = persona(), r = diversa(p), h = diversa(p,r), az = azienda(), c = citta(); return `Oggetto: rimborso spese e aggiornamento dati di ${firma(p)}
 
-le scrivo per conto della Dolomiti Impianti S.r.l. (P.IVA 12345678903) in merito alla trasferta del nostro dipendente Luca Ferraro, nato il 01/01/1980 a Belluno, C.F. FRRLCU80A01A757D, residente in Via Garibaldi 12, 32100 Belluno.
+Gentile Dott.ssa ${r.nome} ${r.cognome},
 
-Il rimborso di 1.240 € va accreditato sull'IBAN IT60 X054 2811 1010 0000 0123 456. Per le spese anticipate Ferraro ha usato la carta aziendale 4111 1111 1111 1111. L'auto utilizzata è la Fiat targata AB 123 CD.
+le scrivo per conto della ${az} (P.IVA ${piva()}) in merito alla trasferta del nostro dipendente ${firma(p)}, nato il ${data()} a ${c[0]}, C.F. ${cf(p)}, residente in ${indirizzo(c)}.
 
-Le segnalo inoltre che Ferraro, 45 anni, è stato assente dal 3 al 7 marzo per un'ernia del disco ed è iscritto alla CGIL. Matricola 4521, pratica n. PR-2024/0012.
+Il rimborso di ${importo(300,2500)} va accreditato sull'IBAN ${iban()}. Per le spese anticipate ${p.cognome} ha usato la carta aziendale ${carta()}. L'auto utilizzata è targata ${targa()}.
 
-Per qualsiasi chiarimento può contattarlo al 347 123 4567 o scrivere a luca.ferraro@dolomiti-impianti.it. Il documento di riconoscimento allegato è la carta d'identità CA12345AB.
+Le segnalo inoltre che ${p.cognome}, ${N(28,62)} anni, è stato assente dal 3 al 7 marzo per un'ernia del disco ed è iscritto alla CGIL. Matricola ${N(1000,9999)}, pratica n. PR-2026/${pad(N(1,999),4)}.
+
+Per chiarimenti può contattare il responsabile del personale al ${tel()} o scrivere a ${mail(p, dominio(az))}.
 
 Cordiali saluti,
-Anna Maria De Luca
-Ufficio Risorse Umane`;
-    state.excluded.clear(); state.catOff = new Set(state.filters.cats); analyze();
+${firma(h)}
+Ufficio Risorse Umane`; },
+      () => { const p = persona(), m = diversa(p), c = citta(); return `Gentile Dott. ${m.cognome},
+
+le invio i referti di ${p.f?'mia madre':'mio padre'}, ${firma(p)}, ${N(68,91)} anni, tessera sanitaria ${cf(p)}. Da ${N(2,6)} settimane soffre di ipertensione e assume cortisone dopo il ricovero del ${dataTesto()} all'Ospedale San Martino di ${c[0]}.
+
+La visita specialistica è fissata alle 10:30 del ${dataTesto()}. ${p.f?'La badante':'Il badante'}, l'unica persona che lo assiste di notte, ci ha segnalato ${N(3,9)} episodi di confusione.
+
+Il ticket di ${importo(20,90)} è stato pagato con la carta ${carta()}. Per qualsiasi cosa può chiamarmi al ${tel()}.
+
+Grazie,
+${firma(diversa(p,m))}`; },
+      () => { const p = persona(), az = azienda(), az2 = azienda(), c = citta(); return `SOLLECITO DI PAGAMENTO
+
+Spett.le ${az2}
+${indirizzo(c)}
+P.IVA ${piva()}
+
+Alla cortese attenzione del titolare, ${firma(p)}.
+
+Risulta ancora da saldare la fattura n. ${N(100,999)}/2026 del ${data(2026,2026)} per un importo di ${importo(1500,48000)}. Vi chiediamo di effettuare il bonifico entro 15 giorni sul conto IBAN ${iban()} intestato a ${az}.
+
+Sono già stati inviati ${N(2,4)} solleciti. In mancanza di pagamento la pratica passerà al nostro legale, l'avv. ${firma(diversa(p))}.
+
+Amministrazione ${az}
+Tel. ${fisso(c)} · amministrazione@${dominio(az)}`; },
+      () => { const a = persona(), b = diversa(a), d = diversa(a,b), az = azienda(); return `Verbale della riunione del ${dataTesto()}
+
+Presenti: ${firma(a)} (direttore), ${firma(b)}, ${firma(d)} e la figlia del titolare.
+
+1. Organico: dal mese prossimo il reparto passa da ${N(8,15)} a ${N(16,24)} persone. Il nuovo responsabile della logistica sarà ${firma(b)}, che oggi guadagna ${importo(1800,2600)} netti al mese.
+2. ${d.nome} ${d.cognome} è in maternità fino a settembre: la sostituisce l'unica stagista del reparto vendite.
+3. Il cliente ${az} ha chiesto uno sconto del 12%. ${a.cognome} propone di accettare, ${b.cognome.toLowerCase()} è contrario.
+
+Prossimo incontro alle 9:00 del ${dataTesto()} in sala riunioni.`; },
+      () => { const l = persona(), t = diversa(l), c = citta(); return `CONTRATTO DI LOCAZIONE AD USO ABITATIVO
+
+Il sig. ${firma(l)}, nato a ${c[0]} il ${data(1950,1975)}, C.F. ${cf(l)} (locatore)
+e ${t.f?'la sig.ra':'il sig.'} ${firma(t)}, nat${t.f?'a':'o'} il ${data(1985,2001)}, C.F. ${cf(t)}, documento d'identità n. ${cid()} (conduttore)
+
+convengono la locazione dell'appartamento in ${indirizzo(c)}, piano ${N(1,5)}, censito al Catasto Foglio ${N(1,40)}, particella ${N(100,999)}, sub. ${N(1,20)}.
+
+Il canone mensile è di ${importo(450,1200)}, da versare entro il giorno 5 sull'IBAN ${iban()}. Il deposito cauzionale è di ${importo(900,2400)}.
+
+Nell'appartamento abiterà anche ${t.f?'il marito':'la moglie'} del conduttore con ${N(1,3)} figli.`; },
+      () => { const p = persona(), c = citta(); return `CURRICULUM VITAE
+
+${firma(p)}
+Nat${p.f?'a':'o'} il ${data(1980,2000)} · ${indirizzo(c)}
+Cell. ${tel()} · ${mail(p,'gmail.com')} · linkedin.com/in/${p.nome.toLowerCase()}${p.cognome.toLowerCase().replace(/\s/g,'')}
+
+Esperienza
+- ${N(2016,2020)}–oggi: Impiegat${p.f?'a':'o'} amministrativ${p.f?'a':'o'} presso ${azienda()}, ${c[0]}
+- ${N(2010,2015)}–${N(2016,2019)}: Contabile presso ${azienda()}
+
+Altre informazioni
+Patente B, automunit${p.f?'a':'o'} (${targa()}). Categoria protetta ai sensi della legge 104. Disponibile da subito; attuale retribuzione ${importo(22000,34000)} lordi annui.
+
+Referenze: il mio attuale responsabile, ${firma(diversa(p))}, è disponibile a essere contattato.`; },
+      () => { const p = persona(), op = diversa(p), c = citta(); return `Ticket #${N(10000,99999)} · Assistenza clienti
+
+Cliente: ${firma(p)}
+Codice cliente: CL-${N(10000,99999)}
+Email: ${mail(p,'libero.it')}
+
+Messaggio del cliente:
+"Buongiorno, il ${dataTesto()} ho ordinato ${N(2,6)} sedie (ordine n. ${N(100000,999999)}) con consegna in ${indirizzo(c)}. Il corriere è passato alle 14:15 ma non c'era nessuno: mio figlio è disabile e non può aprire. Potete richiamare me o mia moglie al ${tel()}? Ho già pagato ${importo(150,900)} con la carta ${carta()}."
+
+Risposta di ${op.nome} (operatore):
+"Gentile ${p.f?'signora':'signor'} ${p.cognome}, abbiamo riprogrammato la consegna. Il suo IP di accesso era 192.168.${N(0,9)}.${N(2,254)}: per sicurezza le chiediamo di cambiare la password."`; },
+      () => { const p = persona(), q = diversa(p), c = citta(); return `Note per la dichiarazione dei redditi
+
+Contribuente: ${firma(p)}, C.F. ${cf(p)}, ${N(35,64)} anni
+Coniuge a carico: ${firma(q)}
+
+Redditi 2025: ${importo(28000,65000)} da lavoro dipendente presso ${azienda()}; affitto percepito ${importo(4000,9000)} per l'immobile di ${indirizzo(c)}.
+
+Spese detraibili: ${importo(800,3500)} di spese mediche (psicoterapia del figlio maggiore e terapia per il diabete di ${q.nome}), ${importo(200,900)} di contributi al sindacato CISL.
+
+Rimborso sull'IBAN ${iban()}. Appuntamento con lo studio alle 17:30 del ${dataTesto()}.`; },
+      () => { const g = persona(), s = diversa(g), ins = diversa(g,s), c = citta(); return `Gentile famiglia ${s.cognome},
+
+vi scriviamo riguardo a ${s.nome}, classe 3ª B, nat${s.f?'a':'o'} il ${data(2012,2014)}. Negli ultimi ${N(2,5)} mesi ha accumulato ${N(10,25)} assenze e la docente di sostegno segnala un possibile disturbo d'ansia.
+
+Il colloquio con la coordinatrice, prof.ssa ${firma(ins)}, è fissato alle 16:00 del ${dataTesto()} nella sede di ${indirizzo(c)}.
+
+Vi ricordiamo inoltre la quota della gita di ${importo(150,380)}, da versare sull'IBAN ${iban()} indicando il codice alunno ${N(100000,999999)}.
+
+Per comunicazioni: ${tel()} (${g.f?'madre':'padre'}, ${firma(g)}).
+
+La Dirigente Scolastica`; },
+      () => { const p = persona(), t = diversa(p), c = citta(); return `DENUNCIA DI SINISTRO
+
+Polizza n. ${N(1000000,9999999)} · Assicurato: ${firma(p)}, C.F. ${cf(p)}
+
+Il ${dataTesto()}, alle 18:40, in ${indirizzo(c)}, il veicolo dell'assicurato targato ${targa()} è stato tamponato dal veicolo targato ${targa()} condotto da ${firma(t)}, patente n. ${c[2]}${N(1000000,9999999)}${R('ABCDE')}.
+
+Nell'incidente il passeggero, il cognato dell'assicurato, ha riportato una frattura al polso con ${N(20,40)} giorni di prognosi. Danni stimati al veicolo: ${importo(1200,6500)}.
+
+Testimone: il vicino di casa ${firma(diversa(p,t))}, tel. ${tel()}.
+
+L'assicurato chiede il risarcimento sull'IBAN ${iban()}.`; },
+    ];
+    // gli scenari girano tutti prima di ripetersi, e mai due volte di fila lo stesso
+    let coda = [], ultimo = -1;
+    function prossimo(){
+      if(!coda.length){ coda = SCENARI.map((_,i)=>i).sort(()=>Math.random()-.5); if(coda[0]===ultimo) coda.push(coda.shift()); }
+      ultimo = coda.shift();
+      return SCENARI[ultimo]();
+    }
+    return {prossimo, quanti: SCENARI.length};
+  })();
+  $('btnExample').addEventListener('click', ()=>{
+    $('src').value = Esempi.prossimo();
+    state.excluded.clear(); state.catOff = new Set(state.filters.cats); state.manual=[]; analyze();
+    toast('Nuovo esempio con dati inventati');
   });
   $('btnReset').addEventListener('click', e=>{
     const b = e.currentTarget;
