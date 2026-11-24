@@ -42,6 +42,17 @@ for (const [nome, opts] of [['Reversibile', {}], ['Anonima', { anon: true }]]) {
   out.push('');
 }
 out.push(`_Il dataset usa le sue categorie: alcune (per esempio SEX, GENDER, TIME, TITLE) Bauta non le considera dati da coprire, quindi lì percentuali basse sono attese._`);
+// esempi di dati non coperti, per capire cosa migliorare (testi sintetici del dataset)
+const mancati = {};
+for (const r of righe) {
+  const t = r.testo, cop = new Uint8Array(t.length);
+  for (const e of Core.analyze(t, {})) for (let i = e.s; i < e.e; i++) cop[i] = 1;
+  for (const d of r.dati) {
+    let tutti = true; for (let i = d.start; i < d.end; i++) if (!/\s/.test(t[i]) && !cop[i]) tutti = false;
+    if (!tutti && (mancati[d.label] ||= []).length < 40) mancati[d.label].push(`«${t.slice(d.start, d.end)}» … ${t.slice(Math.max(0, d.start - 45), d.start)}[[${t.slice(d.start, d.end)}]]${t.slice(d.end, d.end + 30)}`.replace(/\n/g, ' '));
+  }
+}
+fs.writeFileSync(path.join(__dirname, 'esempi-mancati.txt'), Object.entries(mancati).map(([k, v]) => `## ${k}\n` + v.join('\n')).join('\n\n'));
 const md = out.join('\n');
 console.log(md);
 if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md + '\n');

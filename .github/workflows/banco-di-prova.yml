@@ -28,6 +28,12 @@ jobs:
           python banco-di-prova/scarica.py
       - name: Misura
         run: node banco-di-prova/misura.js banco-di-prova/dati.jsonl
+      - name: Esempi non coperti (per migliorare Bauta)
+        uses: actions/upload-artifact@v4
+        with:
+          name: esempi-mancati
+          path: banco-di-prova/esempi-mancati.txt
+          retention-days: 7
       - name: Salva i risultati nel repository
         run: |
           git config user.name "Banco di prova"
