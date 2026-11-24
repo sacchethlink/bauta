@@ -73,5 +73,15 @@ for (const r of ['[PERSONA_1]', '**[PERSONA_1]**', '\\[PERSONA\\_1\\]', 'PERSONA
 check('segnaposto inventato segnalato', Core.restore('[PERSONA_9]', tab).unknown.includes('[PERSONA_9]'));
 check('"la persona 1" non viene toccato', Core.restore('la persona 1', tab).text === 'la persona 1');
 
+// 6. Nomi in minuscolo, soprannomi e (in modalità Anonima) persone descritte a parole
+const low = copri('ho parlato con mario rossi e poi con luca. Il Gigi, detto "il Biondo", ha chiamato.');
+for (const d of ['mario rossi', 'luca', 'Gigi', 'il Biondo']) check(`minuscolo/soprannome: "${d}" ancora visibile in → ${low}`, !low.includes(d));
+check('"ha detto che" non è un soprannome', copri('Luca Ferraro ha detto che arriva').includes('detto che arriva'));
+check('"rosa" e "viola" come parole comuni restano', copri('ho visto fiori rosa e viola').includes('rosa e viola'));
+const desc = 'La figlia del titolare è l\'unica donna del reparto vendite e il nuovo responsabile della logistica è in ferie.';
+const an = copri(desc, { anon: true });
+for (const d of ['figlia del titolare', "unica donna del reparto vendite", 'responsabile della logistica']) check(`descrizione: "${d}" ancora visibile in → ${an}`, !an.includes(d));
+check('in modalità Reversibile le descrizioni restano', copri(desc).includes('figlia del titolare'));
+
 console.log(`\n${ok} controlli superati, ${ko} non superati.`);
 process.exit(ko ? 1 : 0);

@@ -37,7 +37,7 @@ Il testo che incolli resta sul tuo computer e non viene salvato da nessuna parte
 
 | Famiglia | Dati |
 |---|---|
-| Chi è la persona | nomi e cognomi, aziende ed enti, altri nomi propri, età |
+| Chi è la persona | nomi e cognomi (anche in minuscolo), soprannomi, aziende ed enti, altri nomi propri, età; in modalità Anonima anche le persone descritte a parole |
 | Come contattarla | email, telefoni, indirizzi, siti, profili social |
 | Codici e documenti | codice fiscale e partita IVA (con controllo della cifra), documenti d'identità, targhe, matricole, protocolli, numeri di pratica |
 | Soldi | IBAN e carte (con controllo matematico), importi |
@@ -46,9 +46,14 @@ Il testo che incolli resta sul tuo computer e non viene salvato da nessuna parte
 
 Nel dubbio Bauta copre: meglio un segnaposto in più che un dato in chiaro.
 
+## Modalità
+
+- **Reversibile**: i dati diventano segnaposto e, quando l'AI risponde, tornano i dati veri.
+- **Anonima**: copre anche le persone descritte a parole e i cognomi in minuscolo; età, date e importi diventano fasce; il collegamento con i dati veri non viene conservato.
+
 ## Limiti
 
-- Non riconosce tutto: nomi scritti in minuscolo, soprannomi, dati descritti a parole. Il controllo al passaggio 2 è obbligatorio per poter copiare.
+- Non riconosce tutto: riconosce i nomi in minuscolo e i soprannomi più comuni e, in modalità Anonima, le descrizioni più frequenti di persone (ruoli, parentele). Nomi rari scritti in minuscolo o descrizioni insolite possono sfuggire. Il controllo al passaggio 2 è obbligatorio per poter copiare.
 - Non legge immagini e scansioni.
 - Non rende un testo anonimo in senso legale: il contesto può permettere di riconoscere una persona. Un testo con i segnaposto è *pseudonimizzato* e contiene ancora dati personali.
 - Non sostituisce le regole della tua azienda sull'uso dell'AI.

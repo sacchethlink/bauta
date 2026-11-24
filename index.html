@@ -144,6 +144,8 @@ td code{font:700 12.5px ui-monospace,Menlo,monospace}
 footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:22px}
 .fine{color:var(--muted);font-size:13px;margin-top:10px;line-height:1.45}
 .scarica{display:none}
+@keyframes richiamo{0%,100%{box-shadow:0 0 0 0 rgba(255,130,0,0)}50%{box-shadow:0 0 0 10px rgba(255,130,0,.45)}}
+.btn.richiamo{animation:richiamo .7s ease-in-out 3}
 body.solo-download .scarica{display:block}
 body.solo-download .app{display:none}
 .scarica h2{font-size:28px;letter-spacing:-.02em;margin:0 0 8px}
@@ -211,7 +213,7 @@ body.solo-download .app{display:none}
     <li><b>Estrai</b> la cartella: su Windows tasto destro sul file, poi "Estrai tutto"; sul Mac basta un doppio clic.</li>
     <li><b>Apri</b> <code>index.html</code> con un doppio clic. Si apre nel browser, ma lavora tutto sul tuo computer: puoi anche staccare internet.</li>
   </ol>
-  <div class="row"><a class="btn primary" href="bauta.zip" download>Scarica bauta.zip</a><a class="btn" href="guida.html">Leggi la guida</a></div>
+  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip</a><a class="btn" href="guida.html">Leggi la guida</a></div>
 </section>
 <div class="app">
 <nav class="steps" aria-label="I quattro passaggi">
@@ -325,7 +327,7 @@ body.solo-download .app{display:none}
 <div class="cta"><p>Volete regole chiare per usare l'AI con i dati in azienda?</p><a href="https://marcosacchet.netlify.app" target="_blank" rel="noopener">Il caffè lo offro io ☕</a></div>
 <footer>
   <span>Hyper Link di Sacchet Marco &amp; C. s.a.s. · P.IVA IT01219960257 · <a href="https://hyperlink-ai.netlify.app/" target="_blank" rel="noopener">hyperlink-ai.netlify.app</a></span>
-  <span>Bauta · versione 0.3</span>
+  <span>Bauta · versione 0.4</span>
 </footer>
 <p class="fine">Bauta è uno strumento d'esempio, fornito così com'è e senza garanzie. Aiuta a ridurre i dati personali esposti, ma non rende anonimo un testo in senso legale e non sostituisce le regole della tua azienda: anche con i segnaposto, il contesto può permettere di risalire a una persona. Ricontrolla sempre il passaggio 2 prima di inviare. <a href="guida.html">Guida completa</a> · <a href="https://github.com/sacchethlink/bauta" target="_blank" rel="noopener">Codice</a> · Licenza MIT · carattere Figtree (SIL Open Font License)</p>
 </div>
@@ -363,9 +365,10 @@ const Core = (() => {
     SENSIBILE:   {label:'Dati particolari',       tok:'SENSIBILE'},
     GIUDIZIARIO: {label:'Dati giudiziari',        tok:'GIUDIZIARIO'},
     IP:          {label:'Indirizzi IP',           tok:'IP'},
+    DESCRIZIONE: {label:'Persone descritte',      tok:'DESCRIZIONE'},
     ALTRO:       {label:'Le tue liste',           tok:'ALTRO'}
   };
-  const PRI = {ALTRO:0,IBAN:1,CARTA:2,CF:3,PIVA:4,EMAIL:5,URL:5.5,CATASTO:6,SALUTE:6.2,GIUDIZIARIO:6.3,SENSIBILE:6.4,
+  const PRI = {DESCRIZIONE:12.9,ALTRO:0,IBAN:1,CARTA:2,CF:3,PIVA:4,EMAIL:5,URL:5.5,CATASTO:6,SALUTE:6.2,GIUDIZIARIO:6.3,SENSIBILE:6.4,
     AZIENDA:7,INDIRIZZO:8,DOC:9,TARGA:10,TEL:11,CODICE:11.5,IP:12,IMPORTO:12.5,ETA:12.7,PERSONA:13,DATA:14,LUOGO:15,NOME:16};
 
   const words = s => s.trim().split(/\s+/);
@@ -396,6 +399,16 @@ const Core = (() => {
   const SALUTE_CTX = `(?:affett[oaie] da|soffr(?:e|ono) di|ha sofferto di|diagnosi di|diagnosticat[oaie](?: con| una?| un)?|in cura (?:per|da|presso)|in terapia (?:con|per)|allergic[oaie] a|intolleran(?:te|ti) a|ricoverat[oaie] (?:per|a causa di|presso)|operat[oaie] (?:di|per|al|alla|alle|ai)|positiv[oaie] (?:al|alla|a)|esent[ei] (?:per|da)|in malattia per|assente per|assenza per|a causa di (?:una|un)? ?(?:malattia|patologia))`;
   const SENSIBILE_TERMS = `cattolic[oaie]|cristian[oaie]|musulman[oaie]|islamic[oaie]|ebre[oaie]|ebraic[oaie]|buddist[aie]|induist[aie]|testimon[ei] di geova|evangelic[oaie]|ortodoss[oaie]|protestant[ei]|atei|atea|ateo|agnostic[oaie]|sikh|religion[ei]|religios[oaie]|ramadan|kosher|halal|omosessual(?:e|i|ità)|eterosessual[ei]|gay|lesbic(?:a|he)|bisessual[ei]|transgender|transessual[ei]|lgbt[a-z+]*|queer|non binari[oaie]|coming out|orientamento sessuale|identità di genere|vita sessuale|unione civile|etnia|etnic[oaie]|razza|razzial[ei]|colore della pelle|di origin[ei] [a-zà-ÿ]+|nazionalità [a-zà-ÿ]+|permesso di soggiorno|richiedent[ei] asilo|rifugiat[oaie]|profugh?[oaie]|sindacat[oi]|sindacal[ei]|sindacalist[aie]|rsu|cgil|cisl|uil|ugl|cobas|fiom|iscritt[oaie] (?:al|a un) (?:partito|sindacato)|tesserat[oaie]|orientamento politico|opinion[ei] politic[ah]e?|idee politiche|partito democratico|fratelli d.italia|movimento 5 stelle|m5s|forza italia|italia viva|rifondazione comunista|casapound|forza nuova|dna|test genetic[oi]|dati genetici|impront[ae] digital[ei]|dati biometrici|riconoscimento facciale`;
   const GIUD_TERMS = `condann[ae]|condannat[oaie](?: (?:per|a) [^.,;:\\n()]{2,50})?|carichi pendenti|casellario(?: giudiziale)?|precedenti penali|fedina penale|procediment[oi] penal[ei]|indagat[oaie]|imputat[oaie]|arrestat[oaie]|denunciat[oaie]|querel[ae]|querelat[oaie]|reat[oi]|pregiudicat[oaie]|misur[ae] cautelar[ei]|arresti domiciliari|domiciliari|patteggiament[oi]|sentenz[ae] penal[ei]|pena detentiva|detenut[oaie]|carcere|libertà vigilata|affidamento in prova|interdittiva antimafia|daspo`;
+
+
+  // Nomi scritti in minuscolo: si usano solo i nomi che non sono anche parole comuni
+  const FIRST_AMBIGUI = new Set(words(`ada alba alma ambra angela angelo angelica asia assunta aurora bianca bruna carmen celeste chiara clara concetta costanza cristiano dalia diana dino elia ella enzo erica eva fausto felice fiorella franca franco gaia gemma germano gioia gloria grazia ines iris italo lara leone lia lino linda luce mara marina massimo maura melissa mirella nadia natale nella nina norma olga pace pasquale pina pino primo rina rita romano rosa rosalba salvatore sara serena sole speranza stella tania vanna vera viola vito vittoria zoe ivan ugo ana benedetta letizia`));
+  const COGNOMI = new Set(words(`rossi russo ferrari esposito bianchi romano colombo ricci marino greco bruno gallo conti mancini costa giordano rizzo lombardi moretti barbieri fontana santoro mariani rinaldi caruso ferrara galli martini leone longo gentile martinelli vitale lombardo serra coppola marchetti parisi villa conte ferraro ferri fabbri bianco marini grasso valentini messina sala gatti pellegrini palumbo sanna farina rizzi monti cattaneo morelli amato silvestri mazza testa grassi pellegrino carbone giuliani benedetti barone rossetti caputo montanari guerra palmieri bernardi martino fiore ferretti bellini basile riva donati piras vitali battaglia sartori neri costantini milani pagano ruggiero sorrentino orlando negri sacchet de col zanco`));
+  // Soprannomi e diminutivi frequenti
+  const SOPRANNOMI = new Set(words(`gigi beppe peppe peppino pippo toni tonino nino totò lele ale fede vale max giò teo betta lalla titti bea cri dani giuly marty robi simo gabri michi fabri manu mimmo ciccio nanni bebo enri giuse pupi lory sabri ely vane ricky andy alex tony mike chicca tina nico dodo cate mati gio fra`));
+  const SOPRANNOMI_AMBIGUI = new Set(words(`fra ale tina max nico gio`));
+  // Persone descritte a parole (solo modalità Anonima)
+  const RUOLI = `titolar[ei]|direttor[ei]|direttric[ei]|responsabil[ei]|cap[oi](?:ufficio|reparto|squadra|area)?|primari[oa]|amministrator[ei](?: delegat[oi])?|amministratric[ei]|president[ei]|presidentessa|segretari[oa]|soci[oa]|fondator[ei]|fondatric[ei]|dirigent[ei]|manager|coordinator[ei]|coordinatric[ei]|preside|sindac[oa]|assessor[ei]|parroc[oi]|medic[oi] di base|commercialista|ragionier[ea]|figli[oa]?|figlie|moglie|marito|compagn[oa]|fidanzat[oa]|padre|madre|pap[àa]|mamma|fratell[oi]|sorell[ae]|nonn[oa]|zi[oa]|cugin[oa]|nipot[ei]|suocer[oa]|cognat[oa]|genero|nuora|vicin[oa](?: di casa)?|colleg[ah]i?|collega|stagista|tirocinante|apprendista|neoassunt[oa]|ex dipendente|ex`;
 
   const CF_ODD = {0:1,1:0,2:5,3:7,4:9,5:13,6:15,7:17,8:19,9:21,A:1,B:0,C:5,D:7,E:9,F:13,G:15,H:17,I:19,J:21,K:2,L:4,M:18,N:20,O:11,P:3,Q:6,R:8,S:12,T:14,U:16,V:10,W:22,X:25,Y:24,Z:23};
   function cfValid(cf){
@@ -648,6 +661,34 @@ const Core = (() => {
       all(new RegExp(`${NB}${esc(c.core).replace(/\s+/g,'\\s+')}${NA}`,'g'), m => add(m.index, m.index+m[0].length, 'AZIENDA', {key:c.key, pri:7.5, alias:true}));
     }
 
+
+    // ---- Nomi in minuscolo e soprannomi ----
+    const lowTok = toks.filter(t=>/^[a-zà-öø-ÿ]/.test(t.w));
+    for(let i=0;i<toks.length;i++){
+      const t = toks[i], lw = t.w.toLowerCase();
+      if(/^[a-zà-öø-ÿ]/.test(t.w) && FIRST.has(lw) && !FIRST_AMBIGUI.has(lw)){
+        const nx = toks[i+1];
+        if(nx && adj(t,nx) && COGNOMI.has(nx.w.toLowerCase())) add(t.s, nx.e, 'PERSONA', {pri:13.3, key:'PERSONA|'+norm('PERSONA', text.slice(t.s,nx.e))});
+        else add(t.s, t.e, 'PERSONA', {pri:13.4, key:'PERSONA|'+lw, guessed:true});
+      }
+      if(SOPRANNOMI.has(lw) && !(SOPRANNOMI_AMBIGUI.has(lw) && /^[a-z]/.test(t.w))) add(t.s, t.e, 'PERSONA', {pri:13.4, key:'PERSONA|'+lw, guessed:true});
+    }
+    all(/(?<![A-Za-zÀ-ÿ])(?<!(?:ha|ho|hai|hanno|abbiamo|avete|aveva|avevo|avevano|avrà|aver|avendo|è|sono|era|stato|stata|già|ben|come|sopra|suddetto|predetto)\s)(?:dett[oa]|soprannominat[oa]|soprannome|conosciut[oa] come|nome d'arte|nickname|alias|che tutti chiamano)\s*[:"«“']?\s*([^\s.,;:!?"»”()]+(?:\s+[A-ZÀ-Ý][^\s.,;:!?"»”()]*)?)/gi, m => {
+      const s0 = m.index + m[0].length - m[1].length;
+      if(m[1].length>=2 && !COMMON.has(m[1].toLowerCase()) && !/^(che|di|a|da|per|in|su|con|questo|questa|quello|così|cosa|niente|tutto|prima|dopo|anche|non|sopra|sotto)$/i.test(m[1])) add(s0, s0+m[1].length, 'PERSONA', {pri:13.1, key:'PERSONA|'+m[1].toLowerCase()});
+    });
+
+    // ---- Solo modalità Anonima: persone descritte a parole e cognomi in minuscolo ----
+    if(opts.anon){
+      all(new RegExp(`(?<![A-Za-zÀ-ÿ])(?:(?:il|lo|la|l'|i|gli|le|un|uno|una|un'|suo|sua|suoi|sue|mio|mia|tuo|tua|nostr[oaie]|vostr[oaie]|quest[oaie]|quell[oa]|quel)\\s*)(?:(?:unic[oa]|nuov[oa]|stess[oa]|vecchi[oa]|giovane|attuale|precedente|ex)\\s+)?(?:${RUOLI})(?![A-Za-zÀ-ÿ])(?:\\s+(?:(?:del|della|dello|dei|degli|delle|dell'|di|d'|al|alla|in|a)\\s*[^\\s.,;:!?()]+(?:\\s+(?!(?:e|ed|o|ma|che|chi|ha|ho|hanno|è|sono|era|sarà|perché|non|si|mi|ti|ci|vi|lo|la|li|le|gli|ne|ieri|oggi|domani|quando|dove|come|anche|poi|già|ancora)(?:\\s|$))[^\\s.,;:!?()]+){0,3}))?`,'gi'), m => add(m.index, m.index+m[0].length, 'DESCRIZIONE'));
+      all(/(?<![A-Za-zÀ-ÿ])(?:l'unic[oa]|il solo|la sola|l'ultim[oa] arrivat[oa]|il più giovane|la più giovane|il più anzian[oa]|la più anziana)(?:\s+(?!(?:e|ed|o|ma|che|chi|ha|ho|hanno|è|sono|era|sarà|perché|non|si|mi|ti|ci|vi|lo|la|li|le|gli|ne|ieri|oggi|domani|quando|dove|come|anche|poi|già|ancora)(?:\s|$))[^\s.,;:!?()]+){1,6}/gi, m => add(m.index, m.index+m[0].length, 'DESCRIZIONE', {pri:12.8}));
+      for(const [sur, keys] of Object.entries(surnameOwners)){
+        if(keys.size!==1 || sur.length<4) continue;
+        const key=[...keys][0];
+        all(new RegExp(`${NB}${esc(sur.toLowerCase())}${NA}`,'g'), m => add(m.index, m.index+m[0].length, 'PERSONA', {key, pri:13.6, alias:true}));
+      }
+    }
+
     // ---- Risoluzione delle sovrapposizioni ----
     cands.sort((a,b)=> a.pri-b.pri || (b.e-b.s)-(a.e-a.s) || a.s-b.s);
     const occ = new Uint8Array(text.length+1);
@@ -756,6 +797,11 @@ const Core = (() => {
     document.body.classList.add('solo-download');
     const go = document.querySelector('.hero .btn.primary'); if(go){ go.textContent='Scarica Bauta'; go.setAttribute('href','#scarica'); }
     document.querySelectorAll('a[href="#s1"],a[href="#s2"],a[href="#s3"],a[href="#s4"]').forEach(a=>a.setAttribute('href','#scarica'));
+    // il pulsante di download si illumina quando ci si arriva
+    const zip = document.getElementById('btnZip');
+    const richiama = () => { zip.classList.remove('richiamo'); void zip.offsetWidth; setTimeout(()=>zip.classList.add('richiamo'), 450); };
+    document.querySelectorAll('a[href="#scarica"]').forEach(a=>a.addEventListener('click', richiama));
+    if(location.hash==='#scarica') richiama();
     return;
   }
   const state = {
@@ -800,7 +846,7 @@ const Core = (() => {
 
   function analyze(){
     state.text = $('src').value;
-    state.ents = Core.analyze(state.text, {hide: parseHide(), never: parseNever()});
+    state.ents = Core.analyze(state.text, {hide: parseHide(), never: parseNever(), anon: state.mode==='anon'});
     const fullByKey = {};
     for(const e of state.ents) if(!e.alias && !fullByKey[e.key]) fullByKey[e.key] = e.text;
     for(const e of state.ents) if(e.alias) e.fullValue = fullByKey[e.key] || e.text;
@@ -810,11 +856,41 @@ const Core = (() => {
 
   const active = e => !state.excluded.has(e.key) && !state.catOff.has(e.type);
 
+  // In modalità Anonima età, date e importi diventano fasce: l'AI capisce l'ordine di grandezza, non il dato
+  const fmt = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  function generalize(e){
+    const t = e.text.toLowerCase();
+    if(e.type==='ETA'){
+      const w = {diciott:18,vent:20,trent:30,quarant:40,cinquant:50,sessant:60,settant:70,ottant:80,novant:90};
+      let n = (t.match(/\d{1,3}/)||[])[0]; n = n ? +n : null;
+      if(n===null) for(const k in w) if(t.includes(k)){ n=w[k]; break; }
+      if(n===null) return t.includes('minorenn') ? '[ETÀ: minorenne]' : '[ETÀ]';
+      const d = Math.floor(n/10)*10; return `[ETÀ tra ${d} e ${d+9} anni]`;
+    }
+    if(e.type==='DATA'){
+      let y = (t.match(/(?:19|20)\d{2}/)||[])[0];
+      if(!y){ const m = t.match(/[\/.\-](\d{2})$/); if(m) y = (+m[1] > 30 ? '19' : '20') + m[1]; }
+      return y ? `[DATA, anno ${y}]` : '[DATA]';
+    }
+    if(e.type==='IMPORTO'){
+      const cur = /\$|usd/.test(t) ? '$' : /£/.test(t) ? '£' : /chf/.test(t) ? 'CHF' : '€';
+      const num = (t.match(/\d[\d.' ]*(?:,\d+)?/)||[])[0];
+      if(!num) return '[IMPORTO]';
+      let v = parseFloat(num.replace(/[.' ]/g,'').replace(',','.'));
+      if(/milion/.test(t)) v*=1e6; else if(/mila|k€/.test(t)) v*=1000;
+      const B=[100,1000,5000,10000,50000,100000,1e6];
+      if(v<B[0]) return `[IMPORTO sotto ${fmt(B[0])} ${cur}]`;
+      for(let i=1;i<B.length;i++) if(v<B[i]) return `[IMPORTO tra ${fmt(B[i-1])} e ${fmt(B[i])} ${cur}]`;
+      return `[IMPORTO oltre 1 milione di ${cur}]`;
+    }
+    return null;
+  }
+
   function render(){
     const text = state.text, ents = state.ents;
     // in modalità anonima la tabella è temporanea e non viene conservata
     const dict = state.mode==='rev' ? state.dict : {byKey:{}, byToken:{}, count:{}};
-    for(const e of ents) e.tok = active(e) ? tokenFor(e, dict) : null;
+    for(const e of ents) e.tok = active(e) ? ((state.mode==='anon' && generalize(e)) || tokenFor(e, dict)) : null;
 
     let html='', pos=0;
     for(const e of ents){
@@ -865,10 +941,10 @@ const Core = (() => {
     $('modeRev').setAttribute('aria-pressed', m==='rev'); $('modeAnon').setAttribute('aria-pressed', m==='anon');
     $('modeHint').innerHTML = m==='rev'
       ? '<b>Reversibile</b>: i dati vengono sostituiti da segnaposto e la tabella dei collegamenti resta in questa pagina, così puoi rimettere i dati veri nella risposta dell\'AI.'
-      : '<b>Anonima</b>: i dati vengono sostituiti da segnaposto e la tabella dei collegamenti non viene conservata. Più protezione, ma la risposta non si può ripristinare.';
+      : '<b>Anonima</b>: copre anche le persone descritte a parole (ruoli, parentele, "l\'unica donna del reparto") e i cognomi scritti in minuscolo; età, date e importi diventano fasce. La tabella dei collegamenti non viene conservata, quindi la risposta non si può ripristinare.';
     $('restoreArea').hidden = m==='anon'; $('anonNote').hidden = m==='rev';
     if(m==='anon') state.dict = {byKey:{}, byToken:{}, count:{}};
-    resetGate(); render();
+    analyze();
   }
   $('modeRev').addEventListener('click', ()=>setMode('rev'));
   $('modeAnon').addEventListener('click', ()=>setMode('anon'));
