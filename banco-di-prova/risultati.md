@@ -37,9 +37,9 @@ Testi: 2000 ([ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.c
 
 Testi: 2000 ([ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.co/datasets/ai4privacy/open-pii-masking-500k-ai4privacy), CC BY 4.0).
 
-- Dati coperti per intero: **92,5%** (4170 su 4508)
+- Dati coperti per intero: **92,5%** (4171 su 4508)
 - Caratteri di dati personali coperti: **96,3%**
-- Testo normale coperto per eccesso: **1,8%**
+- Testo normale coperto per eccesso: **1,9%**
 
 | Tipo di dato (etichetta del dataset) | Quanti | Coperti per intero | Caratteri coperti |
 |---|---:|---:|---:|
@@ -53,7 +53,7 @@ Testi: 2000 ([ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.c
 | EMAIL | 206 | 96,6% | 99,0% |
 | IDCARDNUM | 191 | 99,0% | 99,3% |
 | BUILDINGNUM | 172 | 82,6% | 81,4% |
-| TITLE | 153 | 74,5% | 71,3% |
+| TITLE | 153 | 75,2% | 72,3% |
 | AGE | 110 | 80,9% | 82,6% |
 | PASSPORTNUM | 69 | 100,0% | 100,0% |
 | ZIPCODE | 60 | 96,7% | 96,7% |
@@ -108,13 +108,13 @@ Testi: 600 ([gretelai/synthetic_pii_finance_multilingual](https://huggingface.co
 
 Testi: 600 ([gretelai/synthetic_pii_finance_multilingual](https://huggingface.co/datasets/gretelai/synthetic_pii_finance_multilingual), Apache 2.0).
 
-- Dati coperti per intero: **66,8%** (2036 su 3050)
-- Caratteri di dati personali coperti: **78,7%**
-- Testo normale coperto per eccesso: **10,1%**
+- Dati coperti per intero: **67,4%** (2057 su 3050)
+- Caratteri di dati personali coperti: **79,2%**
+- Testo normale coperto per eccesso: **10,2%**
 
 | Tipo di dato (etichetta del dataset) | Quanti | Coperti per intero | Caratteri coperti |
 |---|---:|---:|---:|
-| name | 952 | 72,0% | 80,9% |
+| name | 952 | 74,2% | 82,7% |
 | company | 582 | 51,0% | 62,0% |
 | street_address | 462 | 67,5% | 92,3% |
 | date | 395 | 63,0% | 71,7% |
