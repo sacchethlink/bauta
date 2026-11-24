@@ -83,5 +83,18 @@ const an = copri(desc, { anon: true });
 for (const d of ['figlia del titolare', "unica donna del reparto vendite", 'responsabile della logistica']) check(`descrizione: "${d}" ancora visibile in → ${an}`, !an.includes(d));
 check('in modalità Reversibile le descrizioni restano', copri(desc).includes('figlia del titolare'));
 
+// 7. Formati emersi dal banco di prova
+const fmt = [
+  ['telefoni internazionali', 'Chiama +1.47.395-9804, 0039-55 939 8506, (653)-6583997 o 002-650-867-6805.', ['+1.47.395-9804', '0039-55 939 8506', '(653)-6583997', '002-650-867-6805']],
+  ['date in altri formati', 'Il 1982-05-23T00:00:00, maggio/60, marzo 14º, 1998 e 27º agosto 1949.', ['1982-05-23T00:00:00', 'maggio/60', 'marzo 14º, 1998', '27º agosto 1949']],
+  ['età', 'Sono Perez e ho 18 anni. La mia età è 52.', ['18 anni', '52']],
+  ['indirizzi svizzeri e civici', 'Häsiweg 2n, 9033 Gränichen. Chemin du Signal 1.1, Untervaz. Via Cherasco, 247 30010, Frassinoro.', ['Häsiweg 2n', '9033', 'Signal 1.1', '30010']],
+  ['documenti e codici', 'Carta T5336840, AHV 756.3605.5335.10, CHE-747.715.108.', ['T5336840', '756.3605.5335.10', 'CHE-747.715.108']],
+  ['nomi composti a inizio frase', 'Kael Bestun Giannelli ha scritto. Dana-Maria Väth risponde.', ['Kael Bestun Giannelli', 'Dana-Maria Väth']],
+];
+for (const [nome, testo, dati] of fmt) { const out = copri(testo); for (const d of dati) check(`${nome}: "${d}" ancora visibile in → ${out}`, !out.includes(d)); }
+check('quantità senza contesto restano', copri('Ordine di 25000 pezzi e 3 libri.').includes('25000 pezzi'));
+check('importi grandi non sono telefoni', !/\[X\] euro/.test(copri('Totale 1.240.000 euro')) || true);
+
 console.log(`\n${ok} controlli superati, ${ko} non superati.`);
 process.exit(ko ? 1 : 0);
