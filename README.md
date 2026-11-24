@@ -23,10 +23,15 @@ La bauta è la maschera del Carnevale di Venezia che copriva tutto il viso: chi 
 
 La guida completa, con le infografiche, è in [`guida.html`](guida.html).
 
-## Due modi per usarlo
+## Si usa solo dal tuo computer
 
-- **Online**, dalla pagina del progetto.
-- **Dal tuo computer**: scarica `index.html` e `guida.html`, poi apri `index.html` con un doppio clic. Funziona anche senza internet.
+Bauta non funziona da un sito: la pagina online serve solo a scaricarla.
+
+1. Scarica `bauta.zip` dalla pagina del progetto (o il pulsante **Code → Download ZIP** di questo repository).
+2. Estrai la cartella.
+3. Apri `index.html` con un doppio clic. Funziona anche senza internet.
+
+Il testo che incolli resta sul tuo computer e non viene salvato da nessuna parte online. Le liste "Copri sempre" e "Non toccare mai" restano nel browser del tuo computer.
 
 ## Cosa copre
 
@@ -65,7 +70,8 @@ node test/test-motore.js
 ## Struttura
 
 ```
-index.html          lo strumento (pagina unica, funziona offline)
+index.html          lo strumento (si usa aprendo il file dal computer)
+bauta.zip           il pacchetto da scaricare: strumento, guida e istruzioni
 guida.html          guida all'uso con infografiche
 test/               test del motore di riconoscimento
 logo/               il marchio di Bauta (nero e bianco, con i fori trasparenti)

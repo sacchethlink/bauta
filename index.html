@@ -143,6 +143,13 @@ td code{font:700 12.5px ui-monospace,Menlo,monospace}
 .cta a{background:var(--brand);color:var(--on-brand);text-decoration:none;font-weight:700;padding:10px 18px;border-radius:var(--pill)}
 footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:22px}
 .fine{color:var(--muted);font-size:13px;margin-top:10px;line-height:1.45}
+.scarica{display:none}
+body.solo-download .scarica{display:block}
+body.solo-download .app{display:none}
+.scarica h2{font-size:28px;letter-spacing:-.02em;margin:0 0 8px}
+.howto{margin:0 0 6px;padding-left:22px;font-size:16px}
+.howto li{margin:6px 0}
+.howto code,.hint code{font:700 14px ui-monospace,Menlo,monospace;background:var(--surface-2);padding:1px 6px;border-radius:6px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--on-ink);padding:10px 18px;border-radius:var(--pill);font-size:15px;font-weight:700;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}
 .toast.show{opacity:1}
 .sr{position:absolute;left:-9999px}
@@ -172,7 +179,7 @@ footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-s
     <p class="eyebrow">Strumento d'esempio · corsi Hyper Link</p>
     <h1>Copri i dati personali prima di chiederli all'AI.</h1>
     <p class="lead">Bauta mette dei segnaposto al posto di nomi, recapiti, codici, dati sanitari e degli altri dati personali che riconosce. Quando l'AI ti risponde, rimette i dati veri dove erano.</p>
-    <p class="sub">Lavora solo in questa pagina: il testo non viene inviato a nessuno, nemmeno a Hyper Link. Funziona con qualsiasi assistente AI: Claude, ChatGPT, Gemini, Copilot, Le Chat, Perplexity e gli altri. Non riconosce tutto: il controllo finale (passaggio 2) resta tuo.</p>
+    <p class="sub">Lavora solo sul tuo computer: il testo non viene inviato a nessuno, nemmeno a Hyper Link, e non viene salvato online. Funziona con qualsiasi assistente AI: Claude, ChatGPT, Gemini, Copilot, Le Chat, Perplexity e gli altri. Non riconosce tutto: il controllo finale (passaggio 2) resta tuo.</p>
     <div class="hero-cta">
       <a class="btn primary" href="#s1">Inizia</a>
       <a class="btn" href="guida.html">Come funziona</a>
@@ -195,6 +202,18 @@ footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-s
   <span class="pill">Il controllo finale è tuo</span>
 </div>
 
+<section class="card scarica" id="scarica">
+  <p class="eyebrow">Solo dal tuo computer</p>
+  <h2>Scarica Bauta e usala in locale</h2>
+  <p class="hint">Per proteggere i tuoi dati, Bauta non funziona da un sito: si usa solo dal tuo computer, aprendo il file che scarichi. Il testo che incolli non passa da internet e non viene salvato da nessuna parte online.</p>
+  <ol class="howto">
+    <li><b>Scarica</b> il file <code>bauta.zip</code>.</li>
+    <li><b>Estrai</b> la cartella: su Windows tasto destro sul file, poi "Estrai tutto"; sul Mac basta un doppio clic.</li>
+    <li><b>Apri</b> <code>index.html</code> con un doppio clic. Si apre nel browser, ma lavora tutto sul tuo computer: puoi anche staccare internet.</li>
+  </ol>
+  <div class="row"><a class="btn primary" href="bauta.zip" download>Scarica bauta.zip</a><a class="btn" href="guida.html">Leggi la guida</a></div>
+</section>
+<div class="app">
 <nav class="steps" aria-label="I quattro passaggi">
   <a href="#s1"><b>1 · Incolla</b>Il testo, o un file .docx / .txt</a>
   <a href="#s2"><b>2 · Controlla</b>Togli o aggiungi ciò che va coperto</a>
@@ -301,6 +320,7 @@ footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-s
     </div>
   </details>
 </details>
+</div>
 
 <div class="cta"><p>Volete regole chiare per usare l'AI con i dati in azienda?</p><a href="https://marcosacchet.netlify.app" target="_blank" rel="noopener">Il caffè lo offro io ☕</a></div>
 <footer>
@@ -731,6 +751,13 @@ const Core = (() => {
 
 (() => {
   const $ = id => document.getElementById(id);
+  // Bauta si usa solo dal computer (file aperto in locale). Da un sito mostra solo il download.
+  if(location.protocol !== 'file:'){
+    document.body.classList.add('solo-download');
+    const go = document.querySelector('.hero .btn.primary'); if(go){ go.textContent='Scarica Bauta'; go.setAttribute('href','#scarica'); }
+    document.querySelectorAll('a[href="#s1"],a[href="#s2"],a[href="#s3"],a[href="#s4"]').forEach(a=>a.setAttribute('href','#scarica'));
+    return;
+  }
   const state = {
     text:'', ents:[], excluded:new Set(), catOff:new Set(), manual:[], mode:'rev',
     dict:{byKey:{}, byToken:{}, count:{}}, lastRestored:'', restoredOnce:false
