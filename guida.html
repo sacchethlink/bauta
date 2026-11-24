@@ -71,6 +71,7 @@ nav.links a{font-size:15px;font-weight:700;text-decoration:none;padding:9px 16px
 nav.links a:hover{box-shadow:0 6px 16px #0000001f}
 button,.btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:10px 18px;font:700 15px/1.2 "Figtree",system-ui,sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
 button:hover,.btn:hover{box-shadow:0 6px 16px #0000001f}
+.wrap.top-wide{max-width:1080px;padding-bottom:0;line-height:1.55}
 .toc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 20px;box-shadow:var(--shadow)}
 .toc ol{margin:6px 0 0;padding-left:20px;columns:2;column-gap:28px;font-size:15.5px}
 @media (max-width:640px){.toc ol{columns:1}}
@@ -120,7 +121,7 @@ svg text{font-family:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,Arial,s
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap top-wide">
 <header class="top">
   <div class="logos">
     <span class="bauta"><svg viewBox="2 11 60 35" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M4 26c0-10 10-14 18-12 4 1 7 3 10 3s6-2 10-3c8-2 18 2 18 12s-8 18-16 18c-5 0-8-3-12-3s-7 3-12 3C12 44 4 36 4 26ZM13 27c2-5 10-6 14-1-3 5-11 6-14 1ZM51 27c-2-5-10-6-14-1 3 5 11 6 14 1Z"/></svg><span>Bauta</span></span>
@@ -135,18 +136,18 @@ svg text{font-family:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,Arial,s
 
 <div class="notice" role="note">
   <span class="ico" aria-hidden="true">!</span>
-  <p><b>Strumento d'esempio dei corsi Hyper Link.</b> Serve a mostrare come proteggere i dati quando si usa l'AI. Prima di usarlo in azienda con dati reali, fatelo approvare da chi di dovere: titolare, DPO o responsabile IT. <a href="#regole">Leggi perché al punto 9 →</a></p>
+  <p><b>Strumento d'esempio dei corsi Hyper Link.</b> Serve a mostrare come proteggere i dati quando si usa l'AI. Prima di usarlo in azienda con dati reali, fatelo approvare da chi di dovere: titolare, DPO o responsabile IT. <a href="#regole">Leggi perché nella guida →</a></p>
 </div>
 
 <section class="hero">
   <div class="hero-txt">
-    <p class="eyebrow">Guida all'uso · corsi Hyper Link</p>
+    <p class="eyebrow">Strumento d'esempio · corsi Hyper Link</p>
     <h1>Copri i dati personali prima di chiederli all'AI.</h1>
-    <p class="lead">Bauta è lo strumento che usiamo nei corsi Hyper Link per mostrare, in pratica, come usare un assistente AI senza consegnargli nomi, recapiti, codici e dati delicati di colleghi e clienti.</p>
-    <p class="sub">In questa guida trovi a cosa serve, i quattro passaggi, cosa copre, i suoi limiti e come verificare da solo che non venga inviato nulla.</p>
+    <p class="lead">Bauta mette dei segnaposto al posto di nomi, recapiti, codici, dati sanitari e degli altri dati personali che riconosce. Quando l'AI ti risponde, rimette i dati veri dove erano.</p>
+    <p class="sub">Lavora solo in questa pagina: il testo non viene inviato a nessuno, nemmeno a Hyper Link. Funziona con qualsiasi assistente AI: Claude, ChatGPT, Gemini, Copilot, Le Chat, Perplexity e gli altri. Non riconosce tutto: il controllo finale (passaggio 2) resta tuo.</p>
     <div class="hero-cta">
-      <a class="btn primary" href="index.html">Apri lo strumento</a>
-      <a class="btn" href="#perche">Leggi la guida</a>
+      <a class="btn primary" href="index.html#s1">Inizia</a>
+      <a class="btn" href="#perche">Come funziona</a>
     </div>
   </div>
   <div class="hero-art" aria-hidden="true">
@@ -154,6 +155,8 @@ svg text{font-family:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,Arial,s
     <div class="demo"><span class="orig">Sacchet Marco</span><span class="arr">diventa</span><code>[PERSONA_1]</code></div>
   </div>
 </section>
+</div>
+<div class="wrap">
 
 <div class="why"><svg viewBox="2 11 60 35" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M4 26c0-10 10-14 18-12 4 1 7 3 10 3s6-2 10-3c8-2 18 2 18 12s-8 18-16 18c-5 0-8-3-12-3s-7 3-12 3C12 44 4 36 4 26ZM13 27c2-5 10-6 14-1-3 5-11 6-14 1ZM51 27c-2-5-10-6-14-1 3 5 11 6 14 1Z"/></svg><div><b>Perché si chiama Bauta?</b><p>La bauta è la maschera del Carnevale di Venezia che copriva tutto il viso: chi la indossava poteva parlare senza togliersela e senza farsi riconoscere. Bauta fa lo stesso con i tuoi testi: l'AI capisce di cosa parli, ma non sa di chi.</p></div></div>
 
