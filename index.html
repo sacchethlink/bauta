@@ -255,12 +255,12 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
     <li><b>Apri</b> <code>index.html</code> con un doppio clic. Si apre nel browser, ma lavora tutto sul tuo computer: puoi anche staccare internet.</li>
   </ol>
   <dl class="peso" aria-label="Dati del file">
-    <div><dt>Peso del file</dt><dd>106 KB</dd></div>
-    <div><dt>Una volta estratto</dt><dd>215 KB</dd></div>
+    <div><dt>Peso del file</dt><dd>107 KB</dd></div>
+    <div><dt>Una volta estratto</dt><dd>219 KB</dd></div>
     <div><dt>Contiene</dt><dd>4 file: strumento, guida, istruzioni, licenza</dd></div>
-    <div><dt>Versione</dt><dd>0.6 · 24/11/2026</dd></div>
+    <div><dt>Versione</dt><dd>0.7 · 24/11/2026</dd></div>
   </dl>
-  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip · 106 KB</a><a class="btn" href="guida.html">Leggi la guida</a></div>
+  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip · 107 KB</a><a class="btn" href="guida.html">Leggi la guida</a></div>
 </section>
 <div class="app">
 <nav class="steps" aria-label="I quattro passaggi">
@@ -380,7 +380,7 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
 <div class="cta"><p>Volete regole chiare per usare l'AI con i dati in azienda?</p><a href="https://marcosacchet.netlify.app" target="_blank" rel="noopener">Il caffè lo offro io ☕</a></div>
 <footer>
   <span>Hyper Link di Sacchet Marco &amp; C. s.a.s. · P.IVA IT01219960257 · <a href="https://hyperlink-ai.netlify.app/" target="_blank" rel="noopener">hyperlink-ai.netlify.app</a></span>
-  <span>Bauta · versione 0.6</span>
+  <span>Bauta · versione 0.7</span>
 </footer>
 <p class="fine">Bauta è uno strumento d'esempio, fornito così com'è e senza garanzie. Aiuta a ridurre i dati personali esposti, ma non rende anonimo un testo in senso legale e non sostituisce le regole della tua azienda: anche con i segnaposto, il contesto può permettere di risalire a una persona. Ricontrolla sempre il passaggio 2 prima di inviare. <a href="guida.html">Guida completa</a> · <a href="https://github.com/sacchethlink/bauta" target="_blank" rel="noopener">Codice</a> · Licenza MIT · carattere Figtree (SIL Open Font License)</p>
 </div>
@@ -419,9 +419,13 @@ const Core = (() => {
     GIUDIZIARIO: {label:'Dati giudiziari',        tok:'GIUDIZIARIO'},
     IP:          {label:'Indirizzi IP',           tok:'IP'},
     DESCRIZIONE: {label:'Persone descritte',      tok:'DESCRIZIONE'},
+    ORARIO:      {label:'Orari',                  tok:'ORARIO'},
+    SESSO:       {label:'Sesso e genere',         tok:'SESSO'},
+    TITOLO:      {label:'Titoli (Sig., Dott.…)',  tok:'TITOLO'},
+    NUMERO:      {label:'Numeri isolati',         tok:'NUMERO'},
     ALTRO:       {label:'Le tue liste',           tok:'ALTRO'}
   };
-  const PRI = {DESCRIZIONE:12.9,ALTRO:0,IBAN:1,CARTA:2,CF:3,PIVA:4,EMAIL:5,URL:5.5,CATASTO:6,SALUTE:6.2,GIUDIZIARIO:6.3,SENSIBILE:6.4,
+  const PRI = {ORARIO:12.4,SESSO:12.8,TITOLO:12.85,NUMERO:15.5,DESCRIZIONE:12.9,ALTRO:0,IBAN:1,CARTA:2,CF:3,PIVA:4,EMAIL:5,URL:5.5,CATASTO:6,SALUTE:6.2,GIUDIZIARIO:6.3,SENSIBILE:6.4,
     AZIENDA:7,INDIRIZZO:8,DOC:9,TARGA:10,TEL:11,CODICE:11.5,IP:12,IMPORTO:12.5,ETA:12.7,PERSONA:13,DATA:14,LUOGO:15,NOME:16};
 
   const words = s => s.trim().split(/\s+/);
@@ -447,7 +451,7 @@ const Core = (() => {
   const CITIES = [...`agrigento|alessandria|ancona|aosta|arezzo|ascoli piceno|asti|avellino|bari|barletta|andria|trani|belluno|benevento|bergamo|biella|bologna|bolzano|brescia|brindisi|cagliari|caltanissetta|campobasso|caserta|catania|catanzaro|chieti|como|cosenza|cremona|crotone|cuneo|enna|ferrara|firenze|foggia|forlì|cesena|frosinone|genova|gorizia|grosseto|imperia|isernia|l'aquila|la spezia|lecce|lecco|livorno|lodi|lucca|macerata|mantova|massa carrara|matera|messina|milano|modena|monza|napoli|novara|nuoro|oristano|padova|palermo|parma|pavia|perugia|pesaro|urbino|pescara|piacenza|pisa|pistoia|pordenone|ragusa|ravenna|reggio calabria|reggio emilia|rieti|rimini|roma|rovigo|salerno|sassari|savona|siena|siracusa|sondrio|taranto|teramo|terni|torino|trapani|trento|treviso|trieste|udine|varese|venezia|mestre|verbania|vercelli|verona|vibo valentia|vicenza|viterbo|feltre|cortina d'ampezzo|cortina|bassano del grappa|conegliano|abruzzo|basilicata|calabria|campania|emilia-romagna|emilia romagna|friuli-venezia giulia|friuli venezia giulia|friuli|lazio|liguria|lombardia|marche|molise|piemonte|puglia|sardegna|sicilia|toscana|trentino-alto adige|trentino alto adige|trentino|alto adige|südtirol|umbria|valle d'aosta|veneto|dolomiti|londra|parigi|berlino|madrid|barcellona|lisbona|vienna|zurigo|ginevra|lugano|monaco di baviera|bruxelles|amsterdam|praga|varsavia|atene|new york|san marino|vaticano`.split('|')];
   const CITY_SET = new Set(CITIES);
   const PLACE_PREFIX = new Set(words(`san santa santo sant via viale piazza corso largo vicolo ospedale istituto scuola liceo hotel albergo ristorante villa palazzo fondazione teatro chiesa basilica stazione aeroporto ponte porta parco museo università premio cantina`));
-  const PARTICLES = new Set(words(`de di del della dal dalla lo la li da dello degli dei d`));
+  const PARTICLES = new Set(words(`de di del della delle dal dalla dalle dagli lo la li da dello degli dei d`));
 
   // Lessici per le categorie particolari (art. 9 e 10 GDPR). Nel dubbio si nasconde.
   const SALUTE_TERMS = `diabet(?:e|ic[oaie]|ici|iche)|tumor(?:e|i|ale|ali)|cancro|carcinom[ai]|leucemi[ae]|linfom[ai]|metastas[ie]|chemio(?:terapia)?|radioterapia|hiv|aids|sieropositiv[oaie]|epatite|cirrosi|epiless(?:ia|ic[oaie])|ictus|infarto|ischemi(?:a|c[oaie])|cardiopati[ae]|ipertension[ei]|ipertes[oaie]|aritmi[ae]|asma|asmatic[oaie]|bpco|allergi(?:a|e|c[oaie]|ci|che)|celiachia|celiac[oaie]|intolleranz[ae]|depression[ei]|depress[oaie]|ansia|ansios[oaie]|attacch[io] di panico|disturb[oi] (?:bipolare|ossessivo[- ]compulsivo|d(?:ella|i) personalità|alimentar[ei]|post[- ]traumatico|d'ansia)|bipolare|schizofreni(?:a|c[oaie])|burn[- ]?out|esaurimento nervoso|adhd|autism[oi]|autistic[oaie]|dislessi(?:a|c[oaie])|discalculia|disabilità|disabil[ei]|invalidità|invalid[oaie] civil[ei]|legge 104|l\\. ?104|handicap|sclerosi(?: multipla| laterale amiotrofica)?|sla|parkinson|alzheimer|demenza|artrite|artrosi|ernia(?: del disco| discale)?|frattur[ae]|lombalgia|sciatalgia|cervicalgia|tendinite|distorsione|infortuni[oi]|malatti[ae]|malat[oaie]|patologi[ae]|sindrome(?: di [A-Za-zÀ-ÿ]+)?|diagnos[ie]|terapi[ae]|farmac[oi]|psicofarmac[oi]|antidepressiv[oi]|ansiolitic[oi]|antibiotic[oi]|insulina|cortisone|ricover[oi]|ricoverat[oaie]|intervento chirurgico|operazione chirurgica|day hospital|pronto soccorso|certificat[oi] medic[oi]|certificat[oi] di malattia|visit[ae] (?:medic[ah]e?|specialistic[ah]e?|fiscal[ei])|esami del sangue|risonanza(?: magnetica)?|tac|ecografi[ae]|biopsi[ae]|gravidanz[ae]|incinta|aborto|interruzione di gravidanza|fecondazione(?: assistita)?|covid(?:-19)?|quarantena|febbre|dipendenz[ae] da [a-zà-ÿ]+|alcolism[oi]|alcolist[aie]|tossicodipenden(?:za|te|ti)|ludopatia|sert|psicolog[oaie]|psichiatr[aie]|psichiatric[oaie]|psicoterapi[ae]|psicoterapeut[aie]|dialisi|trapiant[oi]|obesità|obes[oaie]|anoressi(?:a|c[oaie])|bulimi(?:a|c[oaie])|cartell[ae] clinic[ah]e?|referto|referti|emicrania|fibromialgia|ipotiroidismo|ipertiroidismo|tiroide|gastrite|colite|morbo di [A-Za-zÀ-ÿ]+|crohn|pressione alta|colesterolo|glicemia|anemia|trombosi|ospedalizzat[oaie]|convalescenza|riabilitazione|fisioterapia|inidone[oaie]|inidoneità|idoneità con limitazioni|medico competente|sorveglianza sanitaria`;
@@ -581,9 +585,9 @@ const Core = (() => {
     });
     // Indirizzi
     const ADDR_KW = `(?:[Vv]ia|VIA|[Vv]iale|V\\.le|[Pp]iazza|P\\.zza|P\\.za|[Pp]iazzale|[Cc]orso|C\\.so|[Ll]argo|[Vv]icolo|[Ss]trada(?: [Ss]tatale| [Pp]rovinciale)?|[Ll]ocalità|[Ll]oc\\.|[Ff]razione|[Ff]raz\\.|[Cc]ontrada|[Bb]orgo|[Ll]ungomare|[Ss]alita|[Vv]ia\\s+[Pp]rivata|[Ss]tradello|[Vv]iottolo|[Cc]alle|[Cc]ampo|[Ff]ondamenta|[Rr]ione|[Cc]hemin|[Rr]ue|[Rr]oute|[Aa]venue|[Pp]lace|[Aa]llée|[Qq]uai|[Bb]oulevard|[A-ZÀ-Ý][a-zà-ÿ]*(?:strasse|straße|weg|gasse|platz|rain|matt|halde|acker|ring|graben|steig)(?![a-zà-ÿ]))(?![${W}])`;
-    const ADDR_TOK = `(?:(?:[A-ZÀ-Ý][${W}'.\\-]*|\\d{1,4}(?:[.\\/]\\d{1,3})?[A-Za-z]?|d[aei]|del|della|dello|dei|degli|delle|dal|dalla|dallo|dagli|dalle|al|alla|allo|agli|alle|sul|sulla|per|du|des|de|la|le|e)(?![${W}])|d')`;
+    const ADDR_TOK = `(?:(?:[A-ZÀ-Ý][${W}'.\\-]*|\\d{1,4}(?:[.\\/]\\d{1,3})?[A-Za-z]?|d[aei]|del|della|dello|dei|degli|delle|dal|dalla|dallo|dagli|dalle|al|alla|allo|agli|alle|sul|sulla|per|du|des|de|la|le)(?![${W}])|(?:dell|d|nell|sull|all)'[A-ZÀ-Ý][${W}\\-]*)`;
     const CAPCITY = `(?:\\d{5}|(?!(?:19|20)\\d{2})\\d{4})\\s+[A-ZÀ-Ý][${W}'\\-]+(?:\\s(?:[A-ZÀ-Ý][${W}'\\-]+|d[aei]|del|in|sul|sulla|al|nel|im|am))*?(?:\\s*\\(\\s?[A-Z]{2}\\s?\\))?`;
-    all(new RegExp(`${NB}${ADDR_KW}(?:\\s+((?:${ADDR_TOK}\\s*){1,6}))?(?:,?\\s*(?:n\\.?\\s*|nr\\.?\\s*|n°\\s*)?\\d{1,4}(?:\\.\\d{1,2})?(?!\\d)(?:\\s?[A-Za-z](?![${W}]))?(?:\\/\\s?[A-Za-z0-9]+)?)?(?:,?\\s*${CAPCITY})?`,'g'), m => {
+    all(new RegExp(`${NB}${ADDR_KW}(?:\\s+((?:${ADDR_TOK}\\s*){1,8}))?(?:,?\\s*(?:n\\.?\\s*|nr\\.?\\s*|n°\\s*)?\\d{1,4}(?:\\.\\d{1,2})?(?!\\d)(?:\\s?[A-Za-z](?![${W}]))?(?:\\/\\s?[A-Za-z0-9]+)?)?(?:,?\\s*${CAPCITY})?`,'g'), m => {
       let str = m[0];
       const ws = [...str.matchAll(/\S+/g)];
       for(let q=2;q<ws.length;q++){ const w=ws[q][0].replace(/[.,]$/,'').toLowerCase(); if(COMMON.has(w) && !PARTICLES.has(w) && w!=='e' && !/^\d/.test(w)){ str = str.slice(0, ws[q].index); break; } }
@@ -744,8 +748,36 @@ const Core = (() => {
       if(m[1].length>=2 && !COMMON.has(m[1].toLowerCase()) && !/^(che|di|a|da|per|in|su|con|questo|questa|quello|così|cosa|niente|tutto|prima|dopo|anche|non|sopra|sotto)$/i.test(m[1])) add(s0, s0+m[1].length, 'PERSONA', {pri:13.1, key:'PERSONA|'+m[1].toLowerCase()});
     });
 
+    // ---- Orari ----
+    all(/(?<![\d:.\/])(?:[01]?\d|2[0-3])[:.][0-5]\d(?::[0-5]\d)?(?:\s?(?:AM|PM|am|pm|a\.m\.|p\.m\.))?(?![\d:.\/]|,\d)/g, m => {
+      if(/\./.test(m[0]) && !/^\s*$/.test('') && !/(?:alle|ore|dalle|entro le|verso le|h)\s*$/i.test(text.slice(Math.max(0,m.index-12), m.index))) return; // 9.30 solo con "alle", "ore"
+      add(m.index, m.index+m[0].length, 'ORARIO');
+    });
+    all(/(?<![\w])(?:alle|dalle|alle ore|ore|entro le|verso le)\s+(?:[01]?\d|2[0-3])(?:\s+e\s+(?:\d{1,2}|mezza|un quarto|tre quarti))?(?![\w:\d]|\.\d)/gi, m => { const s0 = m.index + m[0].search(/\d/); add(s0, m.index+m[0].length, 'ORARIO'); });
+    // ---- Sesso e genere ----
+    all(/(?<![\w])(?:[Mm]aschio|[Ff]emmina|[Mm]aschile|[Ff]emminile|[Nn]on[- ]binari[oa]|[Ii]ntersex)(?![\w])/g, m => add(m.index, m.index+m[0].length, 'SESSO'));
+    all(/(?<![\w])(?:sesso|genere|gender)\s*[:=]?\s*\(?\s*([MFX])(?![\w])/gi, m => { const s0 = m.index + m[0].length - 1; add(s0, s0+1, 'SESSO'); });
+    all(/(?<=\(\s?\d{1,3}\s?)[MF](?=\s?\))|(?<=\d{1,3}\s?anni\s?,?\s?)[MF](?![\w])|(?<=[Ss]ono\s)[MF](?=[\s.,!])|(?<=anni\s?\(\s?)[MF](?=\s?\))/g, m => add(m.index, m.index+1, 'SESSO'));
+    // ---- Titoli ----
+    all(/(?<![\wÀ-ÿ])(?:Sig\.(?:ra|na)?|Sig(?=\s+[A-ZÀ-Ý])|Sigg\.|Signor(?:a|ina|e)?|Dott\.(?:ssa)?|Dr\.(?:ssa)?|Dottor(?:essa|e)?|Avv\.(?:to)?|Avvocat[oa]|Ing\.|Ingegner[ea]|Prof\.(?:ssa)?|Professor(?:essa|e)?|Geom\.|Geometra|Rag\.|Ragionier[ea]|Arch\.|Architett[oa]|Notaio|Not\.|On\.|Onorevole|Cap\.|Capitano|Gen\.|Generale|Col\.|Colonnello|Mons\.|Monsignor|Don(?=\s+[A-ZÀ-Ý])|Suor(?=\s+[A-ZÀ-Ý])|Padre(?=\s+[A-ZÀ-Ý])|Mr\.?|Mrs\.?|Ms\.?|Mme|Mlle|Herr|Frau)(?![\wÀ-ÿ])/g, m => {
+      const nx = text.slice(m.index+m[0].length, m.index+m[0].length+3);
+      if(/^[.,;:]?\s?[A-ZÀ-Ý]/.test(nx) || /^[,\s]*$/.test(nx) || /^\s*[,;]/.test(nx)) add(m.index, m.index+m[0].length, 'TITOLO');
+    });
+    // ---- Età: altre forme ----
+    all(/(?<![\w])età(?![\wÀ-ÿ])[^.\n]{0,40}?(?<![\wÀ-ÿ])(?:è|ha|di|:)\s+(\d{1,3})(?![\w])/gi, m => { if(+m[1]<=120){ const s0=m.index+m[0].length-m[1].length; add(s0, s0+m[1].length, 'ETA'); } });
+    all(/(?<![\w])\d{1,3}[°º]?\s+compleanno(?![\w])|(?<=[,(]\s?)\d{1,3}\s+anni(?=\s*$)/gim, m => add(m.index, m.index+m[0].length, 'ETA'));
+    // ---- CAP: 4 cifre dopo città o civico, "indirizzo 1234" ----
+    all(/(?<=(?:[A-ZÀ-Ýa-zà-ÿ],|\d[a-z]?,|indirizzo|CAP:?|cap:?)\s?)(?<![\d.\/\-:+])(?!(?:19|20)\d{2}(?!\d))\d{4}(?![\d.,\/\-:]\d|\d)/g, m => add(m.index, m.index+4, 'INDIRIZZO', {pri:12.6}));
+    all(/(?<=[A-ZÀ-Ý][a-zà-ÿ\-]+\s)(?!(?:19|20)\d{2}(?!\d))\d{4}(?=\s*(?:[.;)]|$))/gm, m => add(m.index, m.index+4, 'INDIRIZZO', {pri:12.7}));
+    // ---- Indirizzi senza "Via": Nome 589a, 2022 Città ----
+    all(/(?<![\w])((?:(?:La|Le|Il)\s)?[A-ZÀ-Ý][a-zà-ÿ\-]+(?:\s[A-ZÀ-Ý][a-zà-ÿ\-]+){0,2})\s(\d{1,4}[a-z]?)(?:,\s*\d{4,5}(?=\s+[A-ZÀ-Ý])|(?=,\s*[A-ZÀ-Ý]))/g, m => {
+      if(COMMON.has(m[1].toLowerCase())) return;
+      add(m.index, m.index+m[0].length, 'INDIRIZZO', {pri:8.5});
+    });
+
     // ---- Solo modalità Anonima: persone descritte a parole e cognomi in minuscolo ----
     if(opts.anon){
+      if(opts.numbers!==false) all(/(?<![\w.,\/\-:+€$£])\d{2,6}(?![\w]|[.,\/\-:%]\d|\s?(?:%|€|euro|eur|\$|£|kg|g|km|m|cm|mm|l|ml|litri|pezzi|unità|volte|ore|minuti|giorni|settimane|mesi|anni)(?![\w]))/gi, m => { if(/^(?:19|20)\d{2}$/.test(m[0])) return; add(m.index, m.index+m[0].length, 'NUMERO'); });
       if(opts.descriptions!==false) all(new RegExp(`(?<![A-Za-zÀ-ÿ])(?:(?:il|lo|la|l'|i|gli|le|un|uno|una|un'|suo|sua|suoi|sue|mio|mia|tuo|tua|nostr[oaie]|vostr[oaie]|quest[oaie]|quell[oa]|quel)\\s*)(?:(?:unic[oa]|nuov[oa]|stess[oa]|vecchi[oa]|giovane|attuale|precedente|ex)\\s+)?(?:${RUOLI})(?![A-Za-zÀ-ÿ])(?:\\s+(?:(?:del|della|dello|dei|degli|delle|dell'|di|d'|al|alla|in|a)\\s*[^\\s.,;:!?()]+(?:\\s+(?!(?:e|ed|o|ma|che|chi|ha|ho|hanno|è|sono|era|sarà|perché|non|si|mi|ti|ci|vi|lo|la|li|le|gli|ne|ieri|oggi|domani|quando|dove|come|anche|poi|già|ancora)(?:\\s|$))[^\\s.,;:!?()]+){0,3}))?`,'gi'), m => add(m.index, m.index+m[0].length, 'DESCRIZIONE'));
       if(opts.descriptions!==false) all(/(?<![A-Za-zÀ-ÿ])(?:l'unic[oa]|il solo|la sola|l'ultim[oa] arrivat[oa]|il più giovane|la più giovane|il più anzian[oa]|la più anziana)(?:\s+(?!(?:e|ed|o|ma|che|chi|ha|ho|hanno|è|sono|era|sarà|perché|non|si|mi|ti|ci|vi|lo|la|li|le|gli|ne|ieri|oggi|domani|quando|dove|come|anche|poi|già|ancora)(?:\s|$))[^\s.,;:!?()]+){1,6}/gi, m => add(m.index, m.index+m[0].length, 'DESCRIZIONE', {pri:12.8}));
       for(const [sur, keys] of Object.entries(surnameOwners)){
@@ -790,6 +822,7 @@ const Core = (() => {
     const strong = t => { const lw=t.w.toLowerCase(); return FIRST.has(lw) || CITY_SET.has(lw) || midSeen.has(lw) || known.has(lw); };
     const hideable = t => {
       if(occ[t.s]) return false;
+      if(/^(?:La|Le|Les|Lo|Il|L)$/.test(t.w) && !initial(t.s) && !headingLine(t.s)){ const k = toks.indexOf(t), n = toks[k+1]; if(n && adj(t,n) && candidateCap(n) && !lowerSeen.has(n.w.toLowerCase())) return true; }
       if(!candidateCap(t)) return false;
       const lw = t.w.toLowerCase();
       if(lowerSeen.has(lw) && !FIRST.has(lw) && !CITY_SET.has(lw)) return false;
@@ -808,6 +841,7 @@ const Core = (() => {
       while(j+1<toks.length && adj(toks[j],toks[j+1])){
         const n = toks[j+1];
         if(!occ[n.s] && candidateCap(n) && !(lowerSeen.has(n.w.toLowerCase()) && !FIRST.has(n.w.toLowerCase()))) { j++; continue; }
+        if(/^(?:d|dell|nell|sull|all)'[A-ZÀ-Ý]/.test(n.w) && !occ[n.s]) { j++; continue; }
         if((PARTICLES.has(n.w.toLowerCase()) || /^(sul|sulla|sullo|in|im|am|an|der|del|la|le|les|du|des|sur|bei|ob|unter)$/i.test(n.w)) && toks[j+2] && adj(n,toks[j+2]) && !occ[toks[j+2].s] && candidateCap(toks[j+2])) { j+=2; continue; }
         break;
       }
@@ -921,7 +955,7 @@ const Core = (() => {
   function analyze(){
     state.text = $('src').value;
     const T = state.filters.tech;
-    state.ents = Core.analyze(state.text, {hide: parseHide(), never: parseNever(), anon: state.mode==='anon', safetyNet:!T.has('safetyNet'), lowercase:!T.has('lowercase'), nicknames:!T.has('nicknames'), descriptions:!T.has('descriptions')});
+    state.ents = Core.analyze(state.text, {hide: parseHide(), never: parseNever(), anon: state.mode==='anon', safetyNet:!T.has('safetyNet'), lowercase:!T.has('lowercase'), nicknames:!T.has('nicknames'), descriptions:!T.has('descriptions'), numbers:!T.has('numbers')});
     const fullByKey = {};
     for(const e of state.ents) if(!e.alias && !fullByKey[e.key]) fullByKey[e.key] = e.text;
     for(const e of state.ents) if(e.alias) e.fullValue = fullByKey[e.key] || e.text;
@@ -1221,6 +1255,7 @@ Ufficio Risorse Umane`;
     ['lowercase','Nomi scritti in minuscolo','I nomi propri più comuni, anche senza maiuscola'],
     ['nicknames','Soprannomi','Diminutivi comuni e ciò che segue "detto", "alias"…'],
     ['descriptions','Persone descritte a parole','Solo in modalità Anonima: ruoli, parentele, "l\'unica…"'],
+    ['numbers','Numeri isolati','Solo in modalità Anonima: numeri senza unità di misura (non anni, importi, percentuali)'],
     ['generalize','Fasce per età, date e importi','Solo in modalità Anonima: "tra 40 e 49 anni" invece del segnaposto']
   ];
   try{ const f = JSON.parse(store.get('bauta.filtri','{}')); state.filters = {cats:new Set(f.cats||[]), tech:new Set(f.tech||[])}; }catch(_){}
@@ -1229,7 +1264,7 @@ Ufficio Risorse Umane`;
   function renderFilters(){
     const F = state.filters;
     const sw = (kind,id,label,desc) => `<label class="sw"><input type="checkbox" data-kind="${kind}" data-id="${id}" ${(kind==='cat'?F.cats:F.tech).has(id)?'':'checked'}><span>${label}${desc?`<small>${desc}</small>`:''}</span></label>`;
-    $('fgrid').innerHTML = '<h4>Cosa riconosce</h4>' + Object.entries(Core.CATS).filter(([k])=>!['ALTRO','DESCRIZIONE'].includes(k)).map(([k,v])=>sw('cat',k,v.label,'')).join('')
+    $('fgrid').innerHTML = '<h4>Cosa riconosce</h4>' + Object.entries(Core.CATS).filter(([k])=>!['ALTRO','DESCRIZIONE','NUMERO'].includes(k)).map(([k,v])=>sw('cat',k,v.label,'')).join('')
       + '<h4>Come lo riconosce</h4>' + TECH.map(([id,l,d])=>sw('tech',id,l,d)).join('');
     const n = F.cats.size + F.tech.size;
     const w = $('filtriWarn');

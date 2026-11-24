@@ -96,5 +96,19 @@ for (const [nome, testo, dati] of fmt) { const out = copri(testo); for (const d 
 check('quantità senza contesto restano', copri('Ordine di 25000 pezzi e 3 libri.').includes('25000 pezzi'));
 check('importi grandi non sono telefoni', !/\[X\] euro/.test(copri('Totale 1.240.000 euro')) || true);
 
+// 8. Orari, sesso, titoli e numeri isolati
+const nuovi = [
+  ['orari', 'Ci vediamo alle 10:30, alle 15 o alle 8:10 AM.', ['10:30', '15', '8:10 AM']],
+  ['sesso', 'Sesso: Femmina. Nome: Jamain, sesso: M. Ha 27 anni (F).', ['Femmina', 'sesso: M', '(F)']],
+  ['titoli', 'Gentile Dott.ssa Laura Bianchi, il Sig. Rossi e Mr Smith.', ['Dott.ssa', 'Sig.', 'Mr']],
+  ['età descritta', "L'età di Safaa Velat è 76. Ha celebrato il suo 63 compleanno.", ['76', '63 compleanno']],
+  ['indirizzo senza Via', 'Grossbiel 589a, 2022 Wolfenschiessen. Samedan, 6436.', ['589a', '2022', '6436']],
+];
+for (const [nome, testo, dati] of nuovi) { const out = copri(testo); for (const d of dati) check(`${nome}: "${d}" ancora visibile in → ${out}`, !out.includes(d)); }
+check('numeri isolati coperti in modalità Anonima', !copri('Abbiamo 12 dipendenti.', { anon: true }).includes('12'));
+check('numeri isolati restano in modalità Reversibile', copri('Abbiamo 12 dipendenti.').includes('12'));
+check('quantità con unità restano anche in Anonima', copri('Ordine di 25000 pezzi, il 15%.', { anon: true }).includes('25000 pezzi'));
+check('"Windows 11" non è un indirizzo', copri('Windows 11, Microsoft.').includes('Windows 11'));
+
 console.log(`\n${ok} controlli superati, ${ko} non superati.`);
 process.exit(ko ? 1 : 0);
