@@ -5,7 +5,7 @@ from huggingface_hub import list_repo_files, hf_hub_download
 import pandas as pd
 
 REPO = "ai4privacy/open-pii-masking-500k-ai4privacy"
-QUANTI = int(os.environ.get("QUANTI", "2000"))
+QUANTI = int(os.environ.get("QUANTI", "4000"))  # 2.000 per trovare gli errori, 2.000 diversi per il voto
 files = [f for f in list_repo_files(REPO, repo_type="dataset") if "validation" in f and f.endswith((".jsonl", ".json", ".parquet"))]
 if not files:
     sys.exit("Nessun file di validazione trovato")
