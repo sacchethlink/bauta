@@ -18,7 +18,14 @@ jobs:
           python banco-di-prova/scarica.py
       - name: Salva su ramo temporaneo
         run: |
-          cp banco-di-prova/dati.jsonl banco-di-prova/dati-gretel.jsonl /tmp/
+          # le finte chiavi d'accesso dei testi sintetici si sostituiscono con X della stessa lunghezza (le posizioni restano uguali)
+          python - <<'PY'
+          import re
+          pat = re.compile(r'(?:xox[a-z]-[\w-]+|gh[pousr]_\w+|sk-[\w-]{16,}|AKIA[0-9A-Z]{16}|AIza[\w-]{30,}|eyJ[\w-]{10,}\.[\w-]{10,}\.[\w-]+|[A-Za-z0-9_\-+/=]{32,})')
+          for f in ['dati.jsonl', 'dati-gretel.jsonl']:
+              t = open('banco-di-prova/' + f, encoding='utf8').read()
+              open('/tmp/' + f, 'w', encoding='utf8').write(pat.sub(lambda m: 'X' * len(m.group(0)), t))
+          PY
           git config user.name "Banco di prova"
           git config user.email "actions@users.noreply.github.com"
           git worktree add --detach /tmp/td
