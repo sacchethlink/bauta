@@ -64,6 +64,12 @@ Nel dubbio Bauta copre: meglio un segnaposto in più che un dato in chiaro.
 - La pagina dichiara al browser `Content-Security-Policy: connect-src 'none'`: ogni connessione verso l'esterno è bloccata.
 - Tutto il codice è in `index.html`, senza librerie esterne.
 
+## Banco di prova
+
+Ogni modifica, e ogni lunedì, GitHub misura quanti dati personali Bauta lascia scoperti su 2.000 testi italiani del dataset pubblico [ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.co/datasets/ai4privacy/open-pii-masking-500k-ai4privacy) (licenza CC BY 4.0, testi sintetici: nessun dato reale). I risultati sono in [`banco-di-prova/risultati.md`](banco-di-prova/risultati.md).
+
+Il banco di prova serve a sapere dove Bauta sbaglia, non a confrontarla con altri strumenti.
+
 ## Test
 
 Il motore di riconoscimento si prova con Node.js:
@@ -79,6 +85,7 @@ index.html          lo strumento (si usa aprendo il file dal computer)
 bauta.zip           il pacchetto da scaricare: strumento, guida e istruzioni
 guida.html          guida all'uso con infografiche
 test/               test del motore di riconoscimento
+banco-di-prova/     misura automatica su testi italiani pubblici
 logo/               il marchio di Bauta (nero e bianco, con i fori trasparenti)
 LICENSE             licenza MIT
 ```
