@@ -29,6 +29,7 @@ jobs:
       - name: Misura
         run: node banco-di-prova/misura.js banco-di-prova/dati.jsonl
       - name: Esempi non coperti (ramo di lavoro banco-esempi, non nel ramo principale)
+        continue-on-error: true
         run: |
           cp banco-di-prova/esempi-mancati.txt /tmp/esempi.txt
           git config user.name "Banco di prova"

@@ -98,7 +98,7 @@ check('importi grandi non sono telefoni', !/\[X\] euro/.test(copri('Totale 1.240
 
 // 8. Orari, sesso, titoli e numeri isolati
 const nuovi = [
-  ['orari', 'Ci vediamo alle 10:30, alle 15 o alle 8:10 AM.', ['10:30', '15', '8:10 AM']],
+  ['orari', 'Ci vediamo alle 10:30. Poi alle 15 o alle 8:10 AM.', ['10:30', '15', '8:10 AM']],
   ['sesso', 'Sesso: Femmina. Nome: Jamain, sesso: M. Ha 27 anni (F).', ['Femmina', 'sesso: M', '(F)']],
   ['titoli', 'Gentile Dott.ssa Laura Bianchi, il Sig. Rossi e Mr Smith.', ['Dott.ssa', 'Sig.', 'Mr']],
   ['età descritta', "L'età di Safaa Velat è 76. Ha celebrato il suo 63 compleanno.", ['76', '63 compleanno']],

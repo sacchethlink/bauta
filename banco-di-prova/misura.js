@@ -60,7 +60,9 @@ for (const r of [...esempi, ...esempiG]) {
     if (!tutti && (mancati[d.label] ||= []).length < 40) mancati[d.label].push(`«${t.slice(d.start, d.end)}» … ${t.slice(Math.max(0, d.start - 45), d.start)}[[${t.slice(d.start, d.end)}]]${t.slice(d.end, d.end + 30)}`.replace(/\n/g, ' '));
   }
 }
-fs.writeFileSync(path.join(__dirname, 'esempi-mancati.txt'), Object.entries(mancati).map(([k, v]) => `## ${k}\n` + v.join('\n')).join('\n\n'));
+// i testi sintetici possono contenere finte chiavi d'accesso: si tolgono prima di salvare gli esempi
+const pulisci = s => s.replace(/(?:xox[a-z]-[\w-]+|gh[pousr]_\w+|sk-[\w-]{16,}|AKIA[0-9A-Z]{16}|AIza[\w-]{30,}|eyJ[\w-]{10,}\.[\w-]{10,}\.[\w-]+|[A-Za-z0-9_\-+\/=]{32,})/g, '[segreto rimosso]');
+fs.writeFileSync(path.join(__dirname, 'esempi-mancati.txt'), pulisci(Object.entries(mancati).map(([k, v]) => `## ${k}\n` + v.join('\n')).join('\n\n')));
 const md = out.join('\n');
 console.log(md);
 if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md + '\n');

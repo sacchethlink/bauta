@@ -749,7 +749,7 @@ const Core = (() => {
     });
 
     // ---- Orari ----
-    all(/(?<![\d:.\/])(?:[01]?\d|2[0-3])[:.][0-5]\d(?::[0-5]\d)?(?:\s?(?:AM|PM|am|pm|a\.m\.|p\.m\.))?(?![\d:.\/]|,\d)/g, m => {
+    all(/(?<![\d:.\/])(?:[01]?\d|2[0-3])[:.][0-5]\d(?::[0-5]\d)?(?:\s?(?:AM|PM|am|pm|a\.m\.|p\.m\.))?(?![\d:\/]|[.,]\d)/g, m => {
       if(/\./.test(m[0]) && !/^\s*$/.test('') && !/(?:alle|ore|dalle|entro le|verso le|h)\s*$/i.test(text.slice(Math.max(0,m.index-12), m.index))) return; // 9.30 solo con "alle", "ore"
       add(m.index, m.index+m[0].length, 'ORARIO');
     });
