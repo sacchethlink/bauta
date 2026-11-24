@@ -4,6 +4,8 @@
 
 **Copri i dati personali prima di chiederli all'AI.**
 
+Versione 0.9 · 24/11/2026
+
 Bauta sostituisce nomi, recapiti, codici, dati sanitari e gli altri dati personali che riconosce con segnaposto come `[PERSONA_1]`. Così puoi incollare il testo in un assistente AI (Claude, ChatGPT, Gemini, Copilot, Le Chat, Perplexity o altri). Quando l'AI risponde, Bauta rimette i dati veri al loro posto.
 
 Lavora solo nel browser: il testo non viene inviato a nessuno.
@@ -66,7 +68,7 @@ Nel dubbio Bauta copre: meglio un segnaposto in più che un dato in chiaro.
 
 ## Banco di prova
 
-Ogni modifica, e ogni lunedì, GitHub misura quanti dati personali Bauta lascia scoperti su 2.000 testi italiani del dataset pubblico [ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.co/datasets/ai4privacy/open-pii-masking-500k-ai4privacy) (licenza CC BY 4.0, testi sintetici: nessun dato reale). I risultati sono in [`banco-di-prova/risultati.md`](banco-di-prova/risultati.md).
+A ogni modifica del motore, e ogni lunedì, GitHub misura quanti dati personali Bauta lascia scoperti su testi italiani di due dataset pubblici: [ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.co/datasets/ai4privacy/open-pii-masking-500k-ai4privacy) (licenza CC BY 4.0, frasi brevi) e [gretelai/synthetic_pii_finance_multilingual](https://huggingface.co/datasets/gretelai/synthetic_pii_finance_multilingual) (licenza Apache 2.0, documenti finanziari). Chi li pubblica li dichiara sintetici, cioè inventati: non contengono dati di persone reali. Metà dei testi serve a cercare gli errori, l'altra metà, mai usata per correggere Bauta, serve a misurare. I risultati sono in [`banco-di-prova/risultati.md`](banco-di-prova/risultati.md).
 
 Il banco di prova serve a sapere dove Bauta sbaglia, non a confrontarla con altri strumenti.
 

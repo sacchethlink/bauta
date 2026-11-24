@@ -132,5 +132,30 @@ for (const [nome, testo, resta] of restano) { const out = copri(testo); check(`$
 check('data e ora non sono un telefono', !Core.analyze('Data/Ora: 10/05/2023 14:30:00').some(e => e.type === 'TEL'));
 check('parole inglesi in -ring non sono vie', !Core.analyze('Il progetto Whispering Concepts è pronto.').some(e => e.type === 'INDIRIZZO'));
 
+// 10. Versione 0.9: orari a parole, nomi stranieri da soli a inizio frase, aziende con nomi inglesi e attaccati
+const v09 = [
+  ['orari a parole', 'Ci vediamo alle 2 meno 7. Il ritrovo è alle 18 in punto, la chiamata entro 11 e 9.', ['2 meno 7', '18 in punto', '11 e 9']],
+  ['orario a inizio messaggio', "13 e 28 Suphin Percetti: 'Grazie per il file'", ['13 e 28']],
+  ['orario con fuso e ore 24', 'I tassi sono aggiornati alle 10:00 CET. La polizza decorre dalle ore 24 del giorno dopo.', ['10:00 CET', 'ore 24']],
+  ['orario con secondi prima di un telefono', "03:12:49 041-0853-2778: 'Mi dispiace'", ['03:12:49', '041-0853-2778']],
+  ['nome straniero da solo a inizio frase', 'Wilfridus ha letto la sua poesia. Momodou sta cercando casa. Oranee vuole creare un modello.', ['Wilfridus', 'Momodou', 'Oranee']],
+  ['nome di chi scrive in una chat', "Sirma: Grazie per aver condiviso.\nXhensila: 'Congratulazioni!'", ['Sirma', 'Xhensila']],
+  ['aziende con suffissi stranieri', 'Fornitore: Deschamps S.A.S. e Calatayud y Larrañaga S.Com.; pubblicate da International Swaps and Derivatives Association, Inc. oggi.', ['Deschamps', 'Calatayud y Larrañaga', 'International Swaps and Derivatives Association']],
+  ['enti con nome inglese', 'quotati presso il Chicago Board of Trade (CBOT). Emittente: Government of Italy. Arbitro: Dispute Review Board.', ['Chicago Board of Trade', 'Government of Italy', 'Dispute Review Board']],
+  ['nomi di aziende attaccati', 'La newsletter di TechSolutions e il conto presso UniCredit.', ['TechSolutions', 'UniCredit']],
+];
+for (const [nome, testo, dati] of v09) { const out = copri(testo); for (const d of dati) check(`${nome}: "${d}" ancora visibile in → ${out}`, !out.includes(d)); }
+const restano09 = [
+  ['quantità con "e" non sono orari', 'Vedi gli articoli 3 e 4. Tra 2 e 3 settimane, le pagine 10 e 12, entro 3 e 4 giorni.', '3 e 4. Tra 2 e 3 settimane, le pagine 10 e 12, entro 3 e 4 giorni'],
+  ['un conto non è un orario', 'Punteggio: 7 meno 2 = 5', '7 meno 2'],
+  ['parole comuni a inizio frase restano', 'Molti hanno chiesto un rinvio. Recentemente ha deciso di cambiare. Excel ha calcolato il totale.', 'Molti hanno chiesto un rinvio. Recentemente ha deciso'],
+  ['date con "e" restano date', 'Siamo chiusi il 3 e 4 maggio.', 'Siamo chiusi il'],
+  ['organi societari non sono aziende', 'Il Board of Directors e lo Executive Board hanno approvato.', 'Directors'],
+  ['nomi di campi XML restano', '<ApplicationReference schemeName="x">1</ApplicationReference>', 'ApplicationReference'],
+];
+for (const [nome, testo, resta] of restano09) { const out = copri(testo); check(`${nome} → ${out}`, out.includes(resta)); }
+check('il 3 e 4 maggio è una data, non un orario', Core.analyze('Siamo chiusi il 3 e 4 maggio.').every(e => e.type !== 'ORARIO'));
+check('"2023 Gentile Johansson AB": la data non entra nel nome dell\'azienda', Core.analyze('Data: 01/03/2023  Gentile Johansson AB, buongiorno').some(e => e.type === 'DATA' && e.text === '01/03/2023'));
+
 console.log(`\n${ok} controlli superati, ${ko} non superati.`);
 process.exit(ko ? 1 : 0);
