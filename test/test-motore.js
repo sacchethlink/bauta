@@ -110,5 +110,27 @@ check('numeri isolati restano in modalità Reversibile', copri('Abbiamo 12 dipen
 check('quantità con unità restano anche in Anonima', copri('Ordine di 25000 pezzi, il 15%.', { anon: true }).includes('25000 pezzi'));
 check('"Windows 11" non è un indirizzo', copri('Windows 11, Microsoft.').includes('Windows 11'));
 
+// 9. Versione 0.8: aziende senza Srl, indirizzi interi, nomi con iniziale, meno coperture per eccesso
+const v08 = [
+  ['azienda con Società davanti', 'Contratto tra la Società XYZ Srl e la Compagnia Italiana di Assicurazioni S.p.A.', ['Società XYZ Srl', 'Compagnia Italiana di Assicurazioni S.p.A.']],
+  ['enti senza Srl', 'Diplomata al Liceo Scientifico Leonardo da Vinci, conto presso Banca Popolare di Sondrio.', ['Liceo Scientifico Leonardo da Vinci', 'Banca Popolare di Sondrio']],
+  ['nome tra virgolette e sigla', 'Sosteniamo l\'organizzazione "Cibo per Tutti". La società "Trasporti Rapidi Italia" (TRI) conferma. TRI non risponde dei ritardi.', ['Cibo per Tutti', 'Trasporti Rapidi Italia', 'TRI']],
+  ['indirizzo dopo l\'etichetta', 'Nome: Antonio\nIndirizzo: 9 Jacobpad\nData: 25/11/2024', ['9 Jacobpad']],
+  ['indirizzo intero con paese', 'con sede legale in Via della Costituzione 21, 00123 Roma (RM), Italia, codice fiscale RSSMRA85H12F205Y', ['Via della Costituzione 21, 00123 Roma (RM), Italia']],
+  ['indirizzo straniero con interno', 'residenza in 6 Grantorget, Apt. 431, codice fiscale da verificare', ['6 Grantorget, Apt. 431']],
+  ['indirizzo su due righe', 'Frutta e Verdura S.p.A.\nVia della Pace 10\n00123 Roma, Italia\nTel: +39 06 1234567', ['Via della Pace 10', '00123 Roma']],
+  ['nomi con iniziale e particelle', 'Nome: Hannah E. Jones. Mittente: Myrthe van Spreuwel-Kleybrink e Linn van der Kint.', ['Hannah E. Jones', 'Myrthe van Spreuwel-Kleybrink', 'Linn van der Kint']],
+];
+for (const [nome, testo, dati] of v08) { const out = copri(testo); for (const d of dati) check(`${nome}: "${d}" ancora visibile in → ${out}`, !out.includes(d)); }
+const restano = [
+  ['"dettagli della" non è un soprannome', 'Di seguito i dettagli della transazione.', 'dettagli della transazione'],
+  ['"Gentile Cliente, Confermiamo" non è un nome', 'Gentile Cliente,\n\nConfermiamo che la pratica è chiusa.', 'Confermiamo'],
+  ['titoli contabili restano leggibili', 'Stato Patrimoniale: Attivo, Passivo e Patrimonio Netto. Balance Sheet: Total Assets.', 'Attivo, Passivo e Patrimonio Netto'],
+  ['"in corso" non è un indirizzo', 'Stato: In corso\n\nDescrizione: ritardo.', 'In corso'],
+];
+for (const [nome, testo, resta] of restano) { const out = copri(testo); check(`${nome} → ${out}`, out.includes(resta)); }
+check('data e ora non sono un telefono', !Core.analyze('Data/Ora: 10/05/2023 14:30:00').some(e => e.type === 'TEL'));
+check('parole inglesi in -ring non sono vie', !Core.analyze('Il progetto Whispering Concepts è pronto.').some(e => e.type === 'INDIRIZZO'));
+
 console.log(`\n${ok} controlli superati, ${ko} non superati.`);
 process.exit(ko ? 1 : 0);
