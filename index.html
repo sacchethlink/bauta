@@ -77,6 +77,14 @@ nav.links a:hover{box-shadow:0 6px 16px #0000001f}
 .steps a{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:12px 14px;font-size:15px;text-decoration:none;color:var(--fg)}
 .steps a:hover{box-shadow:0 6px 16px #0000001f}
 .steps b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.stepbar{position:fixed;left:0;right:0;top:var(--hdr,64px);z-index:30;background:color-mix(in srgb,var(--bg) 92%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transform:translateY(-8px);opacity:0;pointer-events:none;transition:opacity .15s,transform .15s}
+.stepbar.show{opacity:1;transform:none;pointer-events:auto}
+.stepbar div{max-width:1080px;margin:0 auto;padding:6px 20px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.stepbar a{display:block;text-align:center;padding:7px 8px;border:1px solid var(--line);border-radius:var(--pill);background:var(--surface);color:var(--muted);text-decoration:none;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stepbar a[aria-current="step"]{border-color:var(--fg);color:var(--fg);box-shadow:inset 0 0 0 1px var(--fg)}
+
+.stepbar .corto{display:none}
+@media (max-width:600px){.stepbar .lungo{display:none}.stepbar .corto{display:inline}.stepbar div{padding:5px 12px;gap:4px}.stepbar a{font-size:10.5px;letter-spacing:.02em;padding:6px 2px}}
 @media (max-width:720px){.steps{grid-template-columns:1fr 1fr}}
 section.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px;margin-bottom:18px;scroll-margin-top:14px}
 .card h2{margin:0 0 6px;font-size:22px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
@@ -107,6 +115,8 @@ select{border:1px solid var(--line);border-radius:var(--radius-sm);padding:8px 1
 .mode button[aria-pressed="true"]{background:var(--ink);color:var(--on-ink)}
 .modehint{font-size:14.5px;color:var(--muted);margin:8px 0 0}
 .modehint b{color:var(--fg)}
+.modebox{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px 14px;margin:0 0 12px}
+.modebox .modehint{margin-top:8px}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}
 .chip{border-radius:var(--pill);padding:6px 12px;font-size:12px;font-weight:700;display:inline-flex;gap:6px;align-items:center;cursor:pointer;user-select:none;background:var(--surface-2);color:var(--fg);border:1px solid transparent}
 .chip:hover{border-color:var(--line)}
@@ -120,6 +130,10 @@ select{border:1px solid var(--line);border-radius:var(--radius-sm);padding:8px 1
 .ent.weak{outline:1.5px dashed var(--warn)}
 .ent.off{background:transparent;border-bottom:1px dashed var(--line);text-decoration:line-through;text-decoration-color:var(--muted);color:var(--muted)}
 .ent.off::after{content:"in chiaro";background:var(--surface-2)}
+.legenda{display:flex;flex-wrap:wrap;gap:6px 18px;margin:0 0 12px;font-size:13.5px;color:var(--muted)}
+.legenda span{display:inline-flex;align-items:center;gap:6px}
+.legenda .ent{white-space:nowrap;font-style:normal;color:var(--fg);cursor:default;pointer-events:none;line-height:1.9}
+.legenda .ent.off{color:var(--muted)}
 .selbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px;padding:10px 14px;border-radius:var(--radius-sm);background:var(--surface-2);font-size:15px}
 .selbar[hidden]{display:none}
 .selbar q{font-weight:700}
@@ -204,6 +218,7 @@ header.top::before{content:"";position:absolute;top:0;bottom:0;left:-100vw;right
 header.top.scrolled::before{border-bottom-color:var(--line)}
 body{overflow-x:clip}
 section,h2,.scarica{scroll-margin-top:96px}
+#s1,#s2,#s3,#s4,#settings{scroll-margin-top:calc(var(--hdr,64px) + 64px)}
 nav.links .theme{font:700 15px/1.2 "Figtree",system-ui,sans-serif;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
 nav.links .theme::before{content:"";display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px;background:linear-gradient(90deg,var(--fg) 50%,transparent 50%);border:1.5px solid var(--fg)}
 .totop{position:fixed;right:20px;bottom:20px;z-index:45;width:48px;height:48px;border-radius:50%;border:0;background:var(--fg);color:var(--on-ink);padding:0;cursor:pointer;display:grid;place-items:center;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .2s,transform .2s;box-shadow:0 6px 16px #0000002e}
@@ -213,9 +228,9 @@ nav.links .short{display:none}
 @media (max-width:600px){nav.links .short{display:inline}header.top{padding:8px 0;flex-wrap:nowrap}nav.links{gap:6px;flex-wrap:nowrap}nav.links a,nav.links .theme{padding:7px 11px;font-size:13px}nav.links .long{display:none}nav.links .theme{font-size:0;padding:7px 10px}nav.links .theme::before{margin-right:0}.logos{gap:10px}.bauta span{font-size:21px}.bauta svg{width:40px;height:24px}.logos .sep,.logos .hlink{display:none}nav.links a{white-space:nowrap}}
 a{text-decoration-skip-ink:none}
 /* link nel testo: si riconoscono come cliccabili */
-a:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.ctaband,.hero-cta) a){font-weight:600;text-decoration-line:underline;text-decoration-color:var(--brand);text-decoration-thickness:2px;text-underline-offset:3px;border-radius:4px;padding:0 2px;margin:0 -2px;transition:background-color .15s,text-decoration-thickness .15s}
-a:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.ctaband,.hero-cta) a):hover{background:var(--brand-soft);text-decoration-thickness:3px}
-a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.ctaband,.hero-cta) a)::after{content:"\2009\2197";font-size:.85em;text-decoration:none;display:inline-block}
+a:not(.btn):not(.cta):not(:where(nav.links,.steps,.stepbar,.logos,.cta,.ctaband,.hero-cta) a){font-weight:600;text-decoration-line:underline;text-decoration-color:var(--brand);text-decoration-thickness:2px;text-underline-offset:3px;border-radius:4px;padding:0 2px;margin:0 -2px;transition:background-color .15s,text-decoration-thickness .15s}
+a:not(.btn):not(.cta):not(:where(nav.links,.steps,.stepbar,.logos,.cta,.ctaband,.hero-cta) a):hover{background:var(--brand-soft);text-decoration-thickness:3px}
+a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.stepbar,.logos,.cta,.ctaband,.hero-cta) a)::after{content:"\2009\2197";font-size:.85em;text-decoration:none;display:inline-block}
 </style>
 </head>
 <body>
@@ -274,12 +289,12 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
     <li><b>Apri</b> <code>index.html</code> con un doppio clic. Si apre nel browser, ma lavora tutto sul tuo computer: puoi anche staccare internet.</li>
   </ol>
   <dl class="peso" aria-label="Dati del file">
-    <div><dt>Peso del file</dt><dd>124 KB</dd></div>
-    <div><dt>Una volta estratto</dt><dd>265 KB</dd></div>
+    <div><dt>Peso del file</dt><dd>125 KB</dd></div>
+    <div><dt>Una volta estratto</dt><dd>270 KB</dd></div>
     <div><dt>Contiene</dt><dd>4 file: strumento, guida, istruzioni, licenza</dd></div>
-    <div><dt>Versione</dt><dd>0.10 · 25/11/2026</dd></div>
+    <div><dt>Versione</dt><dd>0.11 · 25/11/2026</dd></div>
   </dl>
-  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip · 124 KB</a><a class="btn" href="guida.html">Leggi la guida</a></div>
+  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip · 125 KB</a><a class="btn" href="guida.html">Leggi la guida</a></div>
 </section>
 <div class="app">
 <nav class="steps" aria-label="I quattro passaggi">
@@ -292,6 +307,16 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
 <section class="card" id="s1">
   <h2><span class="num">1</span>Incolla il tuo testo</h2>
   <p class="hint">Incolla qui il testo, oppure trascina un file .docx, .txt o .md. Per i PDF: copia il testo dal PDF e incollalo qui.</p>
+  <div class="modebox">
+    <div class="row">
+      <span style="font-size:14px;font-weight:600">Prima scegli la modalità:</span>
+      <div class="mode" role="group" aria-label="Modalità">
+        <button id="modeRev" aria-pressed="true">Reversibile</button>
+        <button id="modeAnon" aria-pressed="false">Anonima</button>
+      </div>
+    </div>
+    <p class="modehint" id="modeHint"></p>
+  </div>
   <label class="sr" for="src">Testo originale</label>
   <textarea id="src" placeholder="Incolla qui email, contratti, verbali, note HR, referti…"></textarea>
   <div class="row">
@@ -302,19 +327,17 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
     <span class="spacer"></span>
     <button class="danger" id="btnReset" title="Svuota testo, risposta e segnaposto">Nuovo documento</button>
   </div>
-  <div class="row" style="margin-top:16px">
-    <span style="font-size:14px;font-weight:600">Modalità:</span>
-    <div class="mode" role="group" aria-label="Modalità">
-      <button id="modeRev" aria-pressed="true">Reversibile</button>
-      <button id="modeAnon" aria-pressed="false">Anonima</button>
-    </div>
-  </div>
-  <p class="modehint" id="modeHint"></p>
 </section>
 
 <section class="card" id="s2">
   <h2><span class="num">2</span>Controlla cosa viene coperto</h2>
-  <p class="hint">Nel dubbio Bauta copre: meglio un segnaposto in più che un dato in chiaro. <b>Clicca su un dato</b> per lasciarlo in chiaro (vale per tutte le sue ripetizioni). <b>Se manca qualcosa</b>, selezionalo col mouse e coprilo. Le parole sottolineate a puntini sono nomi propri non riconosciuti con certezza; i bordi tratteggiati indicano codici che non superano il controllo matematico.</p>
+  <p class="hint">Nel dubbio Bauta copre: meglio un segnaposto in più che un dato in chiaro. <b>Clicca su un dato</b> per lasciarlo in chiaro (vale per tutte le sue ripetizioni). <b>Se manca qualcosa</b>, selezionalo col mouse e coprilo.</p>
+  <div class="legenda" aria-label="Legenda dei colori">
+    <span><i class="ent" data-tok="PERSONA_1">Mario</i> coperto</span>
+    <span><i class="ent guess" data-tok="NOME_1">Aurora</i> coperto, nome non certo: controllalo</span>
+    <span><i class="ent weak" data-tok="CF_1">RSSMRA…</i> codice che non supera il controllo matematico</span>
+    <span><i class="ent off" data-tok="">Roma</i> lasciato in chiaro da te</span>
+  </div>
   <div class="modediff" id="modeDiff" role="status" hidden></div>
   <div class="chips" id="chips"></div>
   <div class="view" id="view" aria-live="polite"></div>
@@ -410,7 +433,7 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
 <div class="cta"><p>Volete regole chiare per usare l'AI con i dati in azienda?</p><a href="https://marcosacchet.netlify.app" target="_blank" rel="noopener">Il caffè lo offro io ☕</a></div>
 <footer>
   <span>Hyper Link di Sacchet Marco &amp; C. s.a.s. · P.IVA IT01219960257 · <a href="https://hyperlink-ai.netlify.app/" target="_blank" rel="noopener">hyperlink-ai.netlify.app</a></span>
-  <span>Bauta · versione 0.10</span>
+  <span>Bauta · versione 0.11</span>
 </footer>
 <p class="fine">Bauta è uno strumento d'esempio, fornito così com'è e senza garanzie. Aiuta a ridurre i dati personali esposti, ma non rende anonimo un testo in senso legale e non sostituisce le regole della tua azienda: anche con i segnaposto, il contesto può permettere di risalire a una persona. Ricontrolla sempre il passaggio 2 prima di inviare. <a href="guida.html">Guida completa</a> · <a href="https://github.com/sacchethlink/bauta" target="_blank" rel="noopener">Codice</a> · Licenza MIT · carattere Figtree (SIL Open Font License)</p>
 </div>
@@ -1243,8 +1266,8 @@ const Core = (() => {
     state.mode = m;
     $('modeRev').setAttribute('aria-pressed', m==='rev'); $('modeAnon').setAttribute('aria-pressed', m==='anon');
     $('modeHint').innerHTML = m==='rev'
-      ? '<b>Reversibile</b>: i dati vengono sostituiti da segnaposto e la tabella dei collegamenti resta in questa pagina, così puoi rimettere i dati veri nella risposta dell\'AI.'
-      : '<b>Anonima</b>: copre anche le persone descritte a parole (ruoli, parentele, "l\'unica donna del reparto") e i cognomi scritti in minuscolo; età, date e importi diventano fasce. La tabella dei collegamenti non viene conservata, quindi la risposta non si può ripristinare.';
+      ? '<b>Reversibile</b>: i dati vengono sostituiti da segnaposto e la tabella dei collegamenti resta in questa pagina, così puoi rimettere i dati veri nella risposta dell\'AI.<br><b>Quando usarla:</b> mail, lettere e documenti da completare con la risposta dell\'AI.'
+      : '<b>Anonima</b>: copre anche le persone descritte a parole (ruoli, parentele, "l\'unica donna del reparto") e i cognomi scritti in minuscolo; età, date e importi diventano fasce. La tabella dei collegamenti non viene conservata, quindi la risposta non si può ripristinare.<br><b>Quando usarla:</b> analisi, riassunti e statistiche, quando i dati veri nella risposta non servono.';
     $('restoreArea').hidden = m==='anon'; $('anonNote').hidden = m==='rev';
     const cambio = state.mode_prev && state.mode_prev!==m && state.text;
     const prima = cambio ? new Map(state.ents.filter(e=>e.tok).map(e=>[e.s+':'+e.e, e.tok])) : null;
@@ -1368,6 +1391,26 @@ const Core = (() => {
 
   // passaggi 1-3
   $('btnAnalyze').addEventListener('click', ()=>{ analyze(); $('s2').scrollIntoView({block:'start'}); });
+  // barra dei passaggi: quando l'elenco dei passaggi esce dallo schermo, compare una barra compatta sotto l'intestazione che segna il passaggio in cui sei
+  (function(){
+    const nav = document.querySelector('nav.steps'), hdr = document.querySelector('header.top'), app = document.querySelector('.app');
+    if(!nav || !app) return;
+    const bar = document.createElement('nav'); bar.className = 'stepbar'; bar.setAttribute('aria-label','Passaggi');
+    bar.innerHTML = '<div>' + [...nav.querySelectorAll('a')].map(a => { const t = a.querySelector('b').textContent, n = t.split('·')[0].trim(); const corto = {1:'Incolla',2:'Controlla',3:'Copia',4:'Ripristina'}[n] || t; return `<a href="${a.getAttribute('href')}"><span class="lungo">${t}</span><span class="corto">${n} · ${corto}</span></a>`; }).join('') + '</div>';
+    document.body.appendChild(bar);
+    const links = [...bar.querySelectorAll('a')];
+    const setH = () => { if(hdr) document.documentElement.style.setProperty('--hdr', Math.round(hdr.getBoundingClientRect().height)+'px'); };
+    const tick = () => {
+      const h = hdr ? hdr.getBoundingClientRect().height : 0;
+      const show = nav.offsetParent !== null && nav.getBoundingClientRect().bottom < h && app.getBoundingClientRect().bottom > h + 120;
+      bar.classList.toggle('show', show); bar.setAttribute('aria-hidden', show ? 'false' : 'true');
+      links.forEach(a => a.tabIndex = show ? 0 : -1);
+      const y = h + bar.offsetHeight + 40; let cur = null;
+      for(const a of links){ const sec = document.querySelector(a.getAttribute('href')); if(sec && sec.offsetParent !== null && sec.getBoundingClientRect().top <= y) cur = a; }
+      links.forEach(a => a === cur ? a.setAttribute('aria-current','step') : a.removeAttribute('aria-current'));
+    };
+    setH(); window.addEventListener('resize', ()=>{ setH(); tick(); }); window.addEventListener('scroll', tick, {passive:true}); tick();
+  })();
   document.querySelectorAll('a[href="#s1"]').forEach(a=>a.addEventListener('click', ()=>{ setTimeout(()=>{ try{ $('src').focus({preventScroll:true}); }catch(_){ } }, 350); }));
   let tAuto; src.addEventListener('input', ()=>{ clearTimeout(tAuto); tAuto=setTimeout(analyze, 500); });
   $('withPrompt').addEventListener('change', render);

@@ -169,7 +169,7 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
     <p class="eyebrow">Strumento d'esempio · corsi Hyper Link</p>
     <h1>Copri i dati personali prima di chiederli all'AI.</h1>
     <p class="lead">Bauta mette dei segnaposto al posto di nomi, recapiti, codici, dati sanitari e degli altri dati personali che riconosce. Quando l'AI ti risponde, rimette i dati veri dove erano.</p>
-    <p class="sub">Lavora solo sul tuo computer: il testo non viene inviato a nessuno, nemmeno a Hyper Link, e non viene salvato online. Funziona con qualsiasi assistente AI: Claude, ChatGPT, Gemini, Copilot, Le Chat, Perplexity e gli altri. Non riconosce tutto: il controllo finale (passaggio 2) resta tuo.</p>
+    <p class="sub">Lavora solo sul tuo computer: il testo non viene inviato a nessuno, nemmeno a Hyper Link, e non viene salvato online. Funziona con gli assistenti AI in cui si incolla del testo: Claude, ChatGPT, Gemini, Copilot, Le Chat, Perplexity e altri. Non riconosce tutto: il controllo finale (passaggio 2) resta tuo.</p>
     <div class="hero-cta">
       <a class="btn primary" href="index.html">Inizia</a>
       <a class="btn" href="#perche">Come funziona</a>
@@ -268,13 +268,13 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
 <div class="steps">
   <div class="step"><div class="n">1</div><div>
     <h3>Incolla il testo</h3>
-    <p>Incolla una mail, un verbale, un contratto, oppure apri un file .docx o .txt. Scegli la modalità: <b>Reversibile</b> se vuoi rimettere i dati nella risposta, <b>Anonima</b> se non ti serve.</p>
-    <ul><li>Per i PDF: apri il PDF, copia il testo e incollalo.</li><li>Le foto e le scansioni non vengono lette: trascrivi il testo.</li></ul>
+    <p>Prima scegli la modalità: <b>Reversibile</b> se vuoi rimettere i dati nella risposta, <b>Anonima</b> se non ti serve. Poi incolla una mail, un verbale, un contratto, oppure apri un file .docx o .txt.</p>
+    <ul><li>Per i PDF: apri il PDF, copia il testo e incollalo.</li><li>Le foto e le scansioni non vengono lette: trascrivi il testo.</li><li>Per provare senza dati veri premi <b>Prova con un esempio</b>: ogni volta un testo nuovo (lettera HR, referto, sollecito, contratto…) con dati inventati.</li></ul>
   </div></div>
   <div class="step"><div class="n">2</div><div>
     <h3>Controlla cosa viene coperto</h3>
     <p>Ogni dato trovato è evidenziato con un colore e con il segnaposto accanto. Nel dubbio Bauta copre: meglio un segnaposto in più che un dato in chiaro.</p>
-    <ul><li>Clicca su un dato per lasciarlo in chiaro, in tutte le sue ripetizioni.</li><li>Se manca qualcosa, selezionalo col mouse e premi <b>Copri</b>.</li><li>Clicca su una categoria (es. "Importi") per lasciarla tutta in chiaro, se all'AI serve.</li></ul>
+    <ul><li>Clicca su un dato per lasciarlo in chiaro, in tutte le sue ripetizioni.</li><li>Se manca qualcosa, selezionalo col mouse e premi <b>Copri</b>.</li><li>Clicca su una categoria (es. "Importi") per lasciarla tutta in chiaro, se all'AI serve.</li><li>La legenda sopra il testo spiega i segni: sottolineato pieno = coperto; a puntini = nome non riconosciuto con certezza, da controllare; bordo tratteggiato = codice che non supera il controllo matematico; barrato = lasciato in chiaro da te.</li><li>Se cambi modalità dopo aver cercato i dati, Bauta ti dice quanti dati cambiano e li riquadra nel testo.</li></ul>
   </div></div>
   <div class="step"><div class="n">3</div><div>
     <h3>Copia il testo per l'AI</h3>
@@ -291,12 +291,12 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
 <h2 id="copre">4. Cosa copre</h2>
 <p>Bauta cerca i dati con regole, elenchi di parole e controlli matematici. Quelli che riconosce sono raggruppati in sei famiglie.</p>
 <div class="grid">
-  <div class="tile" style="background:var(--g1)"><b>Chi è la persona</b><span>Nomi e cognomi (anche in minuscolo), soprannomi, aziende ed enti, altri nomi propri, età. In modalità Anonima anche le persone descritte a parole</span></div>
+  <div class="tile" style="background:var(--g1)"><b>Chi è la persona</b><span>Nomi e cognomi (anche in minuscolo), soprannomi, titoli (Sig., Dott.…), aziende ed enti, altri nomi propri, età, sesso e genere. In modalità Anonima anche le persone descritte a parole</span></div>
   <div class="tile" style="background:var(--g2)"><b>Come contattarla</b><span>Email, telefoni, indirizzi, siti, profili social</span></div>
   <div class="tile" style="background:var(--g3)"><b>Codici e documenti</b><span>Codice fiscale e partita IVA (verificati), documenti d'identità, targhe, matricole, protocolli, numeri di pratica</span></div>
   <div class="tile" style="background:var(--g4)"><b>Soldi</b><span>IBAN (verificato), carte di pagamento (verificate), importi</span></div>
   <div class="tile" style="background:var(--g5)"><b>Dati particolari</b><span>Salute, religione, opinioni politiche, adesione a sindacati, orientamento sessuale, origine etnica, dati genetici e biometrici, dati giudiziari</span></div>
-  <div class="tile" style="background:var(--g6)"><b>Contesto</b><span>Luoghi, date, dati catastali, indirizzi IP</span></div>
+  <div class="tile" style="background:var(--g6)"><b>Contesto</b><span>Luoghi, date, orari, dati catastali, indirizzi IP</span></div>
 </div>
 <p style="font-size:15px;color:var(--muted)">"Verificato" vuol dire che Bauta controlla la cifra di controllo del codice: un codice che non la supera viene coperto comunque, ma è segnato da un bordo tratteggiato.</p>
 
@@ -369,7 +369,7 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
 <div class="steps">
   <div class="step"><div class="n">A</div><div><h3>Stacca internet</h3><p>Apri Bauta, poi disattiva il Wi-Fi o metti il computer in modalità aereo. Lo strumento continua a funzionare in tutto: vuol dire che non ha bisogno di mandare nulla da nessuna parte.</p></div></div>
   <div class="step"><div class="n">B</div><div><h3>Si usa solo dal tuo computer</h3><p>Bauta non funziona da un sito: la pagina online serve solo a scaricarla. Scarichi <code class="mono">bauta.zip</code>, estrai la cartella e apri <code class="mono">index.html</code> con un doppio clic. Il testo resta sul tuo computer e non viene salvato da nessuna parte online.</p></div></div>
-  <div class="step"><div class="n">C</div><div><h3>Leggi il codice</h3><p>Tutto il codice è pubblico, in un unico file. Chi ha competenze tecniche può leggerlo e far girare i test inclusi nel progetto.</p></div></div>
+  <div class="step"><div class="n">C</div><div><h3>Leggi il codice</h3><p>Tutto il codice è pubblico su GitHub, il sito dove si pubblica il codice dei programmi perché chiunque possa leggerlo: è il pulsante <b>GitHub</b> in alto. Chi ha competenze tecniche, per esempio il tuo responsabile IT, può leggerlo e far girare i test inclusi nel progetto. Per usare Bauta non serve aprirlo, né avere un account.</p></div></div>
   <div class="step"><div class="n">D</div><div><h3>Controllo tecnico</h3><p>La pagina dichiara al browser di bloccare ogni connessione verso l'esterno (<code class="mono">Content-Security-Policy: connect-src 'none'</code>). Negli strumenti per sviluppatori del browser, la scheda <i>Rete</i> resta vuota mentre usi lo strumento.</p></div></div>
 </div>
 
@@ -379,6 +379,7 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
 <details><summary>Perché copre anche parole che non sono dati personali?</summary><p>Perché nel dubbio copre. Una parola con la maiuscola a metà frase viene trattata come un possibile nome. Clicca sulla parola per lasciarla in chiaro, oppure aggiungila in "Non toccare mai" nelle Impostazioni.</p></details>
 <details><summary>L'AI ha bisogno degli importi per fare i calcoli. Come faccio?</summary><p>Al passaggio 2 clicca sulla categoria "Importi" per lasciarla in chiaro. Vale lo stesso per date ed età quando servono all'AI.</p></details>
 <details><summary>Posso spegnere alcuni filtri?</summary><p>Sì, in <b>Impostazioni e filtri</b> puoi accendere e spegnere ogni tipo di dato (per esempio gli importi, se servono all'AI per i calcoli) e ogni modo di riconoscerli. Normalmente conviene lasciarli tutti accesi: un filtro spento lascia in chiaro quei dati in ogni documento, e Bauta te lo ricorda con un avviso al passaggio 2. La scelta resta salvata nel browser del tuo computer; "Riattiva tutti i filtri" rimette tutto com'era.</p></details>
+<details><summary>Quanto è affidabile?</summary><p>Non riconosce tutto. Su GitHub c'è un banco di prova: a ogni nuova versione misura quanti dati Bauta copre su due raccolte pubbliche di testi inventati (frasi brevi e documenti finanziari) e quanto testo normale copre per eccesso. I risultati aggiornati sono nel file <code class="mono">banco-di-prova/risultati.md</code>. Servono a capire dove Bauta sbaglia, non a confrontarla con altri strumenti. Per questo il controllo al passaggio 2 resta obbligatorio.</p></details>
 <details><summary>Posso usarlo con un file PDF?</summary><p>Copia il testo dal PDF e incollalo. Per i file Word (.docx) e di testo (.txt) puoi invece aprirli direttamente.</p></details>
 <details><summary>Se chiudo la pagina perdo tutto?</summary><p>Sì, in modalità Reversibile la tabella dei segnaposto si perde. Il browser ti avvisa prima di chiudere. Se ti serve riprendere più tardi, nelle Impostazioni avanzate puoi salvarla in un file, che però contiene i dati veri.</p></details>
 <details><summary>Posso usarlo e modificarlo per la mia azienda?</summary><p>Il codice è pubblico con licenza MIT: puoi usarlo e adattarlo. Ricorda che è uno strumento d'esempio, senza garanzie, e che prima dell'uso in azienda va approvato da chi di dovere.</p></details>
