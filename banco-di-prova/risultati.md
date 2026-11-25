@@ -6,26 +6,26 @@ Due banchi di prova pubblici con testi italiani sintetici. Per ognuno, metà dei
 
 Testi: 2000 ([ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.co/datasets/ai4privacy/open-pii-masking-500k-ai4privacy), CC BY 4.0).
 
-- Dati coperti per intero: **92,1%** (4154 su 4508)
-- Caratteri di dati personali coperti: **96,5%**
+- Dati coperti per intero: **92,4%** (4166 su 4508)
+- Caratteri di dati personali coperti: **96,6%**
 - Testo normale coperto per eccesso: **1,5%**
 
 | Tipo di dato (etichetta del dataset) | Quanti | Coperti per intero | Caratteri coperti |
 |---|---:|---:|---:|
 | GIVENNAME | 1356 | 96,6% | 97,6% |
 | SURNAME | 611 | 96,9% | 98,5% |
-| CITY | 343 | 94,5% | 96,4% |
+| CITY | 343 | 94,8% | 96,5% |
 | TELEPHONENUM | 341 | 97,9% | 98,8% |
 | DATE | 256 | 100,0% | 100,0% |
 | TIME | 208 | 95,2% | 96,5% |
-| STREET | 206 | 93,7% | 97,9% |
+| STREET | 206 | 93,2% | 97,9% |
 | EMAIL | 206 | 96,6% | 98,9% |
 | IDCARDNUM | 191 | 99,0% | 99,3% |
-| BUILDINGNUM | 172 | 59,9% | 59,6% |
+| BUILDINGNUM | 172 | 66,3% | 66,6% |
 | TITLE | 153 | 74,5% | 71,3% |
 | AGE | 110 | 47,3% | 46,9% |
 | PASSPORTNUM | 69 | 100,0% | 100,0% |
-| ZIPCODE | 60 | 48,3% | 47,4% |
+| ZIPCODE | 60 | 50,0% | 49,3% |
 | CREDITCARDNUMBER | 57 | 100,0% | 100,0% |
 | TAXNUM | 53 | 92,5% | 97,7% |
 | SEX | 48 | 52,1% | 79,6% |
@@ -37,7 +37,7 @@ Testi: 2000 ([ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.c
 
 Testi: 2000 ([ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.co/datasets/ai4privacy/open-pii-masking-500k-ai4privacy), CC BY 4.0).
 
-- Dati coperti per intero: **94,6%** (4263 su 4508)
+- Dati coperti per intero: **94,7%** (4269 su 4508)
 - Caratteri di dati personali coperti: **97,4%**
 - Testo normale coperto per eccesso: **1,9%**
 
@@ -45,14 +45,14 @@ Testi: 2000 ([ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.c
 |---|---:|---:|---:|
 | GIVENNAME | 1356 | 96,6% | 97,6% |
 | SURNAME | 611 | 96,9% | 98,5% |
-| CITY | 343 | 94,5% | 96,4% |
+| CITY | 343 | 94,8% | 96,5% |
 | TELEPHONENUM | 341 | 98,8% | 99,1% |
 | DATE | 256 | 100,0% | 100,0% |
 | TIME | 208 | 95,2% | 97,9% |
-| STREET | 206 | 93,7% | 97,9% |
+| STREET | 206 | 93,2% | 97,9% |
 | EMAIL | 206 | 96,6% | 99,0% |
 | IDCARDNUM | 191 | 99,0% | 99,3% |
-| BUILDINGNUM | 172 | 82,6% | 81,4% |
+| BUILDINGNUM | 172 | 86,0% | 86,0% |
 | TITLE | 153 | 75,2% | 72,3% |
 | AGE | 110 | 80,9% | 82,6% |
 | PASSPORTNUM | 69 | 100,0% | 100,0% |
@@ -68,22 +68,22 @@ Testi: 2000 ([ai4privacy/open-pii-masking-500k-ai4privacy](https://huggingface.c
 
 Testi: 600 ([gretelai/synthetic_pii_finance_multilingual](https://huggingface.co/datasets/gretelai/synthetic_pii_finance_multilingual), Apache 2.0).
 
-- Dati coperti per intero: **65,5%** (1999 su 3050)
-- Caratteri di dati personali coperti: **77,8%**
+- Dati coperti per intero: **70,1%** (2139 su 3050)
+- Caratteri di dati personali coperti: **80,9%**
 - Testo normale coperto per eccesso: **10,0%**
 
 | Tipo di dato (etichetta del dataset) | Quanti | Coperti per intero | Caratteri coperti |
 |---|---:|---:|---:|
-| name | 952 | 71,0% | 80,4% |
-| company | 582 | 54,0% | 63,4% |
-| street_address | 462 | 64,3% | 90,0% |
+| name | 952 | 71,1% | 80,4% |
+| company | 582 | 61,5% | 75,3% |
+| street_address | 462 | 84,2% | 94,3% |
 | date | 395 | 62,8% | 71,0% |
 | time | 113 | 43,4% | 54,5% |
 | phone_number | 84 | 88,1% | 89,6% |
 | email | 78 | 91,0% | 91,8% |
 | date_of_birth | 41 | 82,9% | 77,5% |
 | first_name | 36 | 94,4% | 94,1% |
-| customer_id | 29 | 65,5% | 77,9% |
+| customer_id | 29 | 75,9% | 85,4% |
 | account_pin | 28 | 60,7% | 69,4% |
 | iban | 24 | 79,2% | 95,6% |
 | credit_card_number | 24 | 66,7% | 70,6% |
@@ -108,22 +108,22 @@ Testi: 600 ([gretelai/synthetic_pii_finance_multilingual](https://huggingface.co
 
 Testi: 600 ([gretelai/synthetic_pii_finance_multilingual](https://huggingface.co/datasets/gretelai/synthetic_pii_finance_multilingual), Apache 2.0).
 
-- Dati coperti per intero: **68,0%** (2073 su 3050)
-- Caratteri di dati personali coperti: **79,5%**
+- Dati coperti per intero: **72,2%** (2203 su 3050)
+- Caratteri di dati personali coperti: **82,2%**
 - Testo normale coperto per eccesso: **10,5%**
 
 | Tipo di dato (etichetta del dataset) | Quanti | Coperti per intero | Caratteri coperti |
 |---|---:|---:|---:|
-| name | 952 | 74,2% | 82,7% |
-| company | 582 | 54,0% | 63,4% |
-| street_address | 462 | 67,5% | 92,3% |
+| name | 952 | 74,3% | 82,7% |
+| company | 582 | 61,5% | 75,3% |
+| street_address | 462 | 85,3% | 94,9% |
 | date | 395 | 63,0% | 71,7% |
 | time | 113 | 44,2% | 54,9% |
 | phone_number | 84 | 88,1% | 91,1% |
 | email | 78 | 91,0% | 91,8% |
 | date_of_birth | 41 | 82,9% | 77,5% |
 | first_name | 36 | 94,4% | 94,1% |
-| customer_id | 29 | 65,5% | 77,9% |
+| customer_id | 29 | 75,9% | 85,4% |
 | account_pin | 28 | 82,1% | 86,1% |
 | iban | 24 | 79,2% | 97,0% |
 | credit_card_number | 24 | 91,7% | 94,8% |
