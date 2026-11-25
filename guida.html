@@ -406,12 +406,18 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
 })();
 </script>
 <script>
-// Avviso se Bauta è stata aperta dallo zip senza estrarre la cartella (Windows copia in una cartella temporanea solo il file aperto)
+// Avviso se Bauta è stata aperta dallo zip senza estrarre la cartella (Windows copia in una cartella temporanea solo il file aperto).
 (function(){
   if(location.protocol !== 'file:') return;
   let p = location.pathname; try{ p = decodeURIComponent(p); }catch(e){}
-  if(!/\.zip\/|\/Temp\d+_[^\/]*\.zip|\/7zO[^\/]*\/|\/Rar\$[^\/]*\//i.test(p)) return;
-  const css = document.createElement('style');
+  // Percorsi tipici di un file aperto dallo zip senza estrarlo: cartelle temporanee di Windows, Esplora file, 7-Zip, WinRAR.
+  // (Una prova diretta sull'altra pagina non è possibile: la Content-Security-Policy blocca ogni caricamento, ed è giusto così.)
+  const nelZip = /\.zip\/|\/AppData\/Local\/Temp\/|\/Local Settings\/Temp\/|\/Temp\d*_[^\/]*\.zip|\/7zO[^\/]*\/|\/Rar\$[^\/]*\//i.test(p);
+  if(!nelZip) return;
+  const mostra = () => {
+  if(document.querySelector('.zipmodal')) return;
+  if(!document.getElementById('zipCss')){
+  const css = document.createElement('style'); css.id = 'zipCss';
   css.textContent = `
 .zipmodal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px;background:rgba(17,18,20,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:zipIn .2s ease-out}
 .zipmodal .box{position:relative;max-width:520px;width:100%;background:var(--surface,var(--card,#fff));color:var(--fg,var(--ink,#111214));border:1px solid var(--line,#cfd3d9);border-radius:22px;padding:28px 28px 24px;box-shadow:0 24px 60px rgba(0,0,0,.3);font-family:"Figtree",system-ui,sans-serif}
@@ -425,6 +431,7 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
 @keyframes zipIn{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.zipmodal{animation:none}}`;
   document.head.appendChild(css);
+  }
   const m = document.createElement('div'); m.className = 'zipmodal';
   m.innerHTML = '<div class="box" role="alertdialog" aria-modal="true" aria-labelledby="zipTit" aria-describedby="zipTxt">'
     + '<button type="button" class="x" aria-label="Chiudi">×</button>'
@@ -446,6 +453,13 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
   document.addEventListener('keydown', tasti);
   document.body.appendChild(m);
   m.querySelector('.ok').focus();
+  };
+  mostra();
+  // Se si continua dallo zip, i collegamenti verso l'altra pagina porterebbero a una pagina d'errore: al loro posto si riapre la finestra
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href]'); if(!a) return;
+    if(/^[^:#?\/]+\.html(?:[#?].*)?$/i.test(a.getAttribute('href'))){ e.preventDefault(); mostra(); }
+  }, true);
 })();
 </script>
 </body>

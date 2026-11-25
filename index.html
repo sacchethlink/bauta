@@ -289,12 +289,12 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.stepbar,.log
     <li><b>Apri</b> <code>index.html</code> con un doppio clic. Si apre nel browser, ma lavora tutto sul tuo computer: puoi anche staccare internet.</li>
   </ol>
   <dl class="peso" aria-label="Dati del file">
-    <div><dt>Peso del file</dt><dd>128 KB</dd></div>
-    <div><dt>Una volta estratto</dt><dd>277 KB</dd></div>
+    <div><dt>Peso del file</dt><dd>129 KB</dd></div>
+    <div><dt>Una volta estratto</dt><dd>279 KB</dd></div>
     <div><dt>Contiene</dt><dd>4 file: strumento, guida, istruzioni, licenza</dd></div>
-    <div><dt>Versione</dt><dd>0.11.2 · 25/11/2026</dd></div>
+    <div><dt>Versione</dt><dd>0.11.3 · 25/11/2026</dd></div>
   </dl>
-  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip · 128 KB</a><a class="btn" href="guida.html">Leggi la guida</a></div>
+  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip · 129 KB</a><a class="btn" href="guida.html">Leggi la guida</a></div>
 </section>
 <div class="app">
 <nav class="steps" aria-label="I quattro passaggi">
@@ -433,7 +433,7 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.stepbar,.log
 <div class="cta"><p>Volete regole chiare per usare l'AI con i dati in azienda?</p><a href="https://marcosacchet.netlify.app" target="_blank" rel="noopener">Il caffè lo offro io ☕</a></div>
 <footer>
   <span>Hyper Link di Sacchet Marco &amp; C. s.a.s. · P.IVA IT01219960257 · <a href="https://hyperlink-ai.netlify.app/" target="_blank" rel="noopener">hyperlink-ai.netlify.app</a></span>
-  <span>Bauta · versione 0.11.2</span>
+  <span>Bauta · versione 0.11.3</span>
 </footer>
 <p class="fine">Bauta è uno strumento d'esempio, fornito così com'è e senza garanzie. Aiuta a ridurre i dati personali esposti, ma non rende anonimo un testo in senso legale e non sostituisce le regole della tua azienda: anche con i segnaposto, il contesto può permettere di risalire a una persona. Ricontrolla sempre il passaggio 2 prima di inviare. <a href="guida.html">Guida completa</a> · <a href="https://github.com/sacchethlink/bauta" target="_blank" rel="noopener">Codice</a> · Licenza MIT · carattere Figtree (SIL Open Font License)</p>
 </div>
@@ -1716,12 +1716,18 @@ L'assicurato chiede il risarcimento sull'IBAN ${iban()}.`; },
 })();
 </script>
 <script>
-// Avviso se Bauta è stata aperta dallo zip senza estrarre la cartella (Windows copia in una cartella temporanea solo il file aperto)
+// Avviso se Bauta è stata aperta dallo zip senza estrarre la cartella (Windows copia in una cartella temporanea solo il file aperto).
 (function(){
   if(location.protocol !== 'file:') return;
   let p = location.pathname; try{ p = decodeURIComponent(p); }catch(e){}
-  if(!/\.zip\/|\/Temp\d+_[^\/]*\.zip|\/7zO[^\/]*\/|\/Rar\$[^\/]*\//i.test(p)) return;
-  const css = document.createElement('style');
+  // Percorsi tipici di un file aperto dallo zip senza estrarlo: cartelle temporanee di Windows, Esplora file, 7-Zip, WinRAR.
+  // (Una prova diretta sull'altra pagina non è possibile: la Content-Security-Policy blocca ogni caricamento, ed è giusto così.)
+  const nelZip = /\.zip\/|\/AppData\/Local\/Temp\/|\/Local Settings\/Temp\/|\/Temp\d*_[^\/]*\.zip|\/7zO[^\/]*\/|\/Rar\$[^\/]*\//i.test(p);
+  if(!nelZip) return;
+  const mostra = () => {
+  if(document.querySelector('.zipmodal')) return;
+  if(!document.getElementById('zipCss')){
+  const css = document.createElement('style'); css.id = 'zipCss';
   css.textContent = `
 .zipmodal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px;background:rgba(17,18,20,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:zipIn .2s ease-out}
 .zipmodal .box{position:relative;max-width:520px;width:100%;background:var(--surface,var(--card,#fff));color:var(--fg,var(--ink,#111214));border:1px solid var(--line,#cfd3d9);border-radius:22px;padding:28px 28px 24px;box-shadow:0 24px 60px rgba(0,0,0,.3);font-family:"Figtree",system-ui,sans-serif}
@@ -1735,6 +1741,7 @@ L'assicurato chiede il risarcimento sull'IBAN ${iban()}.`; },
 @keyframes zipIn{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.zipmodal{animation:none}}`;
   document.head.appendChild(css);
+  }
   const m = document.createElement('div'); m.className = 'zipmodal';
   m.innerHTML = '<div class="box" role="alertdialog" aria-modal="true" aria-labelledby="zipTit" aria-describedby="zipTxt">'
     + '<button type="button" class="x" aria-label="Chiudi">×</button>'
@@ -1756,6 +1763,13 @@ L'assicurato chiede il risarcimento sull'IBAN ${iban()}.`; },
   document.addEventListener('keydown', tasti);
   document.body.appendChild(m);
   m.querySelector('.ok').focus();
+  };
+  mostra();
+  // Se si continua dallo zip, i collegamenti verso l'altra pagina porterebbero a una pagina d'errore: al loro posto si riapre la finestra
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href]'); if(!a) return;
+    if(/^[^:#?\/]+\.html(?:[#?].*)?$/i.test(a.getAttribute('href'))){ e.preventDefault(); mostra(); }
+  }, true);
 })();
 </script>
 </body>
