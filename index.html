@@ -69,6 +69,8 @@ nav.links a:hover{box-shadow:0 6px 16px #0000001f}
 .why svg{width:52px;height:30px;flex:none;color:var(--fg);margin-top:4px}
 .why b{display:block;font-size:16px;margin-bottom:2px}
 .why p{margin:0;font-size:15px;color:var(--muted)}
+.whys{margin-top:18px}
+@media (max-width:520px){.why{gap:12px;padding:14px 16px}.why svg{width:32px;height:20px}.why p{font-size:14px}}
 .trust{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px}
 .pill{font-size:12px;font-weight:700;letter-spacing:.02em;padding:6px 12px;border-radius:var(--pill);background:var(--surface-2);color:var(--fg)}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
@@ -260,14 +262,6 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
   <div class="forte"><span class="fi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></span><b>Il controllo finale è tuo</b><p>Vedi tutto quello che viene coperto e decidi tu cosa togliere o aggiungere prima di copiare.</p></div>
 </section>
 
-<div class="why">
-  <svg viewBox="2 11 60 35" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M4 26c0-10 10-14 18-12 4 1 7 3 10 3s6-2 10-3c8-2 18 2 18 12s-8 18-16 18c-5 0-8-3-12-3s-7 3-12 3C12 44 4 36 4 26ZM13 27c2-5 10-6 14-1-3 5-11 6-14 1ZM51 27c-2-5-10-6-14-1 3 5 11 6 14 1Z"/></svg>
-  <div><b>Perché si chiama Bauta?</b><p>La bauta è la maschera del Carnevale di Venezia che copriva tutto il viso: chi la indossava poteva parlare senza togliersela e senza farsi riconoscere. Bauta fa lo stesso con i tuoi testi: l'AI capisce di cosa parli, ma non sa di chi.</p></div>
-</div>
-<div class="why" id="perche-github">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></svg>
-  <div><b>Perché c'è il pulsante GitHub?</b><p>GitHub è un sito dove si pubblica il codice dei programmi, in modo che chiunque possa leggerlo. Il pulsante in alto apre il codice di Bauta: chi sa leggerlo, per esempio il tuo responsabile IT, può controllare che cosa fa e verificare che non invia il testo da nessuna parte. Lì c'è anche il banco di prova, che a ogni nuova versione misura quanti dati Bauta copre su testi di prova pubblici. Per usare Bauta non serve aprirlo, né avere un account.</p></div>
-</div>
 
 
 <section class="card scarica" id="scarica">
@@ -280,12 +274,12 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
     <li><b>Apri</b> <code>index.html</code> con un doppio clic. Si apre nel browser, ma lavora tutto sul tuo computer: puoi anche staccare internet.</li>
   </ol>
   <dl class="peso" aria-label="Dati del file">
-    <div><dt>Peso del file</dt><dd>122 KB</dd></div>
-    <div><dt>Una volta estratto</dt><dd>260 KB</dd></div>
+    <div><dt>Peso del file</dt><dd>124 KB</dd></div>
+    <div><dt>Una volta estratto</dt><dd>265 KB</dd></div>
     <div><dt>Contiene</dt><dd>4 file: strumento, guida, istruzioni, licenza</dd></div>
-    <div><dt>Versione</dt><dd>0.9 · 24/11/2026</dd></div>
+    <div><dt>Versione</dt><dd>0.10 · 25/11/2026</dd></div>
   </dl>
-  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip · 122 KB</a><a class="btn" href="guida.html">Leggi la guida</a></div>
+  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip · 124 KB</a><a class="btn" href="guida.html">Leggi la guida</a></div>
 </section>
 <div class="app">
 <nav class="steps" aria-label="I quattro passaggi">
@@ -403,10 +397,20 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
 </details>
 </div>
 
+<div class="whys">
+<div class="why">
+  <svg viewBox="2 11 60 35" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M4 26c0-10 10-14 18-12 4 1 7 3 10 3s6-2 10-3c8-2 18 2 18 12s-8 18-16 18c-5 0-8-3-12-3s-7 3-12 3C12 44 4 36 4 26ZM13 27c2-5 10-6 14-1-3 5-11 6-14 1ZM51 27c-2-5-10-6-14-1 3 5 11 6 14 1Z"/></svg>
+  <div><b>Perché si chiama Bauta?</b><p>La bauta è la maschera del Carnevale di Venezia che copriva tutto il viso: chi la indossava poteva parlare senza togliersela e senza farsi riconoscere. Bauta fa lo stesso con i tuoi testi: l'AI capisce di cosa parli, ma non sa di chi.</p></div>
+</div>
+<div class="why" id="perche-github">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></svg>
+  <div><b>Perché c'è il pulsante GitHub?</b><p>GitHub è un sito dove si pubblica il codice dei programmi, in modo che chiunque possa leggerlo. Il pulsante in alto apre il codice di Bauta: chi sa leggerlo, per esempio il tuo responsabile IT, può controllare che cosa fa e verificare che non invia il testo da nessuna parte. Lì c'è anche il banco di prova, che a ogni nuova versione misura quanti dati Bauta copre su testi di prova pubblici. Per usare Bauta non serve aprirlo, né avere un account.</p></div>
+</div>
+</div>
 <div class="cta"><p>Volete regole chiare per usare l'AI con i dati in azienda?</p><a href="https://marcosacchet.netlify.app" target="_blank" rel="noopener">Il caffè lo offro io ☕</a></div>
 <footer>
   <span>Hyper Link di Sacchet Marco &amp; C. s.a.s. · P.IVA IT01219960257 · <a href="https://hyperlink-ai.netlify.app/" target="_blank" rel="noopener">hyperlink-ai.netlify.app</a></span>
-  <span>Bauta · versione 0.9</span>
+  <span>Bauta · versione 0.10</span>
 </footer>
 <p class="fine">Bauta è uno strumento d'esempio, fornito così com'è e senza garanzie. Aiuta a ridurre i dati personali esposti, ma non rende anonimo un testo in senso legale e non sostituisce le regole della tua azienda: anche con i segnaposto, il contesto può permettere di risalire a una persona. Ricontrolla sempre il passaggio 2 prima di inviare. <a href="guida.html">Guida completa</a> · <a href="https://github.com/sacchethlink/bauta" target="_blank" rel="noopener">Codice</a> · Licenza MIT · carattere Figtree (SIL Open Font License)</p>
 </div>
@@ -618,11 +622,11 @@ const Core = (() => {
       companies.push({core, key});
     });
     // Enti e aziende senza Srl/Spa: Banca d'Italia, Istituto Tecnico Enrico Fermi, Ospedale Generale…
-    const ENTE_HEAD = `(?:Società|Compagnia|Banca|Istituto|Università|Ospedale|Policlinico|Clinica|Liceo|Fondazione|Associazione|Cooperativa|Consorzio|Gruppo|Cassa|Agenzia|Camera|Ordine|Collegio|Federazione|Unione|Confederazione|Accademia|Conservatorio|Scuola|Azienda|Studio|Hotel|Albergo|Ristorante|Farmacia|Cantina|Officine|Industrie|Comune di|Provincia di|Regione)`;
-    all(new RegExp(`(?<![${W}])${ENTE_HEAD}((?:[ \\t]+(?:[A-ZÀ-Ý][${W}'.\\-]*|d'[A-ZÀ-Ý][${W}\\-]*|dell'[A-ZÀ-Ý][${W}\\-]*|di|del|della|dei|degli|delle|per|e|&|"[^"\\n]{2,40}"|«[^»\\n]{2,40}»)){1,7})`,'g'), m => {
+    const ENTE_HEAD = `(?:Fondo|Ministero|Organizzazione|Laboratori|Laboratorio|Fabbrica|Assicurazioni|Ente|Autorità|Supermercato|Società|Compagnia|Banca|Istituto|Università|Ospedale|Policlinico|Clinica|Liceo|Fondazione|Associazione|Cooperativa|Consorzio|Gruppo|Cassa|Agenzia|Camera|Ordine|Collegio|Federazione|Unione|Confederazione|Accademia|Conservatorio|Scuola|Azienda|Studio|Hotel|Albergo|Ristorante|Farmacia|Cantina|Officine|Industrie|Comune di|Provincia di|Regione)`;
+    all(new RegExp(`(?<![${W}])${ENTE_HEAD}((?:[ \\t]+(?:[A-ZÀ-Ý][${W}'.\\-]*|(?:d|dell|l|all|nell|sull)'[A-ZÀ-Ý][${W}\\-]*|di|del|della|dei|degli|delle|per|per il|per la|per lo|per i|per gli|per le|e|&|"[^"\\n]{2,40}"|«[^»\\n]{2,40}»)){1,7})`,'g'), m => {
       let tail = m[1].replace(/(?:\s+(?:di|del|della|dei|degli|delle|per|e|&))+\s*$/,'');
       const ws = tail.trim().split(/\s+/).map(w=>w.replace(/["«».,']/g,'').toLowerCase());
-      if(!ws.some(w => w && !COMMON.has(w) && !CO_HEAD.test(w))) return; // "Banca Dati", "Società Partecipate": solo parole comuni
+      if(!/^(?:Ministero|Agenzia|Autorità)\s+(?:del|della|dello|dei|degli|delle|dell'|per)/.test(m[0]) && !ws.some(w => w && !COMMON.has(w) && !CO_HEAD.test(w))) return; // "Banca Dati", "Società Partecipate": solo parole comuni
       const e = m.index + m[0].length - (m[1].length - tail.length);
       const str = text.slice(m.index, e), key = 'AZIENDA|'+norm('AZIENDA', str);
       add(m.index, e, 'AZIENDA', {key, pri:7.2});
@@ -662,7 +666,7 @@ const Core = (() => {
       }
     }
     // Indirizzi
-    const ADDR_KW = `(?:[Vv]ia|VIA|[Vv]iale|V\\.le|[Pp]iazza|P\\.zza|P\\.za|[Pp]iazzale|Corso|corso(?=[ \\t]+(?![Dd]i |[Dd]el )[A-ZÀ-Ý])|C\\.so|[Ll]argo|[Vv]icolo|[Ss]trada(?: [Ss]tatale| [Pp]rovinciale)?|[Ll]ocalità|[Ll]oc\\.|[Ff]razione|[Ff]raz\\.|[Cc]ontrada|[Bb]orgo|[Ll]ungomare|[Ss]alita|[Vv]ia\\s+[Pp]rivata|[Ss]tradello|[Vv]iottolo|[Cc]alle|[Cc]ampo|[Ff]ondamenta|[Rr]ione|[Cc]hemin|[Rr]ue|[Rr]oute|[Aa]venue|[Pp]lace|[Aa]llée|[Qq]uai|[Bb]oulevard|[A-ZÀ-Ý][a-zà-ÿ]*(?:strasse|straße|weg|gasse|platz|rain|matt|halde|acker|(?<![aeiou])ring|graben|steig)(?![a-zà-ÿ]))(?![${W}])`;
+    const ADDR_KW = `(?:[Vv]ia|VIA|[Vv]iale|V\\.le|[Pp]iazza|P\\.zza|P\\.za|[Pp]iazzale|Corso|corso(?=[ \\t]+(?![Dd]i |[Dd]el )[A-ZÀ-Ý])|C\\.so|[Ll]argo|[Vv]icolo|[Ss]trada(?: [Ss]tatale| [Pp]rovinciale)?|[Ll]ocalità|[Ll]oc\\.|[Ff]razione|[Ff]raz\\.|[Cc]ontrada|[Bb]orgo|[Ll]ungomare|[Ss]alita|[Vv]ia\\s+[Pp]rivata|[Ss]tradello|[Vv]iottolo|[Cc]alle|[Cc]ampo|[Ff]ondamenta|[Rr]ione|[Cc]hemin|[Rr]ue|[Rr]oute|[Aa]venue|[Pp]lace|[Aa]llée|[Qq]uai|[Bb]oulevard|[A-ZÀ-Ý][a-zà-ÿ]*(?:strasse|straße|weg|gasse|platz|rain|matt|halde|acker|(?<![aeiou])ring|graben|steig|vägen|gatan|gränd|torget|stigen|singel|steeg|(?<=[a-zà-ÿ])pad|laan|straat|dreef|(?<=[a-zà-ÿ])hof|plein|kade|gracht|allee)(?![a-zà-ÿ]))(?![${W}])`;
     const ADDR_TOK = `(?:(?:[A-ZÀ-Ý][${W}'.\\-]*|\\d{1,4}(?:[.\\/]\\d{1,3})?[A-Za-z]?(?:\\/[A-Za-z0-9]{1,3})?|d[aei]|del|della|dello|dei|degli|delle|dal|dalla|dallo|dagli|dalle|al|alla|allo|agli|alle|sul|sulla|per|du|des|de|la|le)(?![${W}])|(?:dell|d|nell|sull|all)'[A-ZÀ-Ý][${W}\\-]*)`;
     const CAPCITY = `(?:\\d{5}|(?!(?:19|20)\\d{2})\\d{4})[ \\t]+[A-ZÀ-Ý][${W}'\\-]+(?:\\s(?:[A-ZÀ-Ý][${W}'\\-]+|d[aei]|del|in|sul|sulla|al|nel|im|am))*?(?:\\s*\\(\\s?[A-Z]{2}\\s?\\))?`;
     all(new RegExp(`${NB}${ADDR_KW}(?:[ \\t]+((?:${ADDR_TOK}[ \\t]*){1,8}))?(?:,?\\s*(?:n\\.?\\s*|nr\\.?\\s*|n°\\s*)?\\d{1,4}(?:\\.\\d{1,2})?(?!\\d)(?:\\s?[A-Za-z](?![${W}]))?(?:\\/\\s?[A-Za-z0-9]+)?)?(?:,?\\s*${CAPCITY})?`,'g'), m => {
@@ -687,14 +691,36 @@ const Core = (() => {
       for(let n=0;n<2;n++){ const nx = text.slice(e0).match(/^,?\s*\n[ \t]*((?:\d{4,5}[ \t]+[A-ZÀ-Ý][^\n]{1,40}|Italia|Italy|Svizzera|Schweiz|Suisse|Francia|France|Germania|Deutschland|Spagna|España|Austria|Paesi Bassi|Belgio|Svezia|Regno Unito|San Marino))[ \t]*(?=\n|$)/); if(!nx) break; e0 += nx[0].length; }
       add(s0, e0, 'INDIRIZZO', {pri:7.8});
     });
-    all(/(?<![A-Za-zÀ-ÿ])(?:con sede(?: legale| operativa| amministrativa)? (?:in|a)|sede legale (?:in|a)|residente (?:in|a)|con residenza (?:in|a)|residenza (?:in|a)|domiciliat[oa] (?:in|a)|con indirizzo (?:in|a)|all'indirizzo|indirizzo (?:in|a)|situat[oa] (?:al|in|a)|sit[oa] in|ubicat[oa] in|abita (?:in|a))\s+(?=[A-ZÀ-Ý0-9])/g, m => {
+    all(/(?<![A-Za-zÀ-ÿ])(?:con sede(?: legale| operativa| amministrativa)? (?:in|a)|sede legale (?:in|a)|residente (?:in|a)|con residenza (?:in|a)|residenza (?:in|a)|domiciliat[oa] (?:in|a)|con indirizzo (?:in|a)|all'indirizzo|indirizzo (?:in|a)|indirizzo(?: di casa| di residenza| di spedizione)?(?: è| e')?|situat[oa] (?:al|in|a)|sit[oa] in|ubicat[oa] in|abita (?:in|a))\s+(?=[A-ZÀ-Ý0-9])/g, m => {
       const s0 = m.index + m[0].length;
-      const v = addrValue(s0, 110);
+      let v = addrValue(s0, 110);
       if(v.length<3) return;
+      if(/^indirizzo/i.test(m[0])){ // "indirizzo Linden 177": solo con il numero civico, e ci si ferma alla prima parola minuscola
+        if(/^(?:IP|IPv[46]|MAC|email|e-mail|PEC|web|URL)\b/i.test(v)) return;
+        const cut = v.match(/^(?:(?:[A-ZÀ-Ý0-9][^\s,?!'"]*|d[aei]|del|della|dello|dei|degli|delle|de|la|le|per|sul|sulla|al|alla)(?:,?[ \t]+|,(?=\S)|$))+/);
+        v = cut ? cut[0].replace(/[\s,]+$/,'').replace(/(?:[\s,]+(?:d[aei]|del|della|dello|dei|degli|delle|de|la|le|per|sul|sulla|al|alla))+$/,'') : '';
+        if(!/\d/.test(v)) return;
+        add(s0, s0+v.length, 'INDIRIZZO', {pri:7.8}); return;
+      }
       const ws = v.split(/\s+/);
       if(ws.length>12) return;
       if(!/\d/.test(v) && ws.length>4) return; // senza numeri si accettano solo brevi nomi di luogo
       add(s0, s0+v.length, 'INDIRIZZO', {pri:/\d/.test(v)?7.8:8.6});
+    });
+    // Indirizzi col numero davanti, come all'estero: "83, chemin Lévy", "76 Gibson garden, Apt. 533", "434 Backvägen", "11 Canale Fantozzi, Rezzanello"
+    const ST_EN = `(?:street|avenue|road|lane|drive|court|place|square|gardens?|pass|radial|hills?|harbou?rs?|rest|mission|meadows?|port|vista|via|passage|mountains?|way|parkway|boulevard|terrace|crescent|close|grove|park|ridge|views?|walks?|trail|circle|crossing|heights|springs?|valley|fields?|point|landing|loop|row|path|plaza|alley|brook|creek|estates?|green|island|junction|knolls?|lakes?|manor|mills?|orchard|ranch|shores?|station|summit|village|wells?|cove|cliffs?|corner|bend|canyon|causeway|cent(?:er|re)|common|curve|dale|divide|falls|ferry|flats?|ford|forks?|fort|freeway|gateway|glen|haven|highway|hollow|inlet|isle|keys?|lodge|mall|motorway|oval|pike|pines?|plains?|prairie|rapids?|river|route|shoals?|skyway|spur|stream|throughway|trace|track|tunnel|turnpike|underpass|unions?|viaduct|villages?|ville|ways)`;
+    const ST_PRIMA = `(?:[Cc]hemin|[Rr]ue|[Aa]venue|[Bb]oulevard|[Aa]llée|[Pp]lace|[Qq]uai|[Rr]oute|[Ii]mpasse|Avenida|Calle|Glorieta|Alameda|Paseo|Pasaje|Travesía|Ronda|Plaza|Camino|Cuesta|Acceso|Vial|Rambla|Canale|Stretto|Incrocio|Rotonda|Via|Viale|Piazza|Vicolo|Corso|Largo|Contrada|Borgo|Strada|Località)`;
+    const NOMEV = `[A-ZÀ-Ý][${W}'\\-]*`;
+    const ST_ATT = `[A-ZÀ-Ý][${W}\\-]*(?:strasse|straße|weg|gasse|platz|(?<![aeiou])ring|vägen|gatan|gränd|torget|stigen|singel|steeg|pad|laan|straat|dreef|hof|plein|kade|gracht|allee|str\\.)`;
+    all(new RegExp(`(?<![${W}.,:\\/\\-+])\\d{1,4}(?:\\/\\d{1,3})?[A-Za-z]?,?[ \\t]+(?:(?:${NOMEV}[ \\t]+){1,3}${ST_EN}(?![${W}])|${ST_PRIMA}[ \\t]+(?:(?:de|del|de la|di|della|des|du|d')[ \\t]*)?${NOMEV}(?:[ \\t]+(?:${NOMEV}|de|del|di)){0,3}|${ST_ATT}(?![${W}]))(?:,?[ \\t]*(?:Apt\\.?|Flat|Suite|Studio|Unit|Int\\.|Interno)[ \\t]*[A-Za-z0-9\\/]{1,5})?(?:,[ \\t]*(?:\\d{4,5}(?:[ \\t]?[A-Z]{2})?|[A-Z]{1,2}\\d[A-Z\\d]?[ \\t]\\d[A-Z]{2}))?(?:,[ \\t]*[A-ZÀ-Ý][${W}'\\-]+(?:[ \\t]+(?:[A-ZÀ-Ý][${W}'\\-]+|[Dd]i|de|del|sur|am|im)){0,3})?`,'g'), m => {
+      let str = m[0];
+      // la città finale si tiene solo se non è una parola comune (", Italia" resta per i paesi)
+      const ws = [...str.matchAll(/\S+/g)];
+      for(let q=1;q<ws.length;q++){ const w = ws[q][0].replace(/[.,]$/,'').toLowerCase(); if(COMMON.has(w) && !PARTICLES.has(w) && !/^(?:via|viale|piazza|corso|largo|strada|place|route|avenue|plaza)$/.test(w)){ str = str.slice(0, ws[q].index); break; } }
+      str = str.replace(/[\s,]+$/,'');
+      if(!/[A-Za-zÀ-ÿ]{3}/.test(str)) return;
+      if(/^,?[ \t]*\d{1,4}[A-Za-z]?(?![\d.,]\d)/.test(text.slice(m.index+str.length)) && /,/.test(m[0].slice(0,8))) return; // "8863, Chleirütiweg, 41": il numero davanti è un CAP, vale la regola con il civico dopo
+      add(m.index, m.index+str.length, 'INDIRIZZO', {pri:7.9});
     });
     all(new RegExp(`(?<![\\d\\-\\/])${CAPCITY}`,'g'), m => add(m.index, m.index+m[0].length, 'INDIRIZZO'));
     all(/(?<=(?:[A-Za-zÀ-ÿ],|\d,?|CAP:?|cap:?)\s?)(?<![\d.\/\-:+])\d{5}(?![\d.,\/\-:]\d|\d)/g, m => add(m.index, m.index+5, 'INDIRIZZO', {pri:12.6}));
@@ -1342,6 +1368,7 @@ const Core = (() => {
 
   // passaggi 1-3
   $('btnAnalyze').addEventListener('click', ()=>{ analyze(); $('s2').scrollIntoView({block:'start'}); });
+  document.querySelectorAll('a[href="#s1"]').forEach(a=>a.addEventListener('click', ()=>{ setTimeout(()=>{ try{ $('src').focus({preventScroll:true}); }catch(_){ } }, 350); }));
   let tAuto; src.addEventListener('input', ()=>{ clearTimeout(tAuto); tAuto=setTimeout(analyze, 500); });
   $('withPrompt').addEventListener('change', render);
   $('gateChk').addEventListener('change', ()=>{ const ok=$('gateChk').checked; $('gate').classList.toggle('done', ok); $('btnCopyOut').disabled = !ok || !$('out').value; });

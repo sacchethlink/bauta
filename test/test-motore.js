@@ -157,5 +157,22 @@ for (const [nome, testo, resta] of restano09) { const out = copri(testo); check(
 check('il 3 e 4 maggio è una data, non un orario', Core.analyze('Siamo chiusi il 3 e 4 maggio.').every(e => e.type !== 'ORARIO'));
 check('"2023 Gentile Johansson AB": la data non entra nel nome dell\'azienda', Core.analyze('Data: 01/03/2023  Gentile Johansson AB, buongiorno').some(e => e.type === 'DATA' && e.text === '01/03/2023'));
 
+// 11. Versione 0.10: indirizzi stranieri col numero davanti, "il mio indirizzo è…", enti italiani senza Srl
+const v010 = [
+  ['indirizzi col numero davanti', 'Residenza in 83, chemin Lévy. Spedire a 76 Gibson garden, Apt. 533 oppure a 434 Backvägen.', ['83, chemin Lévy', '76 Gibson garden, Apt. 533', '434 Backvägen']],
+  ['indirizzo straniero con città', "LOC+45+11 Canale Fantozzi, Rezzanello' e 37 boulevard de Jourdan, FoucherVille", ['11 Canale Fantozzi, Rezzanello', '37 boulevard de Jourdan, FoucherVille']],
+  ['vie nordiche e olandesi', 'Sede in Kyrkvägen 78, filiale in Helenasteeg 53 e Davidpad 8.', ['Kyrkvägen 78', 'Helenasteeg 53', 'Davidpad 8']],
+  ['il mio indirizzo è', 'Il mio indirizzo è Linden 177. Usa il tuo indirizzo Puzzatsch 1801 per inviarti la documentazione.', ['Linden 177', 'Puzzatsch 1801']],
+  ['enti senza Srl', "Il Fondo per l'Istruzione e il Ministero della Salute; Assicurazioni Generali.", ["Fondo per l'Istruzione", 'Ministero della Salute']],
+];
+for (const [nome, testo, dati] of v010) { const out = copri(testo); for (const d of dati) check(`${nome}: "${d}" ancora visibile in → ${out}`, !out.includes(d)); }
+const restano010 = [
+  ['"il tuo indirizzo email" resta', 'Scrivi al tuo indirizzo email e controlla.', 'indirizzo email e controlla'],
+  ['indirizzo IP non è un indirizzo di casa', "Configura il router utilizzando l'indirizzo IP predefinito.", 'IP predefinito'],
+  ['dopo il civico la frase resta leggibile', 'Usa il tuo indirizzo Puzzatsch 1801 per inviarti la documentazione.', 'per inviarti la documentazione'],
+];
+for (const [nome, testo, resta] of restano010) { const out = copri(testo); check(`${nome} → ${out}`, out.includes(resta)); }
+check('un numero davanti a parole qualsiasi non è un indirizzo', Core.analyze('Abbiamo 3 Grandi Obiettivi per il 2025.').every(e => e.type !== 'INDIRIZZO'));
+
 console.log(`\n${ok} controlli superati, ${ko} non superati.`);
 process.exit(ko ? 1 : 0);
