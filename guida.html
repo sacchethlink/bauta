@@ -368,7 +368,7 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
 <p>Non devi fidarti sulla parola. Puoi controllarlo da solo, anche senza competenze tecniche.</p>
 <div class="steps">
   <div class="step"><div class="n">A</div><div><h3>Stacca internet</h3><p>Apri Bauta, poi disattiva il Wi-Fi o metti il computer in modalità aereo. Lo strumento continua a funzionare in tutto: vuol dire che non ha bisogno di mandare nulla da nessuna parte.</p></div></div>
-  <div class="step"><div class="n">B</div><div><h3>Si usa solo dal tuo computer</h3><p>Bauta non funziona da un sito: la pagina online serve solo a scaricarla. Scarichi <code class="mono">bauta.zip</code>, estrai la cartella e apri <code class="mono">index.html</code> con un doppio clic. Il testo resta sul tuo computer e non viene salvato da nessuna parte online.</p></div></div>
+  <div class="step"><div class="n">B</div><div><h3>Si usa solo dal tuo computer</h3><p>Bauta non funziona da un sito: la pagina online serve solo a scaricarla. Scarichi <code class="mono">bauta.zip</code>, estrai la cartella e apri <code class="mono">index.html</code> con un doppio clic. Estrai prima la cartella: se apri <code class="mono">index.html</code> direttamente dallo zip, la guida e i collegamenti tra le pagine non si aprono. Il testo resta sul tuo computer e non viene salvato da nessuna parte online.</p></div></div>
   <div class="step"><div class="n">C</div><div><h3>Leggi il codice</h3><p>Tutto il codice è pubblico su GitHub, il sito dove si pubblica il codice dei programmi perché chiunque possa leggerlo: è il pulsante <b>GitHub</b> in alto. Chi ha competenze tecniche, per esempio il tuo responsabile IT, può leggerlo e far girare i test inclusi nel progetto. Per usare Bauta non serve aprirlo, né avere un account.</p></div></div>
   <div class="step"><div class="n">D</div><div><h3>Controllo tecnico</h3><p>La pagina dichiara al browser di bloccare ogni connessione verso l'esterno (<code class="mono">Content-Security-Policy: connect-src 'none'</code>). Negli strumenti per sviluppatori del browser, la scheda <i>Rete</i> resta vuota mentre usi lo strumento.</p></div></div>
 </div>
@@ -403,6 +403,17 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
   function onScroll(){ var y=window.scrollY; top.classList.toggle('show', y>400); if(h) h.classList.toggle('scrolled', y>8); }
   window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
   top.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+})();
+</script>
+<script>
+// Avviso se Bauta è stata aperta dallo zip senza estrarre la cartella (Windows copia in una cartella temporanea solo il file aperto)
+(function(){
+  if(location.protocol !== 'file:') return;
+  let p = location.pathname; try{ p = decodeURIComponent(p); }catch(e){}
+  if(!/\.zip\/|\/Temp\d+_[^\/]*\.zip|\/7zO[^\/]*\/|\/Rar\$[^\/]*\//i.test(p)) return;
+  const d = document.createElement('div'); d.className = 'notice zip-non-estratto'; d.setAttribute('role','alert');
+  d.innerHTML = '<span class="ico" aria-hidden="true">!</span><p><b>Sembra che tu abbia aperto Bauta direttamente dallo zip.</b> Così la guida e i collegamenti tra le pagine non si aprono. Chiudi questa finestra, estrai la cartella (su Windows tasto destro su <code>bauta.zip</code>, poi "Estrai tutto"; sul Mac doppio clic) e apri <code>index.html</code> dalla cartella estratta.</p>';
+  const primo = document.querySelector('.notice'); if(primo) primo.parentNode.insertBefore(d, primo); else document.body.insertBefore(d, document.body.firstChild);
 })();
 </script>
 </body>

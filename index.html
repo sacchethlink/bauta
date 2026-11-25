@@ -285,16 +285,16 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.stepbar,.log
   <p class="hint">Per proteggere i tuoi dati, Bauta non funziona da un sito: si usa solo dal tuo computer, aprendo il file che scarichi. Il testo che incolli non passa da internet e non viene salvato da nessuna parte online.</p>
   <ol class="howto">
     <li><b>Scarica</b> il file <code>bauta.zip</code>.</li>
-    <li><b>Estrai</b> la cartella: su Windows tasto destro sul file, poi "Estrai tutto"; sul Mac basta un doppio clic.</li>
+    <li><b>Estrai</b> la cartella: su Windows tasto destro sul file, poi "Estrai tutto"; sul Mac basta un doppio clic. Se apri i file direttamente dallo zip, la guida e i collegamenti tra le pagine non si aprono.</li>
     <li><b>Apri</b> <code>index.html</code> con un doppio clic. Si apre nel browser, ma lavora tutto sul tuo computer: puoi anche staccare internet.</li>
   </ol>
   <dl class="peso" aria-label="Dati del file">
-    <div><dt>Peso del file</dt><dd>125 KB</dd></div>
-    <div><dt>Una volta estratto</dt><dd>270 KB</dd></div>
+    <div><dt>Peso del file</dt><dd>126 KB</dd></div>
+    <div><dt>Una volta estratto</dt><dd>272 KB</dd></div>
     <div><dt>Contiene</dt><dd>4 file: strumento, guida, istruzioni, licenza</dd></div>
-    <div><dt>Versione</dt><dd>0.11 · 25/11/2026</dd></div>
+    <div><dt>Versione</dt><dd>0.11.1 · 25/11/2026</dd></div>
   </dl>
-  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip · 125 KB</a><a class="btn" href="guida.html">Leggi la guida</a></div>
+  <div class="row"><a class="btn primary" id="btnZip" href="bauta.zip" download>Scarica bauta.zip · 126 KB</a><a class="btn" href="guida.html">Leggi la guida</a></div>
 </section>
 <div class="app">
 <nav class="steps" aria-label="I quattro passaggi">
@@ -433,7 +433,7 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.stepbar,.log
 <div class="cta"><p>Volete regole chiare per usare l'AI con i dati in azienda?</p><a href="https://marcosacchet.netlify.app" target="_blank" rel="noopener">Il caffè lo offro io ☕</a></div>
 <footer>
   <span>Hyper Link di Sacchet Marco &amp; C. s.a.s. · P.IVA IT01219960257 · <a href="https://hyperlink-ai.netlify.app/" target="_blank" rel="noopener">hyperlink-ai.netlify.app</a></span>
-  <span>Bauta · versione 0.11</span>
+  <span>Bauta · versione 0.11.1</span>
 </footer>
 <p class="fine">Bauta è uno strumento d'esempio, fornito così com'è e senza garanzie. Aiuta a ridurre i dati personali esposti, ma non rende anonimo un testo in senso legale e non sostituisce le regole della tua azienda: anche con i segnaposto, il contesto può permettere di risalire a una persona. Ricontrolla sempre il passaggio 2 prima di inviare. <a href="guida.html">Guida completa</a> · <a href="https://github.com/sacchethlink/bauta" target="_blank" rel="noopener">Codice</a> · Licenza MIT · carattere Figtree (SIL Open Font License)</p>
 </div>
@@ -1713,6 +1713,17 @@ L'assicurato chiede il risarcimento sull'IBAN ${iban()}.`; },
   function onScroll(){ var y=window.scrollY; top.classList.toggle('show', y>400); if(h) h.classList.toggle('scrolled', y>8); }
   window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
   top.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+})();
+</script>
+<script>
+// Avviso se Bauta è stata aperta dallo zip senza estrarre la cartella (Windows copia in una cartella temporanea solo il file aperto)
+(function(){
+  if(location.protocol !== 'file:') return;
+  let p = location.pathname; try{ p = decodeURIComponent(p); }catch(e){}
+  if(!/\.zip\/|\/Temp\d+_[^\/]*\.zip|\/7zO[^\/]*\/|\/Rar\$[^\/]*\//i.test(p)) return;
+  const d = document.createElement('div'); d.className = 'notice zip-non-estratto'; d.setAttribute('role','alert');
+  d.innerHTML = '<span class="ico" aria-hidden="true">!</span><p><b>Sembra che tu abbia aperto Bauta direttamente dallo zip.</b> Così la guida e i collegamenti tra le pagine non si aprono. Chiudi questa finestra, estrai la cartella (su Windows tasto destro su <code>bauta.zip</code>, poi "Estrai tutto"; sul Mac doppio clic) e apri <code>index.html</code> dalla cartella estratta.</p>';
+  const primo = document.querySelector('.notice'); if(primo) primo.parentNode.insertBefore(d, primo); else document.body.insertBefore(d, document.body.firstChild);
 })();
 </script>
 </body>
