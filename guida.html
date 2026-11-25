@@ -411,9 +411,41 @@ a[target="_blank"]:not(.btn):not(.cta):not(:where(nav.links,.steps,.logos,.cta,.
   if(location.protocol !== 'file:') return;
   let p = location.pathname; try{ p = decodeURIComponent(p); }catch(e){}
   if(!/\.zip\/|\/Temp\d+_[^\/]*\.zip|\/7zO[^\/]*\/|\/Rar\$[^\/]*\//i.test(p)) return;
-  const d = document.createElement('div'); d.className = 'notice zip-non-estratto'; d.setAttribute('role','alert');
-  d.innerHTML = '<span class="ico" aria-hidden="true">!</span><p><b>Sembra che tu abbia aperto Bauta direttamente dallo zip.</b> Così la guida e i collegamenti tra le pagine non si aprono. Chiudi questa finestra, estrai la cartella (su Windows tasto destro su <code>bauta.zip</code>, poi "Estrai tutto"; sul Mac doppio clic) e apri <code>index.html</code> dalla cartella estratta.</p>';
-  const primo = document.querySelector('.notice'); if(primo) primo.parentNode.insertBefore(d, primo); else document.body.insertBefore(d, document.body.firstChild);
+  const css = document.createElement('style');
+  css.textContent = `
+.zipmodal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px;background:rgba(17,18,20,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:zipIn .2s ease-out}
+.zipmodal .box{position:relative;max-width:520px;width:100%;background:var(--surface,var(--card,#fff));color:var(--fg,var(--ink,#111214));border:1px solid var(--line,#cfd3d9);border-radius:22px;padding:28px 28px 24px;box-shadow:0 24px 60px rgba(0,0,0,.3);font-family:"Figtree",system-ui,sans-serif}
+.zipmodal .ico{width:40px;height:40px;border-radius:50%;background:var(--warn,#f2b400);color:#111214;display:grid;place-items:center;font-weight:800;font-size:22px;margin:0 0 14px}
+.zipmodal h2{margin:0 0 10px;font-size:22px;line-height:1.25}
+.zipmodal p{margin:0 0 10px;font-size:16px;line-height:1.55}
+.zipmodal ol{margin:0 0 18px;padding-left:22px;font-size:16px;line-height:1.55}
+.zipmodal code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em}
+.zipmodal .x{position:absolute;top:12px;right:12px;width:36px;height:36px;padding:0;border-radius:50%;justify-content:center;font-size:20px;line-height:1}
+.zipmodal .ok{background:var(--brand,#ff8200);color:var(--on-brand,#111214);border-color:var(--brand,#ff8200)}
+@keyframes zipIn{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.zipmodal{animation:none}}`;
+  document.head.appendChild(css);
+  const m = document.createElement('div'); m.className = 'zipmodal';
+  m.innerHTML = '<div class="box" role="alertdialog" aria-modal="true" aria-labelledby="zipTit" aria-describedby="zipTxt">'
+    + '<button type="button" class="x" aria-label="Chiudi">×</button>'
+    + '<div class="ico" aria-hidden="true">!</div>'
+    + '<h2 id="zipTit">Sembra che tu abbia aperto Bauta direttamente dallo zip</h2>'
+    + '<div id="zipTxt"><p>Così la guida e i collegamenti tra le pagine non si aprono. Per usarla:</p>'
+    + '<ol><li>chiudi questa finestra del browser;</li><li>estrai la cartella: su Windows tasto destro su <code>bauta.zip</code>, poi "Estrai tutto"; sul Mac doppio clic;</li><li>apri <code>index.html</code> dalla cartella estratta.</li></ol></div>'
+    + '<button type="button" class="ok">Ho capito</button></div>';
+  const prima = document.activeElement;
+  const chiudi = () => { m.remove(); document.removeEventListener('keydown', tasti); try{ (prima && prima.focus) ? prima.focus() : null; }catch(e){} };
+  const tasti = e => {
+    if(e.key === 'Escape') chiudi();
+    if(e.key === 'Tab'){ const b = [...m.querySelectorAll('button')]; const i = b.indexOf(document.activeElement);
+      if(e.shiftKey && i <= 0){ e.preventDefault(); b[b.length-1].focus(); } else if(!e.shiftKey && i === b.length-1){ e.preventDefault(); b[0].focus(); } }
+  };
+  m.querySelector('.x').addEventListener('click', chiudi);
+  m.querySelector('.ok').addEventListener('click', chiudi);
+  m.addEventListener('click', e => { if(e.target === m) chiudi(); });
+  document.addEventListener('keydown', tasti);
+  document.body.appendChild(m);
+  m.querySelector('.ok').focus();
 })();
 </script>
 </body>

@@ -4,7 +4,7 @@
 
 **Copri i dati personali prima di chiederli all'AI.**
 
-Versione 0.11.1 · 25/11/2026
+Versione 0.11.2 · 25/11/2026
 
 Bauta sostituisce nomi, recapiti, codici, dati sanitari e gli altri dati personali che riconosce con segnaposto come `[PERSONA_1]`. Così puoi incollare il testo in un assistente AI (Claude, ChatGPT, Gemini, Copilot, Le Chat, Perplexity o altri). Quando l'AI risponde, Bauta rimette i dati veri al loro posto.
 
